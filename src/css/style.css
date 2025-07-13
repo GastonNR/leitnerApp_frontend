@@ -8,7 +8,7 @@
     padding-bottom: 3rem;
 }
 
-.login-page {
+.auth-form {
     max-width: 28rem;
     margin-left: auto;
     margin-right: auto;
@@ -79,6 +79,6 @@
     color: rgba(75, 85, 99, 1);
 }
 
-.link_registro {
+.link {
     color: rgba(55, 48, 163, 1);
 }

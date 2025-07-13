@@ -5,7 +5,7 @@ export default function Login() {
   return (
     
     <div id="auth-container" className="auth-container">
-        <div id="login-page" className="login-page">
+        <div id="login-page" className="auth-form">
             <h2 className="titulo">LeitnerApp</h2>
             <p className="subtitulo">Sistema Leitner para memorización efectiva</p>
             
@@ -24,7 +24,7 @@ export default function Login() {
             </form>
             
             <div className="bottom_div">
-                <p className="parrafo_abajo">¿No tienes una cuenta? <Link to="/registro" id="show-register" className="text-indigo-600 hover:text-indigo-800">Regístrate</Link></p>
+                <p className="parrafo_abajo">¿No tienes una cuenta? <Link to="/registro" id="show-register" className="link">Regístrate</Link></p>
             </div>
         </div>
     </div>  
