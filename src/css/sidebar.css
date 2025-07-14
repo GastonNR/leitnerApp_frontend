@@ -1,0 +1,67 @@
+.sidebar{
+    width: 100%;   
+}
+.sidebar_superior{
+    --tw-bg-opacity:1;
+    background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1));
+    border-radius: 0.5rem;
+    --tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    
+}
+.sidebar_titulo{
+    font-size:1.125rem;
+    line-height:1.75rem;
+    font-weight: 600;
+    --tw-text-opacity:1;
+    color:rgb(31 41 55 / var(--tw-text-opacity, 1));
+    margin-bottom: 1rem;
+
+}
+.sidebar_parr{
+    font-size:0.875rem;
+    line-height:1.25rem;
+    --tw-text-opacity:1;
+    color:rgb(75 85 99 / var(--tw-text-opacity, 1));
+    margin-bottom: 1rem;
+}
+.contenedor_texto__caja_sidebar{
+    --tw-space-y-reverse:0;
+    margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))
+}
+.texto__caja_sidebar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.texto__span{
+    font-size:0.875rem;
+    line-height:1.25rem;
+    font-size: medium;
+}
+.cant_cards{
+    --tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1));
+    --tw-text-opacity:1;color:rgb(154 52 18 / var(--tw-text-opacity, 1));
+    font-size:0.75rem;
+    line-height:1rem;
+    font-weight: 500;
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+    padding-top:0.125rem;
+    padding-bottom:0.125rem;
+    border-radius: 100%;
+}
+.contenedor_sidebar_inferior{
+    --tw-bg-opacity:1;
+    background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1));
+    border-radius: 0.5rem;
+     --tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    padding: 1rem;
+}
+
