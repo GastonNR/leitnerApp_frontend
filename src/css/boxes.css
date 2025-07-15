@@ -1,0 +1,6 @@
+.box-highlight {
+    transition: all 0.3s ease;
+}
+.box-highlight:hover {
+    transform: translateY(-5px);
+}

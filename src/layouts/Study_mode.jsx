@@ -19,7 +19,7 @@ export default function Study_mode() {
             </svg>
             <h3>No hay tarjetas para estudiar hoy</h3>
             <p>Crea nuevas tarjetas o espera hasta mañana para continuar estudiando.</p>
-            <button id="add-sample-cards">Agregar tarjetas de ejemplo</button>
+            <button id="add-sample-cards" className='btn_add-sample-cards'>Agregar tarjetas de ejemplo</button>
         </div>
         
         <StudyCard/>

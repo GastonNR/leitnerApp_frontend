@@ -1,4 +1,5 @@
 import React from 'react'
+import "../css/boxes.css"
 
 export default function Boxes() {
   return (
