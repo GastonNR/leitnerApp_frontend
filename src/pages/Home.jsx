@@ -8,17 +8,19 @@ import "../css/home.css"
 export default function Home() {
   return (
     
-    <div id="main-app" className="main">
+    <div id="main-app" className="main-app">
         
         <Header />
         
-        <main className="container mx-auto px-4 py-8">
-            <div className="flex flex-col md:flex-row gap-6">
+        <main className="main">
+            <div className="div-1">
                 <Sidebar/>
-                <div className="w-full md:w-3/4">
-                    <Study_mode />
-                    <Boxes />
-                </div>
+            </div>
+            <div className="div-2">
+                <Study_mode />
+            </div>
+            <div className='div-3'>
+                <Boxes />
             </div>
         </main>
         

@@ -1,4 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    border-width:0;
+    border-style:solid;
+    border-color:#e5e7eb
+}
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f0f4f8;
+    line-height:inherit
 }
+/*
+:host,html{
+    line-height:1.5;-webkit-text-size-adjust:100%;
+    -moz-tab-size:4;
+    tab-size:4;
+    font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-feature-settings:normal;
+    font-variation-settings:normal;-webkit-tap-highlight-color:transparent
+}
+
+*/

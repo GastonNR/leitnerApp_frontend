@@ -1,5 +1,6 @@
 import React from 'react'
 import "../css/sidebar.css"
+import CountCards from '../components/CountCards'
 
 export default function Sidebar() {
   return (
@@ -9,26 +10,11 @@ export default function Sidebar() {
             <p className="sidebar_parr">Organiza tus tarjetas en 5 cajas según tu nivel de conocimiento. Las tarjetas se mueven entre cajas según tu desempeño.</p>
             
             <div className="contenedor_texto__caja_sidebar">
-                <div className="texto_caja_sidebar">
-                    <span className="texto__span">Caja 1 (Diario)</span>
-                    <span id="box-1-count" className="cant_cards">0</span>
-                </div>
-                <div className="texto__caja_sidebar">
-                    <span className="texto__span">Caja 2 (3 días)</span>
-                    <span id="box-2-count" className="cant_cards">0</span>
-                </div>
-                <div className="texto__caja_sidebar">
-                    <span className="texto__span">Caja 3 (7 días)</span>
-                    <span id="box-3-count" className="cant_cards">0</span>
-                </div>
-                <div className="texto__caja_sidebar">
-                    <span className="texto__span">Caja 4 (14 días)</span>
-                    <span id="box-4-count" className="cant_cards">0</span>
-                </div>
-                <div className="texto__caja_sidebar">
-                    <span className="texto__span">Caja 5 (30 días)</span>
-                    <span id="box-5-count" className="cant_cards">0</span>
-                </div>
+                <CountCards id={"box-1-count"} texto={"Caja 1 (Diario)"} cantidad={0} />
+                <CountCards id={"box-2-count"} texto={"Caja 2 (3 días)"} cantidad={0} />
+                <CountCards id={"box-3-count"} texto={"Caja 3 (7 días)"} cantidad={0} />
+                <CountCards id={"box-4-count"} texto={"Caja 4 (14 días)"} cantidad={0} />
+                <CountCards id={"box-5-count"} texto={"Caja 5 (30 días)"} cantidad={0} />
             </div>
         </div>
         
@@ -36,11 +22,11 @@ export default function Sidebar() {
             <h2 className="sidebar_titulo">Crear nueva tarjeta</h2>
             <form id="new-card-form" className="form_card">
                 <div>
-                    <label htmlFor="card-question">Pregunta</label>
+                    <label className='label-sidebar' htmlFor="card-question">Pregunta</label>
                     <textarea id="card-question" rows="2" required=""></textarea>
                 </div>
                 <div>
-                    <label htmlFor="card-answer">Respuesta</label>
+                    <label className='label-sidebar' htmlFor="card-answer">Respuesta</label>
                     <textarea id="card-answer" rows="2" required=""></textarea>
                 </div>
                 <div>

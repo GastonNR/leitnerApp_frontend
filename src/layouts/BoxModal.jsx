@@ -1,8 +1,7 @@
 import React from 'react'
 import "../css/boxModal.css"
 
-export default function BoxModal({tarjetas}) {
-    const {tarjetas} = tarjetas
+export default function BoxModal() {
     
   return (
     <div id="box-modal" className="box-modal">
@@ -17,7 +16,7 @@ export default function BoxModal({tarjetas}) {
                 </div>
                 <div className="contenedor-abajo">
                     <div id="box-cards-container" className="box-card-container">
-                        {tarjetas}
+                        {/*Aquí van las tarjetas */}
                     </div>
                     <div id="box-empty-message" className="box-empty-message">
                         <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>

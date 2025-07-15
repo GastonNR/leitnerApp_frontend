@@ -1,0 +1,36 @@
+.main-app{
+    display: grid;
+    grid-template-areas: 
+    "header"
+    "main"
+    ;
+}
+.main{
+    grid-area: main;
+    width: 100%;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:1rem;
+    padding-right:1rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "sidebar study-mode"
+        "sidebar boxes"
+    ;
+}
+.div-1{
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 0.5rem;
+}
+.div-2{
+    margin: 0.5rem;
+    grid-area: study-mode;
+    width: 100%;
+}
