@@ -12,7 +12,6 @@ export default function Home() {
         
         <Header />
         
-        
         <main className="container mx-auto px-4 py-8">
             <div className="flex flex-col md:flex-row gap-6">
                 <Sidebar/>
@@ -23,9 +22,6 @@ export default function Home() {
             </div>
         </main>
         
-        
-        
-
         <BoxModal />
     </div>
     

@@ -3,7 +3,7 @@ import "../css/sidebar.css"
 
 export default function Sidebar() {
   return (
-    <div className="sidebar md:w-1/4">
+    <div className="sidebar">
         <div className="sidebar_superior">
             <h2 className="sidebar_titulo">Sistema Leitner</h2>
             <p className="sidebar_parr">Organiza tus tarjetas en 5 cajas según tu nivel de conocimiento. Las tarjetas se mueven entre cajas según tu desempeño.</p>
@@ -33,18 +33,18 @@ export default function Sidebar() {
         </div>
         
         <div className="contenedor_sidebar_inferior">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Crear nueva tarjeta</h2>
-            <form id="new-card-form" className="space-y-4">
+            <h2 className="sidebar_titulo">Crear nueva tarjeta</h2>
+            <form id="new-card-form" className="form_card">
                 <div>
-                    <label htmlFor="card-question" className="block text-sm font-medium text-gray-700 mb-1">Pregunta</label>
-                    <textarea id="card-question" rows="2" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required=""></textarea>
+                    <label htmlFor="card-question">Pregunta</label>
+                    <textarea id="card-question" rows="2" required=""></textarea>
                 </div>
                 <div>
-                    <label htmlFor="card-answer" className="block text-sm font-medium text-gray-700 mb-1">Respuesta</label>
-                    <textarea id="card-answer" rows="2" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required=""></textarea>
+                    <label htmlFor="card-answer">Respuesta</label>
+                    <textarea id="card-answer" rows="2" required=""></textarea>
                 </div>
                 <div>
-                    <button type="submit" className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">Crear tarjeta</button>
+                    <button type="submit" className="btn_crearTarjeta">Crear tarjeta</button>
                 </div>
             </form>
         </div>
