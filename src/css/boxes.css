@@ -3,10 +3,10 @@
     gap: 1rem;
     
     display: grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     /*
     grid-template-columns:repeat(2, minmax(0, 1fr))
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns:repeat(3, minmax(0, 1fr));
 
     
     */
@@ -49,4 +49,15 @@
     line-height: 1.25rem;
     color: rgba(75, 85, 99, 1);
     margin-bottom: 0.75rem;
+}
+
+@media(min-width: 1024px){
+    .boxes-container{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@media(min-width: 768px){
+    .boxes-container{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }

@@ -9,12 +9,12 @@ export default function Sidebar() {
             <h2 className="sidebar_titulo">Sistema Leitner</h2>
             <p className="sidebar_parr">Organiza tus tarjetas en 5 cajas según tu nivel de conocimiento. Las tarjetas se mueven entre cajas según tu desempeño.</p>
             
-            <div className="contenedor_texto__caja_sidebar">
-                <CountCards id={"box-1-count"} texto={"Caja 1 (Diario)"} cantidad={0} />
-                <CountCards id={"box-2-count"} texto={"Caja 2 (3 días)"} cantidad={0} />
-                <CountCards id={"box-3-count"} texto={"Caja 3 (7 días)"} cantidad={0} />
-                <CountCards id={"box-4-count"} texto={"Caja 4 (14 días)"} cantidad={0} />
-                <CountCards id={"box-5-count"} texto={"Caja 5 (30 días)"} cantidad={0} />
+            <div className="contenedor_texto_caja_sidebar">
+                <CountCards id={"box-1-count"} texto={"Caja 1 (Diario)"} cantidad={0} resaltado={"cant_cards cant_cards_1"}/>
+                <CountCards id={"box-2-count"} texto={"Caja 2 (3 días)"} cantidad={0} resaltado={"cant_cards cant_cards_2"}/>
+                <CountCards id={"box-3-count"} texto={"Caja 3 (7 días)"} cantidad={0} resaltado={"cant_cards cant_cards_3"}/>
+                <CountCards id={"box-4-count"} texto={"Caja 4 (14 días)"} cantidad={0} resaltado={"cant_cards cant_cards_4"}/>
+                <CountCards id={"box-5-count"} texto={"Caja 5 (30 días)"} cantidad={0} resaltado={"cant_cards cant_cards_5"}/>
             </div>
         </div>
         
@@ -22,11 +22,11 @@ export default function Sidebar() {
             <h2 className="sidebar_titulo">Crear nueva tarjeta</h2>
             <form id="new-card-form" className="form_card">
                 <div>
-                    <label className='label-sidebar' htmlFor="card-question">Pregunta</label>
+                    <label htmlFor="card-question">Pregunta</label>
                     <textarea id="card-question" rows="2" required=""></textarea>
                 </div>
                 <div>
-                    <label className='label-sidebar' htmlFor="card-answer">Respuesta</label>
+                    <label htmlFor="card-answer">Respuesta</label>
                     <textarea id="card-answer" rows="2" required=""></textarea>
                 </div>
                 <div>
