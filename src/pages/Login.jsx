@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import "../css/auth.css"
 
@@ -29,6 +28,12 @@ export default function Login() {
                 })
                 const resultado = await res.json()
                 console.log(resultado)
+                if(res.ok){
+                    localStorage.setItem("token", resultado.token)
+                    window.location.href = "/home"
+                } else {
+                    alert( resultado.mensaje || "Credenciales inválidas")
+                }
 
             } catch (error) {
                 console.log("Error al logear al usuario: ", error)

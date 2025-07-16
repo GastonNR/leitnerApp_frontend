@@ -56,18 +56,18 @@ export default function Registro() {
 
           <form id="register-form" className="space-y-4">
               <div className='field-container'>
-                  <label for="reg-name" className="label">Nombre</label>
-                  <input type="text" id="reg-name" className="input" required="" />
+                  <label htmlFor="reg-name" className="label">Nombre</label>
+                  <input type="text" id="reg-name" className="input" required={true} />
                   <p id='nombre_reg' className='p_campo_invalido'>Campo inválido</p>
               </div>
               <div className='field-container'>
-                  <label for="reg-email" className="label">Correo electrónico</label>
-                  <input type="email" id="reg-email" className="input" required="" />
+                  <label htmlFor="reg-email" className="label">Correo electrónico</label>
+                  <input type="email" id="reg-email" className="input" required={true} />
                   <p id='email_reg' className='p_campo_invalido'>Campo inválido</p>
               </div>
               <div className='field-container'>
-                  <label for="reg-password" className="label">Contraseña</label>
-                  <input type="password" id="reg-password" className="input" required="" />
+                  <label htmlFor="reg-password" className="label">Contraseña</label>
+                  <input type="password" id="reg-password" className="input" required={true} />
                   <p id='pass_reg' className='p_campo_invalido'>Campo inválido</p>
               </div>
               <div>
