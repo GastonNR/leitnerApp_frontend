@@ -4,29 +4,8 @@ import "../css/boxModal.css"
 
 export default function BoxModal({setEstiloDisplay, indiceCaja}) {
     const { cajas } = useCajas()
-    let cajaElegida;
+    const cajaElegida = cajas[Number(indiceCaja) -1]?.tarjetas || [];
 
-    switch (indiceCaja) {
-        case "1":
-            cajaElegida = cajas[+(indiceCaja) - 1].tarjetas
-            break;
-        case "2":
-            cajaElegida = cajas[+(indiceCaja) - 1].tarjetas
-            break;
-        case "3":
-            cajaElegida = cajas[+(indiceCaja) - 1].tarjetas
-            break;
-        case "4":
-            cajaElegida = cajas[+(indiceCaja) - 1].tarjetas
-            break;
-        case "5":
-            cajaElegida = cajas[+(indiceCaja) - 1].tarjetas
-            break;
-    
-        default:
-            break;
-    }
-    
   return (
     <div id="box-modal" className="box-modal">
             <div className="container-box-modal">
@@ -40,14 +19,16 @@ export default function BoxModal({setEstiloDisplay, indiceCaja}) {
                 </div>
                 <div className="contenedor-abajo">
                     <div id="box-cards-container" className="box-card-container">
-                        
-                        {cajaElegida.map(tarjeta => (
-                            <CardElement pregunta={tarjeta.pregunta} respuesta={tarjeta.respuesta} proxima_revision={tarjeta.proxima_revision} />
-                        ))}
+                        {cajaElegida.length > 0 ? 
+                        cajaElegida.map(tarjeta => (                                
+                            <CardElement key={tarjeta._id } pregunta={tarjeta.pregunta} respuesta={tarjeta.respuesta} proxima_revision={tarjeta.proxima_revision} />
+                        )) : (
+                        <div id="box-empty-message" className="box-empty-message">
+                            <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>
+                        </div>
 
-                    </div>
-                    <div id="box-empty-message" className="box-empty-message">
-                        <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>
+                        )}
+
                     </div>
                 </div>
             </div>
