@@ -3,15 +3,14 @@ import Sidebar from '../layouts/Sidebar'
 import Study_mode from '../layouts/Study_mode'
 import Boxes from '../layouts/Boxes'
 import BoxModal from '../layouts/BoxModal'
+import CajasProvider from '../context/cajasContext'
 import "../css/home.css"
 
 export default function Home() {
   return (
-    
+
     <div id="main-app" className="main-app">
-        
         <Header />
-        
         <main className="main">
             <div className="div-1">
                 <Sidebar/>
@@ -23,9 +22,8 @@ export default function Home() {
                 <Boxes />
             </div>
         </main>
-        
         <BoxModal />
     </div>
-    
+
   )
 }

@@ -4,6 +4,7 @@ import Registro from "./pages/Registro"
 import Home from "./pages/Home.jsx"
 import "./css/index.css"
 import RutaProtegida from "./pages/RutaProtegida.jsx"
+import CajasProvider from "./context/cajasContext.jsx"
 
 function App() {
   
@@ -14,7 +15,11 @@ function App() {
         <Route path="/registro" element={<Registro />} />
 
         <Route element={ <RutaProtegida /> } >
-          <Route path="/Home" element={<Home />} />
+          <Route path="/Home" element={
+            <CajasProvider>
+              <Home />
+            </CajasProvider>
+            } />
         </Route>
 
         <Route path="*" element={<Login />} />

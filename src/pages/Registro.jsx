@@ -40,7 +40,11 @@ export default function Registro() {
                     body: JSON.stringify(datos)
                 })
                 const resultado = await res.json();
-                console.log(resultado)
+                
+                if (res.ok){
+                    alert("Usuario registrado")
+                    window.location.href = "/"
+                } 
 
             } catch(error) {
                 console.error("Error al registrar al usuario: ", error)

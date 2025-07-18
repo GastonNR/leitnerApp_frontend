@@ -3,6 +3,63 @@ import "../css/sidebar.css"
 import CountCards from '../components/CountCards'
 
 export default function Sidebar() {
+
+    async function crearNuevaTarjeta(){
+        const pregunta = document.querySelector('#card-question').value
+        const respuesta = document.querySelector('#card-answer').value
+
+        let comprobacionCampos = 0
+
+        if (!pregunta) {
+            alert("El campo de pregunta está vacío")
+            comprobacionCampos++
+        }
+        if (!respuesta){
+            alert("El campo de respuesta está vacío")
+            comprobacionCampos++
+        }
+         
+        if (comprobacionCampos === 0) {
+
+            const fechaActual = new Date();
+            const proxima_revision = new Date(fechaActual)
+            proxima_revision.setDate( proxima_revision.getDate() + 1 )
+
+            const tarjeta = { 
+                pregunta: pregunta,
+                respuesta: respuesta,
+                nivel: 1, 
+                ultima_revision: fechaActual,
+                proxima_revision: proxima_revision
+            }
+
+            //try {
+            //    const res = await fetch(`${import.meta.env.VITE_HOME_URL}/nuevaTarjeta`, {
+            //        method: 'POST',
+            //        headers: {
+            //            'Content-Type': 'application/json',
+            //            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            //        },
+            //        body: JSON.stringify(datos)
+            //    })
+            //     const resultado = await res.json()
+                
+            //if (res.ok) {
+            //    document.querySelector('#card-question').value = ""
+            //    document.querySelector('#card-answer').value = ""
+
+            //} else {
+            //    alert(resultado.mensaje || "Error al guardar la tarjeta")
+            //}
+
+            //} catch (error) {
+            //   console.error("Error al guardar las tarjetas: ", error)
+
+            //}
+        }
+        
+    }
+
   return (
     <div className="sidebar">
         <div className="sidebar_superior">
@@ -30,7 +87,7 @@ export default function Sidebar() {
                     <textarea id="card-answer" rows="2" required=""></textarea>
                 </div>
                 <div>
-                    <button type="submit" className="btn_crearTarjeta">Crear tarjeta</button>
+                    <button type="submit" className="btn_crearTarjeta" onClick={crearNuevaTarjeta}>Crear tarjeta</button>
                 </div>
             </form>
         </div>
