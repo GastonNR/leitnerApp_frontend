@@ -20,8 +20,8 @@ export default function BoxModal({setEstiloDisplay, indiceCaja}) {
                 <div className="contenedor-abajo">
                     <div id="box-cards-container" className="box-card-container">
                         {cajaElegida.length > 0 ? 
-                        cajaElegida.map(tarjeta => (                                
-                            <CardElement key={tarjeta._id } pregunta={tarjeta.pregunta} respuesta={tarjeta.respuesta} proxima_revision={tarjeta.proxima_revision} />
+                        cajaElegida.map((tarjeta, index) => (                                
+                            <CardElement key={tarjeta.index } pregunta={tarjeta.pregunta} respuesta={tarjeta.respuesta} proxima_revision={tarjeta.proxima_revision} />
                         )) : (
                         <div id="box-empty-message" className="box-empty-message">
                             <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>

@@ -34,13 +34,13 @@
     transform: rotateY(180deg);
 }
 
-.card-inner:first-child {
+.card-front {
     background-color: rgba(255, 255, 255, 1);
     border: 1px solid rgba(229, 231, 235, 1);
     padding: 1.5rem;
 }
 
-.card-inner:last-child {
+.card-back {
     background-color: rgba(238, 242, 255, 1);
     border: 1px solid rgba(229, 231, 235, 1);
     padding: 1.5rem;
