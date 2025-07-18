@@ -20,9 +20,9 @@ export default function Home() {
             </div>
             <div className='div-3'>
                 <Boxes />
+                
             </div>
         </main>
-        <BoxModal />
     </div>
 
   )

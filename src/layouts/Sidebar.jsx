@@ -1,10 +1,14 @@
 import React from 'react'
 import "../css/sidebar.css"
 import CountCards from '../components/CountCards'
+import { useCajas } from '../context/cajasContext'
 
 export default function Sidebar() {
+    const { cajas, setCajas } = useCajas()
 
-    async function crearNuevaTarjeta(){
+    function crearNuevaTarjeta(e){
+        e.preventDefault()
+
         const pregunta = document.querySelector('#card-question').value
         const respuesta = document.querySelector('#card-answer').value
 
@@ -33,29 +37,22 @@ export default function Sidebar() {
                 proxima_revision: proxima_revision
             }
 
-            //try {
-            //    const res = await fetch(`${import.meta.env.VITE_HOME_URL}/nuevaTarjeta`, {
-            //        method: 'POST',
-            //        headers: {
-            //            'Content-Type': 'application/json',
-            //            'Authorization': `Bearer ${localStorage.getItem('token')}`
-            //        },
-            //        body: JSON.stringify(datos)
-            //    })
-            //     const resultado = await res.json()
-                
-            //if (res.ok) {
-            //    document.querySelector('#card-question').value = ""
-            //    document.querySelector('#card-answer').value = ""
+            const nuevasCajas = cajas.map((caja, index) => {
+                if (index === 0) {
+                    const tarjetasActualizadas = [...(caja.tarjetas || []), tarjeta]
+                    return { ...caja, tarjetas: tarjetasActualizadas }
 
-            //} else {
-            //    alert(resultado.mensaje || "Error al guardar la tarjeta")
-            //}
+                } else {
+                  return caja
+                  
+                }
+            })
 
-            //} catch (error) {
-            //   console.error("Error al guardar las tarjetas: ", error)
-
-            //}
+            setCajas(nuevasCajas)
+            console.log("Nuevas cajas: ", cajas)
+            
+            document.querySelector('#card-question').value = ""
+            document.querySelector('#card-answer').value = ""
         }
         
     }
@@ -67,11 +64,11 @@ export default function Sidebar() {
             <p className="sidebar_parr">Organiza tus tarjetas en 5 cajas según tu nivel de conocimiento. Las tarjetas se mueven entre cajas según tu desempeño.</p>
             
             <div className="contenedor_texto_caja_sidebar">
-                <CountCards id={"box-1-count"} texto={"Caja 1 (Diario)"} cantidad={0} resaltado={"cant_cards cant_cards_1"}/>
-                <CountCards id={"box-2-count"} texto={"Caja 2 (3 días)"} cantidad={0} resaltado={"cant_cards cant_cards_2"}/>
-                <CountCards id={"box-3-count"} texto={"Caja 3 (7 días)"} cantidad={0} resaltado={"cant_cards cant_cards_3"}/>
-                <CountCards id={"box-4-count"} texto={"Caja 4 (14 días)"} cantidad={0} resaltado={"cant_cards cant_cards_4"}/>
-                <CountCards id={"box-5-count"} texto={"Caja 5 (30 días)"} cantidad={0} resaltado={"cant_cards cant_cards_5"}/>
+                <CountCards id={"box-1-count"} texto={"Caja 1 (Diario)"} resaltado={"cant_cards cant_cards_1"} caja={cajas[0]} />
+                <CountCards id={"box-2-count"} texto={"Caja 2 (3 días)"} resaltado={"cant_cards cant_cards_2"} caja={cajas[1]} />
+                <CountCards id={"box-3-count"} texto={"Caja 3 (7 días)"} resaltado={"cant_cards cant_cards_3"} caja={cajas[2]} />
+                <CountCards id={"box-4-count"} texto={"Caja 4 (14 días)"} resaltado={"cant_cards cant_cards_4" } caja={cajas[3]} />
+                <CountCards id={"box-5-count"} texto={"Caja 5 (30 días)"} resaltado={"cant_cards cant_cards_5"} caja={cajas[4]} />
             </div>
         </div>
         

@@ -32,9 +32,9 @@ export default function CajasProvider({ children }) {
     fetchCajas()
   }, [])
 
-  useEffect(()=>{
-    console.log(cajas)
-  }, [cajas])
+  //useEffect(()=>{
+  //  console.log(cajas)
+  //}, [cajas])
 
   if(loading) return <p>Cargando cajas...</p>
     

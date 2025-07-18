@@ -1,0 +1,25 @@
+.cardElement{
+    --tw-bg-opacity:1;
+    background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1));
+    border-width:1px;
+    --tw-border-opacity:1;
+    border-color:rgb(229 231 235 / var(--tw-border-opacity, 1));
+    border-radius:0.5rem;
+    padding: 1rem; 
+}
+.pregunta{
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+.respuesta{
+    --tw-text-opacity:1;
+    color:rgb(75 85 99 / var(--tw-text-opacity, 1));
+
+}
+.proxima_revision{
+    font-size:0.75rem;
+    line-height:1rem;
+    --tw-text-opacity:1;
+    color:rgb(156 163 175 / var(--tw-text-opacity, 1));
+    margin-top: 0.5rem;
+}

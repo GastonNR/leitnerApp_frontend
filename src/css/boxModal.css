@@ -8,9 +8,6 @@
     align-items: center;
     justify-content: center;
     z-index: 50;
-    /*
-    */
-    display: none;
 }
 .container-box-modal{
     --tw-bg-opacity:1;
