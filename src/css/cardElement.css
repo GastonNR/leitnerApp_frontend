@@ -1,25 +1,23 @@
-.cardElement{
-    --tw-bg-opacity:1;
-    background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1));
-    border-width:1px;
-    --tw-border-opacity:1;
-    border-color:rgb(229 231 235 / var(--tw-border-opacity, 1));
-    border-radius:0.5rem;
-    padding: 1rem; 
+.cardElement {
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(229, 231, 235, 1);
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
-.pregunta{
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-.respuesta{
-    --tw-text-opacity:1;
-    color:rgb(75 85 99 / var(--tw-text-opacity, 1));
 
+.pregunta {
+  font-size: larger;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
-.proxima_revision{
-    font-size:0.75rem;
-    line-height:1rem;
-    --tw-text-opacity:1;
-    color:rgb(156 163 175 / var(--tw-text-opacity, 1));
-    margin-top: 0.5rem;
+
+.respuesta {
+  color: rgba(75, 85, 99, 1);
+}
+
+.proxima_revision {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(156, 163, 175, 1);
+  margin-top: 0.5rem;
 }
