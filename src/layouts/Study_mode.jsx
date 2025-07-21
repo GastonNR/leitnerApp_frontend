@@ -4,7 +4,7 @@ import StudyCard from './StudyCard'
 import { useCajas } from '../context/cajasContext'
 
 export default function Study_mode() {
-    const {cajas, setCajas} = useCajas()
+    const {cajas} = useCajas()
     const [tarjetaIndex, setTarjetaIndex] = useState(0)
     //console.log("primera tarjeta: ", cajas[0].tarjetas[0])
     useEffect(()=>{

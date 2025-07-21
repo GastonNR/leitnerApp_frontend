@@ -30,6 +30,8 @@ export default function Login() {
                 console.log(resultado)
                 if(res.ok){
                     localStorage.setItem("token", resultado.token)
+                    localStorage.setItem("nombre_usuario", resultado.usuario.nombre)
+                    localStorage.setItem("id", resultado.usuario.id)
                     window.location.href = "/home"
                 } else {
                     alert( resultado.mensaje || "Credenciales inválidas")
