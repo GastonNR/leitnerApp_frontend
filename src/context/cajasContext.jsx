@@ -25,6 +25,7 @@ export default function CajasProvider({ children }) {
         //Guardamos un la constante data la respuesta de la base de datos y luego seteamos la constante de las cajas con esa información.
         const data = await res.json();
         setCajas(data)
+        console.log("Cajas: ", data)
         
       } catch (error) {
         console.error("Error al cargar las cajas: ", error);

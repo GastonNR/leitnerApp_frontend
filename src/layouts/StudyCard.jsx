@@ -26,9 +26,6 @@ export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarj
             setTarjetaIndex(prev => prev + 1)
         } 
 
-        //console.log("cantidad de tarjetas: ", cantTarjetas)
-        //console.log("Tarjeta index", tarjetaIndex)
-
     }
 
   return (
