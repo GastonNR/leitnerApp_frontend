@@ -5,6 +5,9 @@ import "../css/auth.css"
 export default function Registro() {
 
     async function registrarUsuario(){
+
+        console.log("entramos en la función registrarUsuario")
+
         const nombre = document.querySelector("#reg-name").value.trim()
         const email = document.querySelector("#reg-email").value.trim()
         const password = document.querySelector("#reg-password").value.trim()
@@ -30,6 +33,8 @@ export default function Registro() {
                 email: email,
                 password: password
             }
+
+            console.log(`Datos cargados:  ${datos}`)
 
             try{
                 const res = await fetch(import.meta.env.VITE_REGISTRO_URL, {

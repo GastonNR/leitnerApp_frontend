@@ -21,7 +21,7 @@ export default function Study_mode() {
             </div>
         </div>
         {
-            cajas[0].tarjetas.length > 0 ?
+            cajas[0]?.tarjetas?.length > 0 ?
                 <StudyCard cantTarjetas={cajas[0].tarjetas.length} tarjeta={cajas[0].tarjetas[tarjetaIndex]} tarjetaIndex={tarjetaIndex} setTarjetaIndex={setTarjetaIndex} />
             :
             <div id="study-empty" className="study-empty">

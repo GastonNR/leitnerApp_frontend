@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function CountCards({id, texto, resaltado, caja}) {
 
-  const cantidadTarjetas = caja.tarjetas.length
+  const cantidadTarjetas = caja?.tarjetas?.length || 0
   //console.log(cantidadTarjetas)
 
   return (
