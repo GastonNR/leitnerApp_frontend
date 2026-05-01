@@ -23,6 +23,7 @@ export const getLecciones = async () => {
     const token = localStorage.getItem("token")
 
     const res = await fetch(`${API_URL}/`, {
+        method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -30,6 +31,23 @@ export const getLecciones = async () => {
     })
 
     if(!res.ok) throw new Error("Error al obtener las lecciones.")
+    return res.json()
+
+}
+
+export const deleteLecciones = async (id) =>{
+
+    console.log("Id de la lección desde service frontend: ", id)
+    const token = localStorage.getItem("token")
+
+    const res = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+    if (!res.ok) throw new Error("Error al eliminar la lección.")
     return res.json()
 
 }

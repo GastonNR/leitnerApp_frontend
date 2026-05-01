@@ -25,6 +25,7 @@ export default function LeccionesModal() {
     const handleEliminar = (e, id) => {
         e.stopPropagation();
         if (window.confirm("¿Eliminás esta lección? Se perderán todas sus tarjetas.")) {
+            console.log("Lección id: ", id)
             eliminarLeccion(id);
         }
     };
@@ -73,10 +74,10 @@ export default function LeccionesModal() {
                             <ul className="lm-list">
                                 {lecciones.map(leccion => {
                                     const totalTarjetas = leccion.cajas.reduce((acc, c) => acc + (c.tarjetas?.length || 0), 0);
-                                    const estaActiva = leccionActiva?.id === leccion.id;
+                                    const estaActiva = leccionActiva?._id === leccion._id;
                                     return (
                                         <li
-                                            key={leccion.id}
+                                            key={leccion._id}
                                             className={`lm-item ${estaActiva ? "lm-item--active" : ""}`}
                                             onClick={() => cambiarLeccion(leccion)}
                                         >
@@ -90,7 +91,7 @@ export default function LeccionesModal() {
                                                 )}
                                                 <button
                                                     className="lm-btn-eliminar"
-                                                    onClick={(e) => handleEliminar(e, leccion.id)}
+                                                    onClick={(e) => handleEliminar(e, leccion._id)}
                                                     aria-label="Eliminar lección"
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -1,15 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { crearLeccionRequest } from "../services/lecciones.service";
+import { crearLeccionRequest, deleteLecciones, getLecciones } from "../services/lecciones.service";
 
 const CajasContext = createContext();
-
-//const CAJAS_VACIAS = () => [
-//  { numero: 1, tarjetas: [] },
-//  { numero: 2, tarjetas: [] },
-//  { numero: 3, tarjetas: [] },
-//  { numero: 4, tarjetas: [] },
-//  { numero: 5, tarjetas: [] },
-//];
 
 export default function CajasProvider({ children }) {
 
@@ -25,43 +17,25 @@ export default function CajasProvider({ children }) {
   const [modalLeccionesAbierto, setModalLeccionesAbierto] = useState(false);
 
   useEffect(() => {
-    const fetchCajas = async () => {
+    const traerLeccionesDB = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await fetch(`${import.meta.env.VITE_HOME_URL}/`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const leccionesEncontradas = await getLecciones()
 
-        const data = await res.json();
+        if(leccionesEncontradas) setLecciones(leccionesEncontradas)
+        if (!leccionActiva) setLeccionActiva(leccionesEncontradas[0] || "null")
 
-        // Cargar lecciones guardadas en localStorage
-        const leccionesGuardadas = JSON.parse(localStorage.getItem("lecciones") || "[]");
-        const leccionActivaGuardada = JSON.parse(localStorage.getItem("leccionActiva") || "null");
-
-        if (leccionesGuardadas.length > 0 && leccionActivaGuardada) {
-          // Hay lecciones guardadas: cargar la lección activa
-          setLecciones(leccionesGuardadas);
-          setLeccionActiva(leccionActivaGuardada);
-          const leccion = leccionesGuardadas.find(l => l.id === leccionActivaGuardada.id);
-          setCajas(leccion ? leccion.cajas : data);
-        } else {
-          // Primera vez: usar datos del backend como lección por defecto
-          setCajas(data);
-        }
-
-        console.log("Cajas: ", data);
       } catch (error) {
-        console.error("Error al cargar las cajas: ", error);
+        console.error("Error al cargar las cajas: ", error)
+
       } finally {
         setLoading(false);
-      }
-    };
 
-    fetchCajas();
-  }, []);
+      }
+    }
+
+    traerLeccionesDB()
+
+  }, [lecciones])
 
   // Sincronizar cajas con la lección activa cuando cambian
   useEffect(() => {
@@ -73,7 +47,9 @@ export default function CajasProvider({ children }) {
         localStorage.setItem("lecciones", JSON.stringify(actualizadas));
         return actualizadas;
       });
+      
     }
+
   }, [cajas]);
 
   useEffect(() => {
@@ -90,47 +66,50 @@ export default function CajasProvider({ children }) {
   }, [cajas]);
 
   // Crear nueva lección
-  const crearLeccion = (nombre) => {
-    //const nuevaLeccion = {
-    //  id: Date.now().toString(),
-    //  nombre: nombre.trim(),
-    //  cajas: CAJAS_VACIAS(),
-    //};
-    const nombreNuevaLeccion = nombre.trim()
-    crearLeccionRequest(nombreNuevaLeccion)
-
-    const nuevasLecciones = [...lecciones, nuevaLeccion];
-    setLecciones(nuevasLecciones);
-    setLeccionActiva({ id: nuevaLeccion.id, nombre: nuevaLeccion.nombre });
-    setCajas(nuevaLeccion.cajas);
-    localStorage.setItem("lecciones", JSON.stringify(nuevasLecciones));
-    localStorage.setItem("leccionActiva", JSON.stringify({ id: nuevaLeccion.id, nombre: nuevaLeccion.nombre }));
-    setModalLeccionesAbierto(false);
+  const crearLeccion = async (nombre) => {
     
-  };
+    try {
+      const nombreNuevaLeccion = nombre.trim()
+      await crearLeccionRequest(nombreNuevaLeccion)
+  
+      setModalLeccionesAbierto(false);
+      location.reload()
+
+    } catch (error) {
+      console.error("Error al crear una nueva lección", error)
+
+    }
+    
+  }
 
   // Cambiar a una lección existente
   const cambiarLeccion = (leccion) => {
-    setLeccionActiva({ id: leccion.id, nombre: leccion.nombre });
+
+    setLeccionActiva({ id: leccion._id, nombre: leccion.nombre });
     setCajas(leccion.cajas);
-    localStorage.setItem("leccionActiva", JSON.stringify({ id: leccion.id, nombre: leccion.nombre }));
+  
     setModalLeccionesAbierto(false);
-  };
+
+  }
 
   // Eliminar lección
-  const eliminarLeccion = (id) => {
-    const nuevasLecciones = lecciones.filter(l => l.id !== id);
-    setLecciones(nuevasLecciones);
-    localStorage.setItem("lecciones", JSON.stringify(nuevasLecciones));
-    if (leccionActiva?.id === id) {
-      if (nuevasLecciones.length > 0) {
-        cambiarLeccion(nuevasLecciones[0]);
-      } else {
-        setLeccionActiva(null);
-        localStorage.removeItem("leccionActiva");
-      }
+  const eliminarLeccion = async (id) => {
+
+    try {
+      const res = await deleteLecciones(id)
+
+      setLecciones(prev => prev.filter(l => l._id !== id))
+      
+      //if(leccionActiva?._id === id) setLeccionActiva(null)
+
+      setModalLeccionesAbierto(false)
+  
+
+    } catch (error) {
+      console.error("Error eliminando: ", error)
     }
-  };
+    
+  }
 
   if (loading) return <p>Cargando cajas...</p>;
 
