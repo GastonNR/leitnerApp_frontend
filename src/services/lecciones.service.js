@@ -15,7 +15,9 @@ export const crearLeccionRequest = async (nuevaLeccion) => {
 
     if(!res.ok) throw new Error("Error al crear lección.")
     
-    return res.json()
+    const datos = res.json()
+    console.log("Respuesta desde el backend: ", datos)
+    return datos
 
 }
 

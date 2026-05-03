@@ -35,7 +35,7 @@ export default function CajasProvider({ children }) {
 
     traerLeccionesDB()
 
-  }, [lecciones])
+  }, [])
 
   // Sincronizar cajas con la lección activa cuando cambian
   useEffect(() => {
@@ -70,10 +70,12 @@ export default function CajasProvider({ children }) {
     
     try {
       const nombreNuevaLeccion = nombre.trim()
-      await crearLeccionRequest(nombreNuevaLeccion)
+      const nuevaLeccion = await crearLeccionRequest(nombreNuevaLeccion)
+      
+      setLecciones(prev => [...prev, nuevaLeccion])
+      setLeccionActiva(nuevaLeccion)
   
       setModalLeccionesAbierto(false);
-      location.reload()
 
     } catch (error) {
       console.error("Error al crear una nueva lección", error)
@@ -100,7 +102,7 @@ export default function CajasProvider({ children }) {
 
       setLecciones(prev => prev.filter(l => l._id !== id))
       
-      //if(leccionActiva?._id === id) setLeccionActiva(null)
+      if(leccionActiva?._id === id) setLeccionActiva(null)
 
       setModalLeccionesAbierto(false)
   
