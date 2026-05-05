@@ -16,7 +16,6 @@ export const crearLeccionRequest = async (nuevaLeccion) => {
     if(!res.ok) throw new Error("Error al crear lección.")
     
     const datos = res.json()
-    console.log("Respuesta desde el backend: ", datos)
     return datos
 
 }
@@ -51,5 +50,29 @@ export const deleteLecciones = async (id) =>{
 
     if (!res.ok) throw new Error("Error al eliminar la lección.")
     return res.json()
+
+}
+
+// CARDS
+
+export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
+
+    const token = localStorage.getItem('token')
+    
+    const nuevaTarjeta = await fetch(`${API_URL}/leccion/${leccion_id}`, {
+        method: 'POST',
+        headers:{
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(datosTarjeta)
+
+    })
+
+    if(!nuevaTarjeta.ok) throw new Error("Error al guardar la tarjeta")
+
+    const nuevaTarjetaGuardada = nuevaTarjeta.json()
+    console.log("nueva tarjeta guardada: ", nuevaTarjetaGuardada)
+    return nuevaTarjetaGuardada
 
 }

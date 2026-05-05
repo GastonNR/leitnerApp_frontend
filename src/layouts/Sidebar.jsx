@@ -2,9 +2,11 @@ import React from 'react'
 import "../css/sidebar.css"
 import CountCards from '../components/CountCards'
 import { useCajas } from '../context/cajasContext'
+import { guardarNuevaTarjeta } from '../services/lecciones.service'
 
 export default function Sidebar() {
     const { cajas, setCajas } = useCajas()
+    const { leccionActiva } = useCajas()
 
     function crearNuevaTarjeta(e){
         e.preventDefault()
@@ -25,21 +27,23 @@ export default function Sidebar() {
          
         if (comprobacionCampos === 0) {
 
-            const fechaActual = new Date();
-            const proxima_revision = new Date(fechaActual)
-            proxima_revision.setDate( proxima_revision.getDate() + 1 )
+            //const fechaActual = new Date();
+            //const proxima_revision = new Date(fechaActual)
+            //proxima_revision.setDate( proxima_revision.getDate() + 1 )
 
             const tarjeta = { 
                 pregunta: pregunta,
                 respuesta: respuesta,
-                nivel: 1, 
-                ultima_revision: fechaActual,
-                proxima_revision: proxima_revision
+                //nivel: 1, 
+                //ultima_revision: fechaActual,
+                //proxima_revision: proxima_revision
             }
+
+            const nuevaTarjeta = guardarNuevaTarjeta(leccionActiva._id, tarjeta)
 
             const nuevasCajas = cajas.map((caja, index) => {
                 if (index === 0) {
-                    const tarjetasActualizadas = [...(caja.tarjetas || []), tarjeta]
+                    const tarjetasActualizadas = [...(caja.tarjetas || []), nuevaTarjeta]
                     return { ...caja, tarjetas: tarjetasActualizadas }
 
                 } else {
