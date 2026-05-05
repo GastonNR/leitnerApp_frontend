@@ -8,7 +8,7 @@ export default function Sidebar() {
     const { cajas, setCajas } = useCajas()
     const { leccionActiva } = useCajas()
 
-    function crearNuevaTarjeta(e){
+    async function crearNuevaTarjeta(e){
         e.preventDefault()
 
         const pregunta = document.querySelector('#card-question').value
@@ -27,19 +27,12 @@ export default function Sidebar() {
          
         if (comprobacionCampos === 0) {
 
-            //const fechaActual = new Date();
-            //const proxima_revision = new Date(fechaActual)
-            //proxima_revision.setDate( proxima_revision.getDate() + 1 )
-
             const tarjeta = { 
                 pregunta: pregunta,
                 respuesta: respuesta,
-                //nivel: 1, 
-                //ultima_revision: fechaActual,
-                //proxima_revision: proxima_revision
             }
 
-            const nuevaTarjeta = guardarNuevaTarjeta(leccionActiva._id, tarjeta)
+            const nuevaTarjeta = await guardarNuevaTarjeta(leccionActiva._id, tarjeta)
 
             const nuevasCajas = cajas.map((caja, index) => {
                 if (index === 0) {
@@ -53,7 +46,7 @@ export default function Sidebar() {
             })
 
             setCajas(nuevasCajas)
-            console.log("Nuevas cajas: ", cajas)
+            console.log("Nuevas cajas: ", nuevasCajas)
             
             document.querySelector('#card-question').value = ""
             document.querySelector('#card-answer').value = ""
