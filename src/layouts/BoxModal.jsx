@@ -3,6 +3,7 @@ import CardElement from "../components/CardElement.jsx"
 import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
+    
     const { cajas, setCajas } = useCajas()
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = cajas[indiceCajaNum]?.tarjetas || []

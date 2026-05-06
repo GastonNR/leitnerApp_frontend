@@ -76,3 +76,26 @@ export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
     return nuevaTarjetaGuardada
 
 }
+
+export const eliminarTarjeta = async (tarjeta_id) => {
+
+    const token = localStorage.getItem('token')
+
+    try {
+        const eliminar = await fetch(`${API_URL}/leccion/${tarjeta_id}`, {
+            method: 'DELETE',
+            headers:{
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            }
+    
+        })
+    
+        return eliminar.json()
+           
+    } catch (error) {
+        throw new Error("Error al eliminar la tarjeta")
+        
+    }
+
+}
