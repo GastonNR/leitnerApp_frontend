@@ -46,7 +46,6 @@ export default function Sidebar() {
             })
 
             setCajas(nuevasCajas)
-            console.log("Nuevas cajas: ", nuevasCajas)
             
             document.querySelector('#card-question').value = ""
             document.querySelector('#card-answer').value = ""

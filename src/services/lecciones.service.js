@@ -1,6 +1,8 @@
 
 const API_URL = import.meta.env.VITE_HOME_URL
 
+// MANEJO DE LECCIONES
+
 export const crearLeccionRequest = async (nuevaLeccion) => {
     const token = localStorage.getItem("token")
 
@@ -53,7 +55,7 @@ export const deleteLecciones = async (id) =>{
 
 }
 
-// CARDS
+// MANEJO DE TARJETAS
 
 export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
 
@@ -72,7 +74,7 @@ export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
     if(!nuevaTarjeta.ok) throw new Error("Error al guardar la tarjeta")
 
     const nuevaTarjetaGuardada = nuevaTarjeta.json()
-    console.log("nueva tarjeta guardada: ", nuevaTarjetaGuardada)
+    
     return nuevaTarjetaGuardada
 
 }

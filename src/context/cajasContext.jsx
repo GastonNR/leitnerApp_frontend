@@ -50,7 +50,7 @@ export default function CajasProvider({ children }) {
         const actualizadas = prev.map(l =>
           l.id === leccionActiva.id ? { ...l, cajas } : l
         );
-        //localStorage.setItem("lecciones", JSON.stringify(actualizadas));
+        
         return actualizadas;
       });
 

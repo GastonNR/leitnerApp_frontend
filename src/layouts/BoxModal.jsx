@@ -6,25 +6,21 @@ import "../css/boxModal.css"
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
     
     const { cajas, setCajas } = useCajas()
+    const { leccionActiva } = useCajas()
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = cajas[indiceCajaNum]?.tarjetas || []
 
-    const eliminarTarjeta = (indexAEliminar) => {
+    const eliminarTarjeta = async (indexAEliminar) => {
 
-        console.log("index a eliminar: ", indexAEliminar)
-        console.log("Datos de la tarjeta a eliminar: ", cajaElegida[indexAEliminar])
         const tarjetaId = cajaElegida[indexAEliminar]._id
-        const respuestaTarjetaEliminada = eliminarTarjetaService(tarjetaId)
-
+        const eliminarYActualizar = await eliminarTarjetaService(tarjetaId)
+        
         setCajas(prevCajas => {
-
             const nuevasCajas = [...prevCajas]
-
-            nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter(
-                (_, indexActual) => indexActual !== indexAEliminar
-            )
+            nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId )
 
             return nuevasCajas
+            
         })
 
         setEstiloDisplay(false)
@@ -46,8 +42,9 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
                     <div id="box-cards-container" className="box-card-container">
                         {cajaElegida.length > 0 ? 
                             cajaElegida.map((tarjeta, index) => (                                
-                                <CardElement 
-                                    key={`${indiceCajaNum}-${index}`} 
+                                <CardElement
+                                    key={tarjeta._id} 
+                                    //key={`${indiceCajaNum}-${index}`} 
                                     pregunta={tarjeta.pregunta} 
                                     respuesta={tarjeta.respuesta} 
                                     proxima_revision={tarjeta.proxima_revision} 
