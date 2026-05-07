@@ -1,5 +1,6 @@
 import { useCajas } from "../context/cajasContext"
 import CardElement from "../components/CardElement.jsx"
+import { eliminarTarjetaService } from "../services/lecciones.service.js"
 import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
@@ -9,14 +10,25 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
     const cajaElegida = cajas[indiceCajaNum]?.tarjetas || []
 
     const eliminarTarjeta = (indexAEliminar) => {
+
+        console.log("index a eliminar: ", indexAEliminar)
+        console.log("Datos de la tarjeta a eliminar: ", cajaElegida[indexAEliminar])
+        const tarjetaId = cajaElegida[indexAEliminar]._id
+        const respuestaTarjetaEliminada = eliminarTarjetaService(tarjetaId)
+
         setCajas(prevCajas => {
+
             const nuevasCajas = [...prevCajas]
+
             nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter(
                 (_, indexActual) => indexActual !== indexAEliminar
             )
+
             return nuevasCajas
         })
+
         setEstiloDisplay(false)
+
     }
 
     return (

@@ -77,12 +77,12 @@ export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
 
 }
 
-export const eliminarTarjeta = async (tarjeta_id) => {
+export const eliminarTarjetaService = async (tarjetaId) => {
 
     const token = localStorage.getItem('token')
 
     try {
-        const eliminar = await fetch(`${API_URL}/leccion/${tarjeta_id}`, {
+        const eliminar = await fetch(`${API_URL}/leccion/${tarjetaId}`, {
             method: 'DELETE',
             headers:{
                 'Content-type': 'application/json',
