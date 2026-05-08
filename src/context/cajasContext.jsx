@@ -45,10 +45,12 @@ export default function CajasProvider({ children }) {
 
   // Sincronizar cajas con la lección activa cuando cambian
   useEffect(() => {
+
     if (leccionActiva && cajas.length === 5) {
+
       setLecciones(prev => {
         const actualizadas = prev.map(l =>
-          l.id === leccionActiva.id ? { ...l, cajas } : l
+          l._id === leccionActiva._id ? { ...l, cajas } : l
         );
         
         return actualizadas;
@@ -100,8 +102,8 @@ export default function CajasProvider({ children }) {
   // Cambiar a una lección existente
   const cambiarLeccion = (leccion) => {
 
-    setLeccionActiva({ id: leccion._id, nombre: leccion.nombre });
-    setCajas(leccion.cajas);
+    setLeccionActiva(leccion)
+    setCajas(leccion.cajas)
 
     setModalLeccionesAbierto(false);
 
