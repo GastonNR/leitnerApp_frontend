@@ -1,16 +1,16 @@
 
 const API_URL = import.meta.env.VITE_HOME_URL
+const TOKEN = localStorage.getItem('token')
 
 // MANEJO DE LECCIONES
 
 export const crearLeccionRequest = async (nuevaLeccion) => {
-    const token = localStorage.getItem("token")
 
     const res = await fetch(`${API_URL}/leccion`, {
         method: "POST",
         headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${TOKEN}`
         },
         body: JSON.stringify({ nuevaLeccion })
     })
@@ -23,12 +23,11 @@ export const crearLeccionRequest = async (nuevaLeccion) => {
 }
 
 export const getLecciones = async () => {
-    const token = localStorage.getItem("token")
 
     const res = await fetch(`${API_URL}/`, {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${TOKEN}`
         }
 
     })
@@ -55,17 +54,39 @@ export const deleteLecciones = async (id) =>{
 
 }
 
+export const guardarLeccion = async (leccion) => {
+
+    const leccionId = leccion._id
+    
+    try {
+      const res = await fetch(`${import.meta.env.VITE_HOME_URL}/${leccionId}`, {
+        method: 'PUT',
+        headers: {
+          "Authorization": `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        "body": JSON.stringify(leccion)
+      })
+
+      if(!res.ok) throw new Error("Error al guardar la lección")
+      const data = await res.json()
+      console.log("Datos guardados: ", data)
+
+    } catch (error) {
+      console.error("Error al guardar los datos de las cajas: ", error)
+    }
+
+}
+
 // MANEJO DE TARJETAS
 
 export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
-
-    const token = localStorage.getItem('token')
     
     const nuevaTarjeta = await fetch(`${API_URL}/leccion/${leccion_id}`, {
         method: 'POST',
         headers:{
             'Content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${TOKEN}`,
         },
         body: JSON.stringify(datosTarjeta)
 
@@ -81,14 +102,12 @@ export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
 
 export const eliminarTarjetaService = async (tarjetaId) => {
 
-    const token = localStorage.getItem('token')
-
     try {
         const eliminar = await fetch(`${API_URL}/leccion/${tarjetaId}`, {
             method: 'DELETE',
             headers:{
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${TOKEN}`,
             }
     
         })
