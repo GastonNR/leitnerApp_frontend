@@ -5,7 +5,7 @@ const CajasContext = createContext();
 
 export default function CajasProvider({ children }) {
 
-  const [cajas, setCajas] = useState([]);
+  //const [cajas, setCajas] = useState([]);
   const [tarjetasDeHoy, setTarjetasDeHoy] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,34 +39,34 @@ export default function CajasProvider({ children }) {
   }, [])
 
   // Cargar cajas
-  useEffect(()=>{
-    if(leccionActiva?.cajas) setCajas(leccionActiva.cajas)
-  }, [leccionActiva])
+  //useEffect(()=>{
+  //  if(leccionActiva?.cajas) setCajas(leccionActiva.cajas)
+  //}, [leccionActiva])
 
   // Sincronizar cajas con la lección activa cuando cambian
-  useEffect(() => {
-
-    if (leccionActiva && cajas.length === 5) {
-
-      setLecciones(prev => {
-        const actualizadas = prev.map(l =>
-          l._id === leccionActiva._id ? { ...l, cajas } : l
-        );
-        
-        return actualizadas;
-      });
-
-    }
-
-  }, [cajas]);
+  //useEffect(() => {
+//
+  //  if (leccionActiva && cajas.length === 5) {
+//
+  //    setLecciones(prev => {
+  //      const actualizadas = prev.map(l =>
+  //        l._id === leccionActiva._id ? { ...l, cajas } : l
+  //      );
+  //      
+  //      return actualizadas;
+  //    });
+//
+  //  }
+//
+  //}, [cajas]);
 
   //Carga las tarjetas del día.
   useEffect(() => {
 
-    if (cajas.length === 5) {
+    if (leccionActiva?.cajas?.length === 5) {
 
       const hoy = new Date().toISOString().slice(0, 10)
-      const todasLasTarjetas = cajas.flatMap(caja => caja.tarjetas || [])
+      const todasLasTarjetas = leccionActiva.cajas.flatMap(caja => caja.tarjetas || [])
 
       const tarjetasHoy = todasLasTarjetas.filter((tarjeta) => {
         if (!tarjeta.proxima_revision) return false
@@ -78,7 +78,7 @@ export default function CajasProvider({ children }) {
 
     }
 
-  }, [cajas]);
+  }, [leccionActiva?.cajas]);
 
   // Crear nueva lección
   const crearLeccion = async (nombre) => {
@@ -103,7 +103,7 @@ export default function CajasProvider({ children }) {
   const cambiarLeccion = (leccion) => {
 
     setLeccionActiva(leccion)
-    setCajas(leccion.cajas)
+    //setCajas(leccion.cajas)
 
     setModalLeccionesAbierto(false);
 
@@ -132,10 +132,13 @@ export default function CajasProvider({ children }) {
 
   return (
     <CajasContext.Provider value={{
-      cajas, setCajas,
+      //cajas,
+      //setCajas,
       tarjetasDeHoy,
       lecciones,
+      setLecciones,
       leccionActiva,
+      setLeccionActiva,
       crearLeccion,
       cambiarLeccion,
       eliminarLeccion,

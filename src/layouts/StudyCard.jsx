@@ -3,7 +3,8 @@ import "../css/studyCard.css"
 import { useCajas } from '../context/cajasContext'
 
 export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }) {
-    const {cajas, setCajas} = useCajas()
+    
+    const { leccionActiva, setLeccionActiva } = useCajas()
     const [flipped, setFlipped] = useState(false)
 
     const handleFlipped = () => {
@@ -15,54 +16,45 @@ export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarj
 
         if (boton !== 'btn-correct' && boton !== 'btn-incorrect') return
 
-        console.log("Datos de tarjeta actual: ", tarjeta)
+        if(boton === 'btn-correct') {
 
+            setLeccionActiva(prevLeccionActiva => {
+                const cajasActualizadas = [...prevLeccionActiva.cajas]
+
+                cajasActualizadas[0].tarjetas = cajasActualizadas[0].tarjetas.map( t => {
+                    if(t._id === tarjeta._id) t.es_correcta = true
+                    return t
+                })
+                
+                return {
+                    ...prevLeccionActiva,
+                    cajas: cajasActualizadas
+                }
+            })
+
+        } else if(boton === 'btn-incorrect') {
+            setLeccionActiva(prevLeccionActiva => {
+
+                const cajasActualizadas = [...prevLeccionActiva.cajas]
+
+                cajasActualizadas[0].tarjetas = cajasActualizadas[0].tarjetas.map(t => {
+                    if(t._id === tarjeta._id) t.es_correcta = false
+                    return t
+                })
+
+                return {
+                    ...prevLeccionActiva,
+                    cajas: cajasActualizadas
+                }
+
+            })
+        } else {
+            return
+        }
         
-        //setCajas(prevCajas => {
-        //    
-        //    const nuevasCajas = prevCajas.map(caja => ({ ...caja, tarjetas: [...caja.tarjetas] }))
-//
-        //    let cajaActualIndex = -1
-        //    let tarjetaPos = -1
-//
-        //    for (let i = 0; i < nuevasCajas.length; i++) {
-        //        tarjetaPos = nuevasCajas[i].tarjetas.findIndex(t => {
-        //        return (t._id && tarjeta._id) ? t._id === tarjeta._id : t.pregunta === tarjeta.pregunta
-        //        });
-//
-        //        if (tarjetaPos !== -1) { cajaActualIndex = i; break; }
-        //    }
-//
-        //    if (cajaActualIndex === -1) return prevCajas
-//
-        //    const tarjetaOriginal = nuevasCajas[cajaActualIndex].tarjetas[tarjetaPos]
-        //    const tarjetaActualizada = { ...tarjetaOriginal }
-        //    nuevasCajas[cajaActualIndex].tarjetas.splice(tarjetaPos, 1)
-//
-        //    if (boton === 'btn-correct') {
-        //        tarjetaActualizada.nivel = (tarjetaActualizada.nivel || 0) + 1
-        //        if (tarjetaActualizada.nivel > 5) tarjetaActualizada.nivel  = 5
-        //    } else {
-        //        tarjetaActualizada.nivel = 1
-        //    }
-//
-        //    tarjetaActualizada.ultima_revision = new Date().toISOString();
-//
-        //    const diasPorNivel = { 1: 1, 2: 3, 3: 7, 4: 14, 5: 30 }
-        //    const dias = diasPorNivel[tarjetaActualizada.nivel] ?? 30
-        //    tarjetaActualizada.proxima_revision = new Date(Date.now() + dias * 24 * 60 * 60 * 1000).toISOString();
-//
-        //    const nuevaCajaIndex = (boton === 'btn-correct') ? Math.min(cajaActualIndex + 1, nuevasCajas.length - 1) : 0
-//
-        //    nuevasCajas[nuevaCajaIndex].tarjetas.push(tarjetaActualizada);
-//
-        //    return nuevasCajas;
-        //});
-
         handlerIndex();
 
-        //console.log('nuevas cajas: ', cajas)
-    };
+    }
 
 
     const handlerIndex = () => {

@@ -59,7 +59,7 @@ export const guardarLeccion = async (leccion) => {
     const leccionId = leccion._id
     
     try {
-      const res = await fetch(`${import.meta.env.VITE_HOME_URL}/${leccionId}`, {
+      const res = await fetch(`${API_URL}/leccion/${leccionId}`, {
         method: 'PUT',
         headers: {
           "Authorization": `Bearer ${TOKEN}`,
@@ -69,8 +69,10 @@ export const guardarLeccion = async (leccion) => {
       })
 
       if(!res.ok) throw new Error("Error al guardar la lección")
-      const data = await res.json()
-      console.log("Datos guardados: ", data)
+      const leccionActualizada = await res.json()
+      console.log("Lección actualizada: ", leccionActualizada)
+
+      return leccionActualizada
 
     } catch (error) {
       console.error("Error al guardar los datos de las cajas: ", error)
@@ -81,6 +83,9 @@ export const guardarLeccion = async (leccion) => {
 // MANEJO DE TARJETAS
 
 export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
+
+    console.log("leccion_id: ", leccion_id)
+    console.log("datos tarjeta: ", datosTarjeta)
     
     const nuevaTarjeta = await fetch(`${API_URL}/leccion/${leccion_id}`, {
         method: 'POST',

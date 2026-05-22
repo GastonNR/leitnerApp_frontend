@@ -5,23 +5,29 @@ import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
     
-    const { cajas, setCajas } = useCajas()
-    const { leccionActiva } = useCajas()
+    //const { cajas, setCajas } = useCajas()
+    const { leccionActiva, setLeccionActiva } = useCajas()
     const indiceCajaNum = Number(indiceCaja) - 1
-    const cajaElegida = cajas[indiceCajaNum]?.tarjetas || []
+    const cajaElegida = leccionActiva.cajas[indiceCajaNum]?.tarjetas || []
 
     const eliminarTarjeta = async (indexAEliminar) => {
 
         const tarjetaId = cajaElegida[indexAEliminar]._id
         const eliminarYActualizar = await eliminarTarjetaService(tarjetaId)
         
-        setCajas(prevCajas => {
-            const nuevasCajas = [...prevCajas]
-            nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId )
-
+        setLeccionActiva(prevLeccionActiva => {
+            const nuevasCajas = [...leccionActiva.cajas]
+            nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId)
             return nuevasCajas
-            
         })
+
+        //setCajas(prevCajas => {
+        //    const nuevasCajas = [...prevCajas]
+        //    nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId )
+//
+        //    return nuevasCajas
+        //    
+        //})
 
         setEstiloDisplay(false)
 

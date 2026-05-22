@@ -4,12 +4,13 @@ import StudyCard from './StudyCard'
 import { useCajas } from '../context/cajasContext'
 
 export default function Study_mode() {
-    const {cajas} = useCajas()
+    const { leccionActiva } = useCajas()
+    //const {cajas} = useCajas()
     const [tarjetaIndex, setTarjetaIndex] = useState(0)
     
-    useEffect(()=>{
-
-    }, [cajas])
+    //useEffect(()=>{
+//
+    //}, [cajas])
 
   return (
     <div id="study-container" className="study-container">
@@ -21,8 +22,8 @@ export default function Study_mode() {
             </div>
         </div>
         {
-            cajas[0]?.tarjetas?.length > 0 ?
-                <StudyCard cantTarjetas={cajas[0].tarjetas.length} tarjeta={cajas[0].tarjetas[tarjetaIndex]} tarjetaIndex={tarjetaIndex} setTarjetaIndex={setTarjetaIndex} />
+            leccionActiva.cajas[0]?.tarjetas?.length > 0 ?
+                <StudyCard cantTarjetas={leccionActiva.cajas[0].tarjetas.length} tarjeta={leccionActiva.cajas[0].tarjetas[tarjetaIndex]} tarjetaIndex={tarjetaIndex} setTarjetaIndex={setTarjetaIndex} />
             :
             <div id="study-empty" className="study-empty">
                 <svg xmlns="http://www.w3.org/2000/svg" className="img_libro" fill="none" viewBox="0 0 24 24" stroke="currentColor">
