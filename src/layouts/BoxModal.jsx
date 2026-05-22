@@ -5,7 +5,6 @@ import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
     
-    //const { cajas, setCajas } = useCajas()
     const { leccionActiva, setLeccionActiva } = useCajas()
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva.cajas[indiceCajaNum]?.tarjetas || []
@@ -20,14 +19,6 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
             nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId)
             return nuevasCajas
         })
-
-        //setCajas(prevCajas => {
-        //    const nuevasCajas = [...prevCajas]
-        //    nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId )
-//
-        //    return nuevasCajas
-        //    
-        //})
 
         setEstiloDisplay(false)
 

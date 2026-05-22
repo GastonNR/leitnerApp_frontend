@@ -5,7 +5,6 @@ const CajasContext = createContext();
 
 export default function CajasProvider({ children }) {
 
-  //const [cajas, setCajas] = useState([]);
   const [tarjetasDeHoy, setTarjetasDeHoy] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,28 +36,6 @@ export default function CajasProvider({ children }) {
       traerLeccionesDB()
 
   }, [])
-
-  // Cargar cajas
-  //useEffect(()=>{
-  //  if(leccionActiva?.cajas) setCajas(leccionActiva.cajas)
-  //}, [leccionActiva])
-
-  // Sincronizar cajas con la lección activa cuando cambian
-  //useEffect(() => {
-//
-  //  if (leccionActiva && cajas.length === 5) {
-//
-  //    setLecciones(prev => {
-  //      const actualizadas = prev.map(l =>
-  //        l._id === leccionActiva._id ? { ...l, cajas } : l
-  //      );
-  //      
-  //      return actualizadas;
-  //    });
-//
-  //  }
-//
-  //}, [cajas]);
 
   //Carga las tarjetas del día.
   useEffect(() => {
@@ -132,8 +109,6 @@ export default function CajasProvider({ children }) {
 
   return (
     <CajasContext.Provider value={{
-      //cajas,
-      //setCajas,
       tarjetasDeHoy,
       lecciones,
       setLecciones,

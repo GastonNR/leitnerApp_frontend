@@ -5,24 +5,21 @@ import LeccionesModal from './LeccionesModal'
 import { guardarLeccion } from '../services/lecciones.service'
 
 export default function Header() {
-  const { cajas, leccionActiva, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useCajas()
+  const { leccionActiva, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useCajas()
 
   async function logout() {
     localStorage.removeItem("token")
     localStorage.removeItem("id")
-    //localStorage.removeItem("leccionActiva")
-    //localStorage.removeItem("lecciones")
     localStorage.removeItem("nombre_usuario")
     window.location.href = '/'
   }
 
   async function guardar() {
-    console.log("leccion activa: ", leccionActiva)
-    //const leccion = leccionActiva
-    //const leccionActualizada = await guardarLeccion(leccion)
-//
-    //if(leccionActualizada) alert("Lección guardada.")
-    //setLeccionActiva(leccionActualizada)
+    const leccion = leccionActiva
+    const leccionActualizada = await guardarLeccion(leccion)
+
+    if(leccionActualizada) alert("Lección guardada.")
+    setLeccionActiva(leccionActualizada)
     
   }
 
