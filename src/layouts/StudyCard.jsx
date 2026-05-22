@@ -4,7 +4,7 @@ import { useCajas } from '../context/cajasContext'
 
 export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }) {
     
-    const { leccionActiva, setLeccionActiva } = useCajas()
+    const {leccionActiva, setLeccionActiva} = useCajas()
     const [flipped, setFlipped] = useState(false)
 
     const handleFlipped = () => {

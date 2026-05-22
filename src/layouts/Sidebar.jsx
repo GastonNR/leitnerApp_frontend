@@ -5,7 +5,7 @@ import { useCajas } from '../context/cajasContext'
 import { guardarNuevaTarjeta } from '../services/lecciones.service'
 
 export default function Sidebar() {
-    //const { cajas, setCajas } = useCajas()
+    
     const { leccionActiva, setLeccionActiva, setLecciones } = useCajas()
 
     async function crearNuevaTarjeta(e){
@@ -57,7 +57,6 @@ export default function Sidebar() {
 
                 return actualizada
             })
-            //setCajas(nuevasCajas)
             
             document.querySelector('#card-question').value = ""
             document.querySelector('#card-answer').value = ""
