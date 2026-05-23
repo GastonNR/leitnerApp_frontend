@@ -28,22 +28,22 @@ export default function CajasProvider({ children }) {
           const idGuardado = localStorage.getItem("leccion_activa")
           const existeLeccion = leccionesEncontradas.some(l => l._id === idGuardado)
           const idInicial = existeLeccion ? idGuardado : leccionesEncontradas[0]._id
-          
+
           setLeccionActivaId(idInicial)
           localStorage.setItem("leccion_activa", idInicial)
         }
-        
-          
-        } catch (error) {
-          console.error("Error al traer las lecciones", error)
-          
-        } finally {
-          setLoading(false);
-          
-        }
+
+
+      } catch (error) {
+        console.error("Error al traer las lecciones", error)
+
+      } finally {
+        setLoading(false);
+
       }
-      
-      traerLeccionesDB()
+    }
+
+    traerLeccionesDB()
 
   }, [])
 
@@ -52,20 +52,59 @@ export default function CajasProvider({ children }) {
 
     if (leccionActiva?.cajas?.length === 5) {
 
-      const hoy = new Date().toISOString().slice(0, 10)
-      const todasLasTarjetas = leccionActiva.cajas.flatMap(caja => caja.tarjetas || [])
+      const hoy = new Date().toLocaleDateString('sv-SE')
+
+      const todasLasTarjetas = leccionActiva.cajas.flatMap(
+        caja => caja.tarjetas || []
+      )
 
       const tarjetasHoy = todasLasTarjetas.filter((tarjeta) => {
+
         if (!tarjeta.proxima_revision) return false
-        const fechaRevision = new Date(tarjeta.proxima_revision).toISOString().slice(0, 10)
-        return fechaRevision === hoy
+
+        const fechaRevision = new Date(
+          tarjeta.proxima_revision
+        ).toLocaleDateString('sv-SE')
+
+        return fechaRevision <= hoy
       })
 
-      setTarjetasDeHoy(tarjetasHoy)
+      if (tarjetasHoy.length > 0) {
 
+        setTarjetasDeHoy(tarjetasHoy)
+
+      } else {
+
+        const tarjetasCaja1 =
+          leccionActiva.cajas[0]?.tarjetas || []
+
+        setTarjetasDeHoy(tarjetasCaja1)
+      }
     }
 
-  }, [leccionActiva?.cajas]);
+  }, [leccionActiva])
+  //useEffect(() => {
+  //  console.log("leccion activa: ", leccionActiva)
+  //  if (leccionActiva?.cajas?.length === 5) {
+  //
+  //    const hoy = new Date().toLocaleDateString('sv-SE')
+  //    console.log("hoy: ", hoy)
+  //    //const hoy = new Date().toISOString().slice(0, 10)
+  //    const todasLasTarjetas = leccionActiva.cajas.flatMap(caja => caja.tarjetas || [])
+  //    console.log("todas las tarjetas: ", todasLasTarjetas)
+  //    const tarjetasHoy = todasLasTarjetas.filter((tarjeta) => {
+  //      if (!tarjeta.proxima_revision) return false
+  //      const fechaRevision = new Date(tarjeta.proxima_revision).toLocaleDateString('sv-SE')
+  //      console.log("comparando: ", fechaRevision, hoy)
+  //      //const fechaRevision = new Date(tarjeta.proxima_revision).toISOString().slice(0, 10)
+  //      return fechaRevision === hoy
+  //    })
+  //    console.log("tarjetas de hoy: ", tarjetasDeHoy)
+  //    setTarjetasDeHoy(tarjetasHoy)
+  //
+  //  }
+  //
+  //}, [leccionActiva]);
 
   // Crear nueva lección
   const crearLeccion = async (nombre) => {
@@ -93,7 +132,7 @@ export default function CajasProvider({ children }) {
 
     setLeccionActivaId(leccionId)
     localStorage.setItem("leccion_activa", leccionId)
-    
+
     setModalLeccionesAbierto(false);
 
   }
@@ -107,17 +146,17 @@ export default function CajasProvider({ children }) {
       const nuevasLecciones = lecciones.filter(l => l._id !== id)
       setLecciones(nuevasLecciones)
 
-      if (leccionActivaId === id){
+      if (leccionActivaId === id) {
         const nuevaLeccionActiva = nuevasLecciones[0]?._id || null
         setLeccionActivaId(nuevaLeccionActiva)
 
-        if(!nuevaLeccionActiva){
+        if (!nuevaLeccionActiva) {
           localStorage.setItem("leccion_activa", nuevaLeccionActiva)
         } else {
           localStorage.removeItem("leccion_activa")
         }
 
-      } 
+      }
 
       setModalLeccionesAbierto(false)
 

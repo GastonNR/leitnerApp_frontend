@@ -5,7 +5,8 @@ import { useCajas } from '../context/cajasContext'
 
 export default function Study_mode() {
 
-    const {leccionActiva} = useCajas()
+    //const {leccionActiva} = useCajas()
+    const {tarjetasDeHoy} = useCajas()
     const [tarjetaIndex, setTarjetaIndex] = useState(0)
 
     return (
@@ -18,12 +19,28 @@ export default function Study_mode() {
                 </div>
             </div>
             {
-                (leccionActiva.cajas[0]?.tarjetas?.length > 0 && tarjetaIndex >= 0) ?
-                    <StudyCard cantTarjetas={leccionActiva.cajas[0].tarjetas.length} tarjeta={leccionActiva.cajas[0].tarjetas[tarjetaIndex]} tarjetaIndex={tarjetaIndex} setTarjetaIndex={setTarjetaIndex} />
+                (tarjetasDeHoy.length > 0 && tarjetaIndex >= 0) ?
+                    <StudyCard
+                        cantTarjetas={tarjetasDeHoy.length}
+                        tarjeta={tarjetasDeHoy[tarjetaIndex]}
+                        tarjetaIndex={tarjetaIndex}
+                        setTarjetaIndex={setTarjetaIndex}
+                    />
                     :
                     <div id="study-empty" className="study-empty">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="img_libro" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            className="img_libro" fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                        >
+                            <path 
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2" 
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                            ></path>
                         </svg>
                         <h3 className="texto-study-empty">No hay más tarjetas para estudiar hoy</h3>
                         <p className="parr-study-empty">Crea nuevas tarjetas o espera hasta mañana para continuar estudiando.</p>
