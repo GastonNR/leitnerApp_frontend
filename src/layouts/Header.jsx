@@ -3,14 +3,14 @@ import "../css/header.css"
 import { useCajas } from '../context/cajasContext'
 import LeccionesModal from './LeccionesModal'
 import { guardarLeccion } from '../services/lecciones.service'
+import { useAuth } from '../context/AuthContext'
 
 export default function Header() {
   const { leccionActivaId, leccionActiva, setLecciones, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useCajas()
-
-  async function logout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("id")
-    localStorage.removeItem("nombre_usuario")
+  const {logout} = useAuth()
+  
+  async function cerrarSesion() {
+    logout()
     window.location.href = '/'
   }
 
@@ -53,7 +53,7 @@ export default function Header() {
                       Lecciones
                   </button>
                   <button className="logout-btn" onClick={guardar}>Guardar</button>
-                  <button className="logout-btn" onClick={logout}>Cerrar sesión</button>
+                  <button className="logout-btn" onClick={cerrarSesion}>Cerrar sesión</button>
               </div>
           </div>
       </header>

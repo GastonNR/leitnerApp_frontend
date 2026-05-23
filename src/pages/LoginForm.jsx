@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
 import "../css/auth.css"
+import { useAuth } from '../context/AuthContext'
 
-export default function Login() {
-    async function login() {
+export default function LoginForm() {
+
+    const {login} = useAuth()
+    async function validar() {
         const email = document.querySelector('#email').value.trim()
         const password = document.querySelector('#password').value.trim()
 
@@ -18,30 +21,8 @@ export default function Login() {
         if(camposValidos === 0) {
             const datos = {email: email, password: password}
 
-            try {
-                const res = await fetch(import.meta.env.VITE_LOGIN_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(datos)
-                })
-                const resultado = await res.json()
-                console.log(resultado)
-                if(res.ok){
-                    localStorage.setItem("token", resultado.token)
-                    localStorage.setItem("nombre_usuario", resultado.usuario.nombre)
-                    localStorage.setItem("id", resultado.usuario.id)
-                    window.location.href = "/home"
-                } else {
-                    alert( resultado.mensaje || "Credenciales inválidas")
-                }
-
-            } catch (error) {
-                console.log("Error al logear al usuario: ", error)
-
-            }
-
+            const respuesta = await login(datos)
+            if(respuesta) window.location.href = "/home"
         }
     }
   
@@ -64,7 +45,7 @@ export default function Login() {
                     <p id='pass_login' className='p_campo_invalido'>Campo inválido</p>
                 </div>
                 <div>
-                    <button type="button" className="btn_submit" onClick={login}>Iniciar sesión</button>
+                    <button type="button" className="btn_submit" onClick={validar}>Iniciar sesión</button>
                 </div>
             </form>
             

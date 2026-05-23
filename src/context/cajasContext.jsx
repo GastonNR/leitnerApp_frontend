@@ -83,28 +83,6 @@ export default function CajasProvider({ children }) {
     }
 
   }, [leccionActiva])
-  //useEffect(() => {
-  //  console.log("leccion activa: ", leccionActiva)
-  //  if (leccionActiva?.cajas?.length === 5) {
-  //
-  //    const hoy = new Date().toLocaleDateString('sv-SE')
-  //    console.log("hoy: ", hoy)
-  //    //const hoy = new Date().toISOString().slice(0, 10)
-  //    const todasLasTarjetas = leccionActiva.cajas.flatMap(caja => caja.tarjetas || [])
-  //    console.log("todas las tarjetas: ", todasLasTarjetas)
-  //    const tarjetasHoy = todasLasTarjetas.filter((tarjeta) => {
-  //      if (!tarjeta.proxima_revision) return false
-  //      const fechaRevision = new Date(tarjeta.proxima_revision).toLocaleDateString('sv-SE')
-  //      console.log("comparando: ", fechaRevision, hoy)
-  //      //const fechaRevision = new Date(tarjeta.proxima_revision).toISOString().slice(0, 10)
-  //      return fechaRevision === hoy
-  //    })
-  //    console.log("tarjetas de hoy: ", tarjetasDeHoy)
-  //    setTarjetasDeHoy(tarjetasHoy)
-  //
-  //  }
-  //
-  //}, [leccionActiva]);
 
   // Crear nueva lección
   const crearLeccion = async (nombre) => {
