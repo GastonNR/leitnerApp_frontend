@@ -79,7 +79,7 @@ export default function LeccionesModal() {
                                         <li
                                             key={leccion._id}
                                             className={`lm-item ${estaActiva ? "lm-item--active" : ""}`}
-                                            onClick={() => cambiarLeccion(leccion)}
+                                            onClick={() => cambiarLeccion(leccion._id)}
                                         >
                                             <div className="lm-item-info">
                                                 <span className="lm-item-nombre">{leccion.nombre}</span>

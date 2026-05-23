@@ -83,9 +83,6 @@ export const guardarLeccion = async (leccion) => {
 // MANEJO DE TARJETAS
 
 export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
-
-    console.log("leccion_id: ", leccion_id)
-    console.log("datos tarjeta: ", datosTarjeta)
     
     const nuevaTarjeta = await fetch(`${API_URL}/leccion/${leccion_id}`, {
         method: 'POST',

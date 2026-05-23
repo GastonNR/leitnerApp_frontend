@@ -5,7 +5,7 @@ import LeccionesModal from './LeccionesModal'
 import { guardarLeccion } from '../services/lecciones.service'
 
 export default function Header() {
-  const { leccionActiva, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useCajas()
+  const { leccionActivaId, leccionActiva, setLecciones, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useCajas()
 
   async function logout() {
     localStorage.removeItem("token")
@@ -19,9 +19,25 @@ export default function Header() {
     const leccionActualizada = await guardarLeccion(leccion)
 
     if(leccionActualizada) alert("Lección guardada.")
-    setLeccionActiva(leccionActualizada)
+    
+    setLecciones(prev => 
+      prev.map(leccion => {
+        if(leccion._id !== leccionActivaId) return leccion
+        return leccionActualizada
+      })
+    )
+    //setLeccionActiva(leccionActualizada)
     
   }
+
+  //async function guardar() {
+  //  const leccion = leccionActiva
+  //  const leccionActualizada = await guardarLeccion(leccion)
+//
+  //  if(leccionActualizada) alert("Lección guardada.")
+  //  setLeccionActiva(leccionActualizada)
+  //  
+  //}
 
   return (
     <>

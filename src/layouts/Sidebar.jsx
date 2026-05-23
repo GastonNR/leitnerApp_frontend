@@ -6,7 +6,7 @@ import { guardarNuevaTarjeta } from '../services/lecciones.service'
 
 export default function Sidebar() {
     
-    const { leccionActiva, setLeccionActiva, setLecciones } = useCajas()
+    const { leccionActiva, setLeccionActiva, leccionActivaId, setLecciones } = useCajas()
 
     async function crearNuevaTarjeta(e){
         e.preventDefault()
@@ -46,17 +46,19 @@ export default function Sidebar() {
                 }
             })
             
-            setLeccionActiva(prev => {
+            setLecciones(prevLecciones => 
+                prevLecciones.map(leccion => {
+                    if(leccion._id !== leccionActivaId) return leccion
 
-                const actualizada = {
-                    ...prev,
-                    cajas: nuevasCajas
-                }
+                    const leccionActualizada = {
+                        ...leccion,
+                        cajas: nuevasCajas
+                    }
 
-                setLecciones(prevLecciones => prevLecciones.map( l => l._id === actualizada._id ? actualizada : l ))
+                    return leccionActualizada
+                })
 
-                return actualizada
-            })
+            )
             
             document.querySelector('#card-question').value = ""
             document.querySelector('#card-answer').value = ""

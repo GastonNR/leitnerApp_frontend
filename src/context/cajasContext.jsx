@@ -10,7 +10,8 @@ export default function CajasProvider({ children }) {
 
   // Manejo de lecciones
   const [lecciones, setLecciones] = useState([]); // [{ id, nombre, cajas }]
-  const [leccionActiva, setLeccionActiva] = useState(null); // { id, nombre }
+  const [leccionActivaId, setLeccionActivaId] = useState(localStorage.getItem("leccion_activa") || null) // 'id'
+  const leccionActiva = lecciones.find(l => l._id === leccionActivaId)
 
   // Modal de lecciones
   const [modalLeccionesAbierto, setModalLeccionesAbierto] = useState(false);
@@ -21,8 +22,17 @@ export default function CajasProvider({ children }) {
       try {
         const leccionesEncontradas = await getLecciones()
 
-        if (leccionesEncontradas) setLecciones(leccionesEncontradas)
-        if (!leccionActiva) setLeccionActiva(leccionesEncontradas[0] || "null")
+        if (leccionesEncontradas?.length > 0) {
+          setLecciones(leccionesEncontradas)
+
+          const idGuardado = localStorage.getItem("leccion_activa")
+          const existeLeccion = leccionesEncontradas.some(l => l._id === idGuardado)
+          const idInicial = existeLeccion ? idGuardado : leccionesEncontradas[0]._id
+          
+          setLeccionActivaId(idInicial)
+          localStorage.setItem("leccion_activa", idInicial)
+        }
+        
           
         } catch (error) {
           console.error("Error al traer las lecciones", error)
@@ -65,7 +75,9 @@ export default function CajasProvider({ children }) {
       const nuevaLeccion = await crearLeccionRequest(nombreNuevaLeccion)
 
       setLecciones(prev => [...prev, nuevaLeccion])
-      setLeccionActiva(nuevaLeccion)
+      setLeccionActivaId(nuevaLeccion._id)
+
+      localStorage.setItem("leccion_activa", nuevaLeccion._id)
 
       setModalLeccionesAbierto(false);
 
@@ -77,11 +89,11 @@ export default function CajasProvider({ children }) {
   }
 
   // Cambiar a una lección existente
-  const cambiarLeccion = (leccion) => {
+  const cambiarLeccion = (leccionId) => {
 
-    setLeccionActiva(leccion)
-    //setCajas(leccion.cajas)
-
+    setLeccionActivaId(leccionId)
+    localStorage.setItem("leccion_activa", leccionId)
+    
     setModalLeccionesAbierto(false);
 
   }
@@ -90,14 +102,24 @@ export default function CajasProvider({ children }) {
   const eliminarLeccion = async (id) => {
 
     try {
-      const res = await deleteLecciones(id)
+      await deleteLecciones(id)
 
-      setLecciones(prev => prev.filter(l => l._id !== id))
+      const nuevasLecciones = lecciones.filter(l => l._id !== id)
+      setLecciones(nuevasLecciones)
 
-      if (leccionActiva?._id === id) setLeccionActiva(null)
+      if (leccionActivaId === id){
+        const nuevaLeccionActiva = nuevasLecciones[0]?._id || null
+        setLeccionActivaId(nuevaLeccionActiva)
+
+        if(!nuevaLeccionActiva){
+          localStorage.setItem("leccion_activa", nuevaLeccionActiva)
+        } else {
+          localStorage.removeItem("leccion_activa")
+        }
+
+      } 
 
       setModalLeccionesAbierto(false)
-
 
     } catch (error) {
       console.error("Error eliminando: ", error)
@@ -113,7 +135,8 @@ export default function CajasProvider({ children }) {
       lecciones,
       setLecciones,
       leccionActiva,
-      setLeccionActiva,
+      leccionActivaId,
+      setLeccionActivaId,
       crearLeccion,
       cambiarLeccion,
       eliminarLeccion,
