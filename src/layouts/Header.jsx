@@ -26,18 +26,8 @@ export default function Header() {
         return leccionActualizada
       })
     )
-    //setLeccionActiva(leccionActualizada)
     
   }
-
-  //async function guardar() {
-  //  const leccion = leccionActiva
-  //  const leccionActualizada = await guardarLeccion(leccion)
-//
-  //  if(leccionActualizada) alert("Lección guardada.")
-  //  setLeccionActiva(leccionActualizada)
-  //  
-  //}
 
   return (
     <>

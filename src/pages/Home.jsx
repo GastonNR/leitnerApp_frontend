@@ -19,8 +19,7 @@ export default function Home() {
                 <Study_mode />
             </div>
             <div className='div-3'>
-                <Boxes />
-                
+                <Boxes />              
             </div>
         </main>
     </div>
