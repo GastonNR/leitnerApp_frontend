@@ -1,5 +1,5 @@
-import Header from '../layouts/Header'
-import Sidebar from '../layouts/Sidebar'
+import Header from '../layouts/Header.jsx'
+import Sidebar from '../layouts/Sidebar.jsx'
 import Study_mode from '../layouts/Study_mode'
 import Boxes from '../layouts/Boxes'
 import BoxModal from '../layouts/BoxModal'

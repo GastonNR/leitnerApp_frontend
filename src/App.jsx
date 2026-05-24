@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Registro from "./pages/Registro"
-import Home from "./pages/Home.jsx"
-import "./css/index.css"
-import RutaProtegida from "./pages/RutaProtegida.jsx"
-import CajasProvider from "./context/cajasContext.jsx"
-import AuthProvider from "./context/AuthContext.jsx"
-import LoginForm from "./pages/LoginForm.jsx"
+import LoginForm from "./features/auth/pages/LoginForm.jsx"
+import Registro from "./features/auth/pages/Registro.jsx"
+import Home from "./features/app/pages/Home.jsx"
+import RutaProtegida from "./routes/RutaProtegida.jsx"
+import CajasProvider from "./features/app/context/cajasContext.jsx"
+import AuthProvider from "./features/auth/context/AuthContext.jsx"
+import "./index.css"
 
 function App() {
 

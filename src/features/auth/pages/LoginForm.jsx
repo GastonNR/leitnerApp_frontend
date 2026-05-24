@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import "../css/auth.css"
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext.jsx'
 
 export default function LoginForm() {
 
