@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./features/landing/pages/Home.jsx"
 import LoginForm from "./features/auth/pages/LoginForm.jsx"
 import Registro from "./features/auth/pages/Registro.jsx"
-import Home from "./features/app/pages/Home.jsx"
+import LeitnerApp from "./features/app/pages/LeitnerApp.jsx"
 import RutaProtegida from "./routes/RutaProtegida.jsx"
 import CajasProvider from "./features/app/context/cajasContext.jsx"
 import AuthProvider from "./features/auth/context/AuthContext.jsx"
@@ -13,13 +14,14 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/registro" element={<Registro />} />
 
           <Route element={<RutaProtegida />} >
-            <Route path="/Home" element={
+            <Route path="/leitnerApp" element={
               <CajasProvider>
-                <Home />
+                <LeitnerApp />
               </CajasProvider>
             } />
           </Route>

@@ -1,12 +1,12 @@
 import Header from '../layouts/Header.jsx'
 import Sidebar from '../layouts/Sidebar.jsx'
-import Study_mode from '../layouts/Study_mode'
-import Boxes from '../layouts/Boxes'
-import BoxModal from '../layouts/BoxModal'
-import CajasProvider from '../context/cajasContext'
-import "../css/home.css"
+import Study_mode from '../layouts/Study_mode.jsx'
+import Boxes from '../layouts/Boxes.jsx'
+import BoxModal from '../layouts/BoxModal.jsx'
+import CajasProvider from '../context/cajasContext.jsx'
+import "../css/leitnerApp.css"
 
-export default function Home() {
+export default function LeitnerApp () {
   return (
 
     <div id="main-app" className="main-app">

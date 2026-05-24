@@ -1,0 +1,25 @@
+.header-home{
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-home-izq{
+    display: flex;
+    flex-direction: row;
+}
+
+.leitnerIconImg{
+    width: 175px;
+    height: 250px;
+}
+
+.btn-home-header{
+    margin: 2rem;
+    padding: 1.5rem;
+    color: aliceblue;
+    font-size: 1.5rem;
+    background-color: rgb(37, 62, 145);
+    border-radius: 10px;
+}
