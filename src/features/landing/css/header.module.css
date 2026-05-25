@@ -1,0 +1,68 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden
+}
+
+.title {
+  font-weight: 700;
+  font-size: 25px
+}
+
+.nav {
+  display: none
+}
+
+.nav a {
+  margin: 0 10px;
+  color: var(--muted)
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center
+}
+
+.login {
+  margin: 1rem;
+  font-size: 1.15rem;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  box-shadow: 0 6px 18px rgba(3, 38, 80, 0.12);
+}
+
+.primary {
+  margin: 1rem;
+  font-size: 1.15rem;
+  background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(3, 38, 80, 0.12);
+}
+
+@media(min-width:768px) {
+  .nav {
+    display: block
+  }
+}

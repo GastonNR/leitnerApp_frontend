@@ -1,0 +1,21 @@
+.features {
+  padding: 40px 20px;
+}
+
+.header {
+  max-width: 720px;
+  margin: 0 auto 20px;
+  text-align: center
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px
+}
+
+@media(min-width:768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr)
+  }
+}

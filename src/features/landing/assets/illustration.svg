@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0" stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="40" width="160" height="220" rx="12" fill="#fff" stroke="#E6E9EF" />
+  <rect x="210" y="40" width="160" height="220" rx="12" fill="#fff" stroke="#E6E9EF" />
+  <rect x="400" y="40" width="160" height="220" rx="12" fill="#fff" stroke="#E6E9EF" />
+  <g fill="url(#g1)" opacity="0.9">
+    <rect x="44" y="64" width="112" height="28" rx="6" />
+    <rect x="234" y="64" width="112" height="28" rx="6" />
+    <rect x="424" y="64" width="112" height="28" rx="6" />
+  </g>
+  <text x="40" y="320" fill="#94A3B8" font-size="12">Ilustración de tarjetas & estudio</text>
+</svg>

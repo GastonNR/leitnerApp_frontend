@@ -1,0 +1,28 @@
+.card{
+    background:var(--card-bg);
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 6px 24px rgba(16,24,40,0.04);
+    border:1px solid rgba(15,23,36,0.03);
+}
+
+.icon{
+    font-size:28px;
+    width:56px;
+    height:56px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(90deg,var(--primary-start),var(--primary-end));
+    color:white;
+    margin-bottom:12px;
+}
+.title{
+    font-weight:600;
+    margin:0 0 8px;
+}
+.desc{
+    color:var(--muted);
+    margin:0;
+}

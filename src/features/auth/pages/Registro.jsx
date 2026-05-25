@@ -85,7 +85,7 @@ export default function Registro() {
           </form>
 
           <div className="bottom_div">
-              <p className="parrafo_abajo">¿Ya tienes una cuenta? <Link to="/" id="show-login" className="link">Inicia sesión</Link></p>
+              <p className="parrafo_abajo">¿Ya tienes una cuenta? <Link to="/login" id="show-login" className="link">Inicia sesión</Link></p>
           </div>
       </div>
     </div>

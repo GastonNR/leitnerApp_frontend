@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Home from "./features/landing/pages/Home.jsx"
+import LandingPage from "./features/landing/pages/LandingPage.jsx"
 import LoginForm from "./features/auth/pages/LoginForm.jsx"
 import Registro from "./features/auth/pages/Registro.jsx"
 import LeitnerApp from "./features/app/pages/LeitnerApp.jsx"
@@ -14,7 +14,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/registro" element={<Registro />} />
 

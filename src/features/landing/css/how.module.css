@@ -1,0 +1,47 @@
+.how {
+  padding: 40px 20px;
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.03), transparent)
+}
+
+.how h2 {
+  text-align: center;
+  margin-bottom: 18px
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: var(--card-bg);
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04)
+}
+
+.index {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700
+}
+
+@media(min-width:768px) {
+  .steps {
+    flex-direction: row
+  }
+
+  .step {
+    flex: 1
+  }
+}
