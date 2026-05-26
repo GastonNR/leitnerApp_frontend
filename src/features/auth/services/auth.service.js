@@ -12,9 +12,31 @@ export const loginService = async (datos) => {
 
         const resultado = await res.json()
         return resultado
-        
+
     } catch (error) {
         console.log("Error al logear al usuario: ", error)
     }
 
+}
+
+export const registroService = async (datos) => {
+    try {
+        const res = await fetch(import.meta.env.VITE_REGISTRO_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        })
+        const resultado = await res.json();
+
+        if (res.ok) {
+            alert("Usuario registrado")
+            window.location.href = "/login"
+        }
+
+    } catch (error) {
+        console.error("Error al registrar al usuario: ", error)
+
+    }
 }

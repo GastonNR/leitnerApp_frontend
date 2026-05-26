@@ -1,0 +1,55 @@
+.auth_container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.auth_form {
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.titulo {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    text-align: center;
+    color: rgba(67, 56, 202, 1);
+    margin-bottom: 1.5rem;
+}
+
+.subtitulo {
+    text-align: center;
+    color: rgba(75, 85, 99, 1);
+    margin-bottom: 2rem;
+}
+
+#email_login, #pass_login, #nombre_reg, #email_reg, #pass_reg{
+    display: none;
+}
+
+.bottom_div {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.parrafo_abajo {
+    font-size: 1.123rem;
+    line-height: 2rem;
+    color: rgba(75, 85, 99, 1);
+}
+
+.link {
+    color: rgba(55, 48, 163, 1);
+}

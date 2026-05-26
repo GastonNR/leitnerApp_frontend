@@ -1,33 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import "../css/auth.css"
+import InputPassword from '../components/InputPassword'
+import Input from '../components/Input'
+import ButtonSubmit from '../components/ButtonSubmit'
+import { registroService } from '../services/auth.service'
+import styles from '../css/auth.module.css'
+
 
 export default function Registro() {
 
-    async function registrarUsuario(){
+    // CAMPOS
+    const [nombreUsuario, setNombreUsuario] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [rep_pass, setRep_pass] = useState('')
 
-        console.log("entramos en la función registrarUsuario")
+    // MANEJO DE ERRORES EN LA VALIDACIÓN DE CAMPOS
+    const [errorNombre, setErrorNombre] = useState(false)
+    const [errorEmail, setErrorEmail] = useState(false)
+    const [errorPassword, setErrorPassword] = useState(false)
+    const [errorRep_pass, setErrorRep_pass] = useState(false)
 
-        const nombre = document.querySelector("#reg-name").value.trim()
-        const email = document.querySelector("#reg-email").value.trim()
-        const password = document.querySelector("#reg-password").value.trim()
+    async function registrarUsuario() {
 
         const nombre_regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9._-]{4,20}$/
         const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
         let camposValidos = 0;
 
-        if(!nombre_regex.test(nombre)){
-            document.querySelector('#nombre_reg').style.display = "inline"
-            camposValidos++;
-        }
-        
-        if(!email_regex.test(email)){
-            document.querySelector('#email_reg').style.display = "inline"
+        if (!nombre_regex.test(nombre)) {
+            setErrorNombre(prev=>!prev)
             camposValidos++;
         }
 
-        if(camposValidos === 0){
+        if (!email_regex.test(email)) {
+            setErrorEmail(prev=>!prev)
+            camposValidos++;
+        }
+
+        if(password !== rep_pass) {
+            alert('Las contraseñas no coinciden')
+            camposValidos++
+        }
+
+        if (camposValidos === 0) {
             const datos = {
                 nombre: nombre,
                 email: email,
@@ -36,58 +52,55 @@ export default function Registro() {
 
             console.log(`Datos cargados:  ${datos}`)
 
-            try{
-                const res = await fetch(import.meta.env.VITE_REGISTRO_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(datos)
-                })
-                const resultado = await res.json();
-                
-                if (res.ok){
-                    alert("Usuario registrado")
-                    window.location.href = "/"
-                } 
-
-            } catch(error) {
-                console.error("Error al registrar al usuario: ", error)
-
-            }
+            const res = await registroService(datos)
+            
         }
     }
 
-  return (
-    <div className="auth-container">
-      <div id="register-page" className="auth-form">
-          <h2 className="titulo">Crear cuenta</h2>
+    return (
+        <div className={styles.auth_container}>
+            <div id="register-page" className={styles.auth_form}>
+                <h2 className={styles.titulo}>Crear cuenta</h2>
 
-          <form id="register-form" className="space-y-4">
-              <div className='field-container'>
-                  <label htmlFor="reg-name" className="label">Nombre</label>
-                  <input type="text" id="reg-name" className="input" required={true} />
-                  <p id='nombre_reg' className='p_campo_invalido'>Campo inválido</p>
-              </div>
-              <div className='field-container'>
-                  <label htmlFor="reg-email" className="label">Correo electrónico</label>
-                  <input type="email" id="reg-email" className="input" required={true} />
-                  <p id='email_reg' className='p_campo_invalido'>Campo inválido</p>
-              </div>
-              <div className='field-container'>
-                  <label htmlFor="reg-password" className="label">Contraseña</label>
-                  <input type="password" id="reg-password" className="input" required={true} />
-                  <p id='pass_reg' className='p_campo_invalido'>Campo inválido</p>
-              </div>
-              <div>
-                  <button type="button" className="btn_submit" onClick={registrarUsuario}>Registrarse</button>
-              </div>
-          </form>
+                <form id="register-form" className="space-y-4">
+                    <Input
+                        labelText={'Nombre de usuario'}
+                        inputType={'text'}
+                        inputId={'reg-name'}
+                        setOnChange={setNombreUsuario}
+                        error={errorNombre}
+                    />
 
-          <div className="bottom_div">
-              <p className="parrafo_abajo">¿Ya tienes una cuenta? <Link to="/login" id="show-login" className="link">Inicia sesión</Link></p>
-          </div>
-      </div>
-    </div>
-  )
+                    <Input
+                        labelText={'Correo electrónico'}
+                        inputType={'email'}
+                        inputId={'reg-email'}
+                        setOnChange={setEmail}
+                        error={errorEmail}
+                    />
+
+                    <InputPassword
+                        labelText={'Contraseña'}
+                        inputId={'reg-password'}
+                        setOnChange={setPassword}
+                        error={errorPassword}
+                    />
+
+                    <InputPassword
+                        labelText={'Repetir Contraseña'}
+                        inputId={'rep-reg-password'}
+                        setOnChange={setRep_pass}
+                        error={errorRep_pass}
+                    />
+
+                    <ButtonSubmit text={'Registrarse'} onclick={registrarUsuario} />
+
+                </form>
+
+                <div className={styles.bottom_div}>
+                    <p className={styles.parrafo_abajo}>¿Ya tienes una cuenta? <Link to="/login" id="show-login" className={styles.link}>Inicia sesión</Link></p>
+                </div>
+            </div>
+        </div>
+    )
 }
