@@ -57,13 +57,13 @@ export default function Registro() {
             
             const respuesta = await registroService(datos)
             if(!respuesta.ok) {
-                alert("Error al registrar el usuario")
+                alert(respuesta.message)
                 return
             }
             
             if(respuesta.ok){
                 console.log("respuesta: ", respuesta)
-                alert(respuesta.mensaje)
+                alert(respuesta.message)
                 navigate("/login")
             } 
 

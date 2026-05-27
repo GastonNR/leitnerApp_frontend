@@ -11,8 +11,6 @@ export const loginService = async (datosLogin) => {
         })
 
         const datos = await res.json()
-        //console.log("datos desde el backend: ", datos)
-
         return datos
 
     } catch (error) {
@@ -37,8 +35,8 @@ export const registroService = async (datosUsuario) => {
             },
             body: JSON.stringify(datosUsuario)
         })
+        
         const respuesta = await res.json();
-
         return respuesta
 
     } catch (error) {
