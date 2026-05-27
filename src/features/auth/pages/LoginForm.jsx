@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useState } from 'react'
 import InputPassword from '../components/InputPassword.jsx'
@@ -8,6 +8,7 @@ import styles from '../css/auth.module.css'
 
 export default function LoginForm() {
 
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorEmail, setErrorEmail] = useState(false)
@@ -29,7 +30,13 @@ export default function LoginForm() {
             const datos = { email: email, password: password }
 
             const respuesta = await login(datos)
-            if (respuesta) window.location.href = "/LeitnerApp"
+
+            if(!respuesta.ok) {
+                alert(`Error: ${respuesta.message}`)
+                return
+            }
+            
+            navigate("/leitnerApp")
         }
     }
 

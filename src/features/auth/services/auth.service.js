@@ -1,42 +1,55 @@
 const AUTH_URL = import.meta.env.VITE_LOGIN_URL
 
-export const loginService = async (datos) => {
+export const loginService = async (datosLogin) => {
     try {
         const res = await fetch(AUTH_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(datos)
+            body: JSON.stringify(datosLogin)
         })
 
-        const resultado = await res.json()
-        return resultado
+        const datos = await res.json()
+        //console.log("datos desde el backend: ", datos)
+
+        return datos
 
     } catch (error) {
-        console.log("Error al logear al usuario: ", error)
+        console.log("Error en la conexión: ", error)
+        return {
+            ok: false,
+            status: 500,
+            datos: {
+                mensaje: "Error de conexión con el servidor"
+            }
+        }
     }
 
 }
 
-export const registroService = async (datos) => {
+export const registroService = async (datosUsuario) => {
     try {
         const res = await fetch(import.meta.env.VITE_REGISTRO_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(datos)
+            body: JSON.stringify(datosUsuario)
         })
-        const resultado = await res.json();
+        const respuesta = await res.json();
 
-        if (res.ok) {
-            alert("Usuario registrado")
-            window.location.href = "/login"
-        }
+        return respuesta
 
     } catch (error) {
-        console.error("Error al registrar al usuario: ", error)
+        console.log("Error en la conexión: ", error)
+        return {
+            ok: false,
+            status: 500,
+            datos: {
+                mensaje: "Error de conexión con el servidor"
+            }
+        }
 
     }
 }

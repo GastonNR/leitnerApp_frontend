@@ -20,16 +20,19 @@ export default function AuthProvider({ children }){
     }, [])
 
     const login = async (datos)=>{
+
         const respuesta = await loginService(datos)
-        console.log("respuesta: ", respuesta)
-        if (respuesta) {
+        console.log("respuesta en el auth context: ", respuesta)
+
+        if (respuesta.ok) {
             localStorage.setItem("token", respuesta.token)
             localStorage.setItem("nombre_usuario", respuesta.usuario.nombre)
             localStorage.setItem("id", respuesta.usuario.id)
-            return respuesta
-        } else {
-            alert(respuesta.mensaje || "Credenciales inválidas")
+
+            return {ok: true}
         }
+        
+        if(!respuesta.ok) return respuesta
 
     }
 

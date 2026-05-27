@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import InputPassword from '../components/InputPassword'
 import Input from '../components/Input'
 import ButtonSubmit from '../components/ButtonSubmit'
@@ -8,6 +8,8 @@ import styles from '../css/auth.module.css'
 
 
 export default function Registro() {
+
+    const navigate = useNavigate()
 
     // CAMPOS
     const [nombreUsuario, setNombreUsuario] = useState('')
@@ -21,6 +23,7 @@ export default function Registro() {
     const [errorPassword, setErrorPassword] = useState(false)
     const [errorRep_pass, setErrorRep_pass] = useState(false)
 
+
     async function registrarUsuario() {
 
         const nombre_regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9._-]{4,20}$/
@@ -28,32 +31,42 @@ export default function Registro() {
 
         let camposValidos = 0;
 
-        if (!nombre_regex.test(nombre)) {
-            setErrorNombre(prev=>!prev)
+        if (!nombre_regex.test(nombreUsuario)) {
+            setErrorNombre(prev => !prev)
             camposValidos++;
         }
 
         if (!email_regex.test(email)) {
-            setErrorEmail(prev=>!prev)
+            setErrorEmail(prev => !prev)
             camposValidos++;
         }
 
-        if(password !== rep_pass) {
+        if (password !== rep_pass) {
             alert('Las contraseñas no coinciden')
             camposValidos++
         }
 
         if (camposValidos === 0) {
             const datos = {
-                nombre: nombre,
+                nombre: nombreUsuario,
                 email: email,
                 password: password
             }
 
-            console.log(`Datos cargados:  ${datos}`)
-
-            const res = await registroService(datos)
             
+            
+            const respuesta = await registroService(datos)
+            if(!respuesta.ok) {
+                alert("Error al registrar el usuario")
+                return
+            }
+            
+            if(respuesta.ok){
+                console.log("respuesta: ", respuesta)
+                alert(respuesta.mensaje)
+                navigate("/login")
+            } 
+
         }
     }
 
