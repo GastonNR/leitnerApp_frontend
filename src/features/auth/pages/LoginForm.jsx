@@ -30,7 +30,7 @@ export default function LoginForm() {
             const datos = { email: email, password: password }
 
             const respuesta = await login(datos)
-
+            
             if(!respuesta.ok) {
                 alert(`Error: ${respuesta.message}`)
                 return

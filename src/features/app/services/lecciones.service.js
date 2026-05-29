@@ -1,16 +1,14 @@
-
 const API_URL = import.meta.env.VITE_HOME_URL
-const TOKEN = localStorage.getItem('token')
 
 // MANEJO DE LECCIONES
 
-export const crearLeccionRequest = async (nuevaLeccion) => {
+export const crearLeccionRequest = async (nuevaLeccion, token) => {
 
     const res = await fetch(`${API_URL}/leccion`, {
         method: "POST",
         headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${TOKEN}`
+            Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({ nuevaLeccion })
     })
@@ -22,12 +20,12 @@ export const crearLeccionRequest = async (nuevaLeccion) => {
 
 }
 
-export const getLecciones = async () => {
+export const getLecciones = async (token) => {
 
     const res = await fetch(`${API_URL}/`, {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${TOKEN}`
+            Authorization: `Bearer ${token}`
         }
 
     })
@@ -37,10 +35,7 @@ export const getLecciones = async () => {
 
 }
 
-export const deleteLecciones = async (id) =>{
-
-    console.log("Id de la lección desde service frontend: ", id)
-    const token = localStorage.getItem("token")
+export const deleteLecciones = async (id, token) =>{
 
     const res = await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
@@ -54,7 +49,7 @@ export const deleteLecciones = async (id) =>{
 
 }
 
-export const guardarLeccion = async (leccion) => {
+export const guardarLeccion = async (leccion, token) => {
 
     const leccionId = leccion._id
     
@@ -62,7 +57,7 @@ export const guardarLeccion = async (leccion) => {
       const res = await fetch(`${API_URL}/leccion/${leccionId}`, {
         method: 'PUT',
         headers: {
-          "Authorization": `Bearer ${TOKEN}`,
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         "body": JSON.stringify(leccion)
@@ -70,7 +65,6 @@ export const guardarLeccion = async (leccion) => {
 
       if(!res.ok) throw new Error("Error al guardar la lección")
       const leccionActualizada = await res.json()
-      console.log("Lección actualizada: ", leccionActualizada)
 
       return leccionActualizada
 
@@ -82,13 +76,13 @@ export const guardarLeccion = async (leccion) => {
 
 // MANEJO DE TARJETAS
 
-export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta) => {
+export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta, token) => {
     
     const nuevaTarjeta = await fetch(`${API_URL}/leccion/${leccion_id}`, {
         method: 'POST',
         headers:{
             'Content-type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(datosTarjeta)
 

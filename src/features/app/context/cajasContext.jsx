@@ -1,12 +1,14 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { crearLeccionRequest, deleteLecciones, getLecciones } from "../services/lecciones.service";
+import { crearLeccionRequest, deleteLecciones, eliminarTarjetaService, getLecciones, guardarLeccion, guardarNuevaTarjeta } from "../services/lecciones.service";
+import { useAuth } from '../../auth/context/AuthContext.jsx'
 
 const CajasContext = createContext();
 
 export default function CajasProvider({ children }) {
 
-  const [tarjetasDeHoy, setTarjetasDeHoy] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [tarjetasDeHoy, setTarjetasDeHoy] = useState([])
+  const { token } = useAuth()
+  const [loading, setLoading] = useState(true)
 
   // Manejo de lecciones
   const [lecciones, setLecciones] = useState([]); // [{ id, nombre, cajas }]
@@ -20,7 +22,7 @@ export default function CajasProvider({ children }) {
   useEffect(() => {
     const traerLeccionesDB = async () => {
       try {
-        const leccionesEncontradas = await getLecciones()
+        const leccionesEncontradas = await getLecciones(token)
 
         if (leccionesEncontradas?.length > 0) {
           setLecciones(leccionesEncontradas)
@@ -45,7 +47,7 @@ export default function CajasProvider({ children }) {
 
     traerLeccionesDB()
 
-  }, [])
+  }, [token])
 
   //Carga las tarjetas del día.
   useEffect(() => {
@@ -89,7 +91,7 @@ export default function CajasProvider({ children }) {
 
     try {
       const nombreNuevaLeccion = nombre.trim()
-      const nuevaLeccion = await crearLeccionRequest(nombreNuevaLeccion)
+      const nuevaLeccion = await crearLeccionRequest(nombreNuevaLeccion, token)
 
       setLecciones(prev => [...prev, nuevaLeccion])
       setLeccionActivaId(nuevaLeccion._id)
@@ -119,7 +121,7 @@ export default function CajasProvider({ children }) {
   const eliminarLeccion = async (id) => {
 
     try {
-      await deleteLecciones(id)
+      await deleteLecciones(id, token)
 
       const nuevasLecciones = lecciones.filter(l => l._id !== id)
       setLecciones(nuevasLecciones)
@@ -144,8 +146,98 @@ export default function CajasProvider({ children }) {
 
   }
 
+  //===========//
+  // TARJETAS //
+  //==========//
+  const crearNuevaTarjeta = async (leccionId, tarjeta) => {
+    const nuevaTarjeta = await guardarNuevaTarjeta(leccionActiva._id, tarjeta, token)
+
+    const nuevasCajas = leccionActiva.cajas.map((caja, index) => {
+
+      if (index === 0) {
+        const tarjetasActualizadas = [...(caja.tarjetas || []), nuevaTarjeta]
+        return { ...caja, tarjetas: tarjetasActualizadas }
+
+      } else {
+        return caja
+
+      }
+    })
+
+    setLecciones(prevLecciones =>
+      prevLecciones.map(leccion => {
+        if (leccion._id !== leccionActivaId) return leccion
+
+        const leccionActualizada = {
+          ...leccion,
+          cajas: nuevasCajas
+        }
+
+        return leccionActualizada
+      })
+
+    )
+  }
+
+  const actualizarTarjeta = async (esCorrecta, tarjeta) => {
+
+    const leccionesActualizadas = lecciones.map(leccion => {
+
+      if (leccion._id !== leccionActivaId) return leccion
+
+      return {
+        ...leccion,
+        cajas: leccion.cajas.map(caja => ({
+          ...caja,
+          tarjetas: caja.tarjetas.map(t => {
+
+            if (t._id !== tarjeta._id) return t
+
+            return {
+              ...t,
+              es_correcta: esCorrecta
+            }
+
+          })
+        }))
+      }
+
+    })
+
+    setLecciones(leccionesActualizadas)
+
+    return leccionesActualizadas
+  }
+
+  const guardar = async (leccionesActualizadas) => {
+
+    const leccionActualizada = leccionesActualizadas.find(
+      l => l._id === leccionActivaId
+    )
+
+    if (!leccionActualizada) return
+
+    const respuesta = await guardarLeccion(leccionActualizada, token)
+
+    if (respuesta) {
+      alert("Lección guardada.")
+
+      setLecciones(prev =>
+        prev.map(leccion => {
+          if (leccion._id !== leccionActivaId) return leccion
+          return respuesta
+        })
+      )
+    }
+  }
+
+  const eliminarTarjeta = async () => {
+
+  }
+
   if (loading) return <p>Cargando cajas...</p>;
 
+  //RETURN
   return (
     <CajasContext.Provider value={{
       tarjetasDeHoy,
@@ -157,6 +249,10 @@ export default function CajasProvider({ children }) {
       crearLeccion,
       cambiarLeccion,
       eliminarLeccion,
+      crearNuevaTarjeta,
+      actualizarTarjeta,
+      eliminarTarjeta,
+      guardar,
       modalLeccionesAbierto,
       setModalLeccionesAbierto,
     }}>

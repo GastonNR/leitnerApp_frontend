@@ -22,12 +22,14 @@ export default function AuthProvider({ children }){
     const login = async (datos)=>{
 
         const respuesta = await loginService(datos)
-        console.log("respuesta en el auth context: ", respuesta)
 
         if (respuesta.ok) {
             localStorage.setItem("token", respuesta.token)
             localStorage.setItem("nombre_usuario", respuesta.usuario.nombre)
             localStorage.setItem("id", respuesta.usuario.id)
+
+            setToken(respuesta.token)
+            setUsuario(respuesta.usuario)
 
             return {ok: true}
         }

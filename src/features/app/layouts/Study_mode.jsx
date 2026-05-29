@@ -5,7 +5,6 @@ import { useCajas } from '../context/cajasContext'
 
 export default function Study_mode() {
 
-    //const {leccionActiva} = useCajas()
     const {tarjetasDeHoy} = useCajas()
     const [tarjetaIndex, setTarjetaIndex] = useState(0)
 
