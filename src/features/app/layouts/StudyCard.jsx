@@ -33,7 +33,8 @@ export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarj
 
         } else {
             setTarjetaIndex(-1)
-            await guardar(leccionesActualizadas)
+            const estaGuardada = await guardar(leccionesActualizadas)
+            if(estaGuardada.ok) alert("Lección actualizada")
         }
     }
 

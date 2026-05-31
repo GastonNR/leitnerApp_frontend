@@ -208,7 +208,7 @@ export default function CajasProvider({ children }) {
 
     return leccionesActualizadas
   }
-
+// ACTUALIZA LAS TARJETAS DESPUÉS DE UNA REVISIÓN DE LA LECCIÓN ACTIVA
   const guardar = async (leccionesActualizadas) => {
 
     const leccionActualizada = leccionesActualizadas.find(
@@ -220,7 +220,6 @@ export default function CajasProvider({ children }) {
     const respuesta = await guardarLeccion(leccionActualizada, token)
 
     if (respuesta) {
-      alert("Lección guardada.")
 
       setLecciones(prev =>
         prev.map(leccion => {
@@ -228,6 +227,8 @@ export default function CajasProvider({ children }) {
           return respuesta
         })
       )
+
+      return {ok: true}
     }
   }
 
