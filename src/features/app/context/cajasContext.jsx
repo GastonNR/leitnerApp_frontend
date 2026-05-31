@@ -231,8 +231,31 @@ export default function CajasProvider({ children }) {
     }
   }
 
-  const eliminarTarjeta = async () => {
+  const eliminarTarjetaContext = async (indexCaja, cajaElegida, indiceCajaNum) => {
 
+    const tarjetaId = cajaElegida[indexCaja]._id
+    const eliminarYActualizar = await eliminarTarjetaService(tarjetaId, token)
+
+    setLecciones(prev =>
+      
+      prev.map(leccion => {
+        
+        if (leccion._id !== leccionActivaId) return leccion
+        
+        const nuevasCajas = [...leccion.cajas]
+        
+        nuevasCajas[indiceCajaNum] = {
+          ...nuevasCajas[indiceCajaNum],
+          tarjetas: nuevasCajas[indiceCajaNum].tarjetas.filter(tarjeta => tarjeta._id !== tarjetaId)
+        }
+        return {
+          ...leccion,
+          cajas: nuevasCajas
+        }
+      })
+    )
+
+    return true
   }
 
   if (loading) return <p>Cargando cajas...</p>;
@@ -251,7 +274,7 @@ export default function CajasProvider({ children }) {
       eliminarLeccion,
       crearNuevaTarjeta,
       actualizarTarjeta,
-      eliminarTarjeta,
+      eliminarTarjetaContext,
       guardar,
       modalLeccionesAbierto,
       setModalLeccionesAbierto,

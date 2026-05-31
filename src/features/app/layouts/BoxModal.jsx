@@ -4,24 +4,19 @@ import { eliminarTarjetaService } from "../services/lecciones.service.js"
 import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
-    
-    const { leccionActiva, setLeccionActiva } = useCajas()
+
+    const { leccionActiva, setLeccionActiva, eliminarTarjetaContext } = useCajas()
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva.cajas[indiceCajaNum]?.tarjetas || []
 
-    const eliminarTarjeta = async (indexAEliminar) => {
+    console.log("indice caja: ", indiceCaja)
+    console.log("indice caja numero: ", indiceCajaNum)
 
-        const tarjetaId = cajaElegida[indexAEliminar]._id
-        const eliminarYActualizar = await eliminarTarjetaService(tarjetaId)
+    const eliminarTarjeta = async (indexAEliminar, cajaElegida, indiceCajaNum) => {
+        const elimada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
+        if(!elimada) alert("No se ha podido eliminar la tarjeta.")
         
-        setLeccionActiva(prevLeccionActiva => {
-            const nuevasCajas = [...leccionActiva.cajas]
-            nuevasCajas[indiceCajaNum].tarjetas = nuevasCajas[indiceCajaNum].tarjetas.filter( t => t._id !== tarjetaId)
-            return nuevasCajas
-        })
-
         setEstiloDisplay(false)
-
     }
 
     return (
@@ -37,21 +32,20 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
                 </div>
                 <div className="contenedor-abajo">
                     <div id="box-cards-container" className="box-card-container">
-                        {cajaElegida.length > 0 ? 
-                            cajaElegida.map((tarjeta, index) => (                                
+                        {cajaElegida.length > 0 ?
+                            cajaElegida.map((tarjeta, index) => (
                                 <CardElement
-                                    key={tarjeta._id} 
-                                    //key={`${indiceCajaNum}-${index}`} 
-                                    pregunta={tarjeta.pregunta} 
-                                    respuesta={tarjeta.respuesta} 
-                                    proxima_revision={tarjeta.proxima_revision} 
-                                    onEliminar={() => eliminarTarjeta(index)}
+                                    key={tarjeta._id}
+                                    pregunta={tarjeta.pregunta}
+                                    respuesta={tarjeta.respuesta}
+                                    proxima_revision={tarjeta.proxima_revision}
+                                    onEliminar={() => eliminarTarjeta(index, cajaElegida, indiceCajaNum)}
                                 />
                             )) : (
-                            <div id="box-empty-message" className="box-empty-message">
-                                <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>
-                            </div>
-                        )}
+                                <div id="box-empty-message" className="box-empty-message">
+                                    <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>
