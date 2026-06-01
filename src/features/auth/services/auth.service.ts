@@ -1,6 +1,8 @@
+import { LoginRequest, LoginResponse, ApiError, RegistroRequest, RegistroResponse } from "../types/auth.types"
 const AUTH_URL = import.meta.env.VITE_LOGIN_URL
 
-export const loginService = async (datosLogin) => {
+export const loginService = async (datosLogin: LoginRequest): Promise<LoginResponse | ApiError> => {
+
     try {
         const res = await fetch(AUTH_URL, {
             method: "POST",
@@ -10,23 +12,21 @@ export const loginService = async (datosLogin) => {
             body: JSON.stringify(datosLogin)
         })
 
-        const datos = await res.json()
+        const datos: LoginResponse | ApiError = await res.json()
         return datos
 
     } catch (error) {
         console.log("Error en la conexión: ", error)
+
         return {
             ok: false,
-            status: 500,
-            datos: {
-                mensaje: "Error de conexión con el servidor"
-            }
+            message: "Error de conexión con el servidor"
         }
     }
 
 }
 
-export const registroService = async (datosUsuario) => {
+export const registroService = async (datosUsuario: RegistroRequest): Promise<RegistroResponse> => {
     try {
         const res = await fetch(import.meta.env.VITE_REGISTRO_URL, {
             method: "POST",
@@ -36,17 +36,15 @@ export const registroService = async (datosUsuario) => {
             body: JSON.stringify(datosUsuario)
         })
         
-        const respuesta = await res.json();
+        const respuesta: RegistroResponse = await res.json();
         return respuesta
 
     } catch (error) {
         console.log("Error en la conexión: ", error)
+
         return {
             ok: false,
-            status: 500,
-            datos: {
-                mensaje: "Error de conexión con el servidor"
-            }
+            message: "Error de conexión con el servidor"
         }
 
     }

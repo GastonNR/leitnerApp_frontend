@@ -19,11 +19,11 @@ export default function LoginForm() {
 
         const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-        let camposValidos = 0;
+        let camposValidos = 0
 
         if (!email_regex.test(email)) {
             setErrorEmail(prev=>!prev)
-            camposValidos++;
+            camposValidos++
         }
 
         if (camposValidos === 0) {
