@@ -1,8 +1,9 @@
 import { useState } from "react"
+import type { InputPasswordProps } from "../types/components.types"
 import styles from '../css/components.module.css'
 
 
-export default function InputPassword({ labelText, inputId, setOnChange, error }) {
+export default function InputPassword({ labelText, inputId, setOnChange, error }: InputPasswordProps) {
 
     const [mostrarPassword, setMostrarPassword] = useState(false)
 

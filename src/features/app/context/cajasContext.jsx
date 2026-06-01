@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { crearLeccionRequest, deleteLecciones, eliminarTarjetaService, getLecciones, guardarLeccion, guardarNuevaTarjeta } from "../services/lecciones.service";
-import { useAuth } from '../../auth/context/AuthContext.jsx'
+import { useAuth } from '../../auth/context/AuthContext.tsx'
 
 const CajasContext = createContext();
 

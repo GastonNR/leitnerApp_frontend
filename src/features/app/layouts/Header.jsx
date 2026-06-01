@@ -3,7 +3,7 @@ import "../css/header.css"
 import { useCajas } from '../context/cajasContext'
 import LeccionesModal from './LeccionesModal'
 import { guardarLeccion } from '../services/lecciones.service'
-import { useAuth } from '../../auth/context/AuthContext.jsx'
+import { useAuth } from '../../auth/context/AuthContext.tsx'
 
 export default function Header() {
   const { leccionActivaId, leccionActiva, setLecciones, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useCajas()

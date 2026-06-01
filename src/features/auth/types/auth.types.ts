@@ -12,7 +12,7 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-    ok: boolean
+    ok: true
     token: string
     usuario: Usuario
 }
@@ -40,7 +40,7 @@ export interface AuthContextType{
     usuario: Usuario | null
     token: string | null
     loading: boolean
-    login: (datos: LoginRequest) => Promise<{} | ApiError>
+    login: (datos: LoginRequest) => Promise<LoginResponse | ApiError>
     logout: () => void
     setUsuario: Dispatch<SetStateAction<Usuario | null>>
 }

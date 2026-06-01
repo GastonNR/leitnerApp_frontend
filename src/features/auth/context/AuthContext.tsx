@@ -61,4 +61,10 @@ export default function AuthProvider({ children }: AuthProviderProps){
     )
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): AuthContextType =>{
+    const context = useContext(AuthContext)
+
+    if(!context) throw Error("useContext debe utilizarse dentro del AuthProvider")
+    return context
+
+} 

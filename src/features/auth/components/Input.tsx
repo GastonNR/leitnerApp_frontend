@@ -1,6 +1,7 @@
+import type { InputProps } from '../types/components.types'
 import styles from '../css/components.module.css'
 
-export default function Input({labelText, inputType, inputId, setOnChange, error}) {
+export default function Input({labelText, inputType, inputId, error, setOnChange}:InputProps) {
 
   return (
     <div className={styles.field_container}>
