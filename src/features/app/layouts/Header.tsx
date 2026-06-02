@@ -16,6 +16,8 @@ export default function Header() {
   }
 
   async function guardar(): Promise<void> {
+    
+    if(!leccionActiva) return
     const leccion = leccionActiva
     const leccionActualizada = await guardarLeccionService(leccion)
 
