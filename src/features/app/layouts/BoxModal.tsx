@@ -1,18 +1,19 @@
 import { useLecciones } from "../context/LeccionesContext"
-import CardElement from "../components/CardElement.tsx"
-import { eliminarTarjetaService } from "../services/lecciones.service.js"
+import CardElement from "../components/CardElement"
+import { BoxModalProps } from "../types/components.types"
+import type { Tarjeta } from "../types/context.types"
 import "../css/boxModal.css"
 
-export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
+export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps) {
 
-    const { leccionActiva, setLeccionActiva, eliminarTarjetaContext } = useLecciones()
+    const { leccionActiva, eliminarTarjetaContext } = useLecciones()
     const indiceCajaNum = Number(indiceCaja) - 1
-    const cajaElegida = leccionActiva.cajas[indiceCajaNum]?.tarjetas || []
+    const cajaElegida = leccionActiva?.cajas[indiceCajaNum]?.tarjetas || []
 
     console.log("indice caja: ", indiceCaja)
     console.log("indice caja numero: ", indiceCajaNum)
 
-    const eliminarTarjeta = async (indexAEliminar, cajaElegida, indiceCajaNum) => {
+    const eliminarTarjeta = async (indexAEliminar: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
         const eliminada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
         if(!eliminada) alert("No se ha podido eliminar la tarjeta.")
         

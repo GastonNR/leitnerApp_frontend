@@ -1,20 +1,21 @@
-import React from 'react'
-import "../css/header.css"
+import { replace, useNavigate } from 'react-router-dom'
 import { useLecciones } from '../context/LeccionesContext'
 import LeccionesModal from './LeccionesModal'
 import { guardarLeccion } from '../services/lecciones.service'
-import { useAuth } from '../../auth/context/AuthContext.tsx'
+import { useAuth } from '../../auth/context/AuthContext'
+import "../css/header.css"
 
 export default function Header() {
-  const { leccionActivaId, leccionActiva, setLecciones, setLeccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useLecciones()
+  const navigate = useNavigate()
+  const { leccionActivaId, leccionActiva, setLecciones, setModalLeccionesAbierto, modalLeccionesAbierto } = useLecciones()
   const {logout} = useAuth()
   
-  async function cerrarSesion() {
+  const cerrarSesion = (): void=> {
     logout()
-    window.location.href = '/'
+    navigate('/login', {replace: true})
   }
 
-  async function guardar() {
+  async function guardar(): Promise<void> {
     const leccion = leccionActiva
     const leccionActualizada = await guardarLeccion(leccion)
 

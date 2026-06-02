@@ -4,7 +4,8 @@ import type {
   LeccionesContextType,
   LeccionesProviderProps,
   Leccion,
-  Tarjeta
+  Tarjeta,
+  NuevaTarjeta
 } from '../types/context.types'
 import { useAuth } from '../../auth/context/AuthContext'
 
@@ -155,7 +156,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   //===========//
   // TARJETAS //
   //==========//
-  const crearNuevaTarjeta = async (leccionId: string, tarjeta: Tarjeta) => {
+  const crearNuevaTarjeta = async (leccionId: string, tarjeta: NuevaTarjeta) => {
 
     if(!leccionActiva) return
 
