@@ -1,7 +1,7 @@
-import React from 'react'
+import type { BoxProps } from "../types/components.types"
 import "../css/boxes.css"
 
-export default function Box({caja, periodo, parrafo, setEstiloDisplay, setIndiceCaja}) {
+export default function Box({caja, periodo, parrafo, setEstiloDisplay, setIndiceCaja}: BoxProps) {
 
   function seleccionarCaja(){
     setEstiloDisplay(true)

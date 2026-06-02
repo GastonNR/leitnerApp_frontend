@@ -5,6 +5,7 @@ import Input from '../components/Input'
 import ButtonSubmit from '../components/ButtonSubmit'
 import { registroService } from '../services/auth.service'
 import styles from '../css/auth.module.css'
+import { RegistroRequest } from '../types/auth.types'
 
 
 export default function Registro() {
@@ -12,60 +13,53 @@ export default function Registro() {
     const navigate = useNavigate()
 
     // CAMPOS
-    const [nombreUsuario, setNombreUsuario] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [rep_pass, setRep_pass] = useState('')
+    const [nombreUsuario, setNombreUsuario] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [rep_pass, setRep_pass] = useState<string>('')
 
     // MANEJO DE ERRORES EN LA VALIDACIÓN DE CAMPOS
-    const [errorNombre, setErrorNombre] = useState(false)
-    const [errorEmail, setErrorEmail] = useState(false)
-    const [errorPassword, setErrorPassword] = useState(false)
-    const [errorRep_pass, setErrorRep_pass] = useState(false)
+    const [errorNombre, setErrorNombre] = useState<boolean>(false)
+    const [errorEmail, setErrorEmail] = useState<boolean>(false)
+    const [errorPassword, setErrorPassword] = useState<boolean>(false)
+    const [errorRep_pass, setErrorRep_pass] = useState<boolean>(false)
 
 
-    async function registrarUsuario() {
+    async function registrarUsuario(): Promise<void> {
 
         const nombre_regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9._-]{4,20}$/
         const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
         let camposValidos = 0;
 
-        if (!nombre_regex.test(nombreUsuario)) {
-            setErrorNombre(prev => !prev)
-            camposValidos++;
-        }
+        const nombreValido = nombre_regex.test(nombreUsuario)
+        const emailValido = email_regex.test(email)
+        const passwordsCoinciden = password === rep_pass
 
-        if (!email_regex.test(email)) {
-            setErrorEmail(prev => !prev)
-            camposValidos++;
-        }
+        setErrorNombre(!nombreValido)
+        setErrorEmail(!emailValido)
+        setErrorPassword(!passwordsCoinciden)
+        setErrorRep_pass(!passwordsCoinciden)
 
-        if (password !== rep_pass) {
-            alert('Las contraseñas no coinciden')
-            camposValidos++
-        }
+        if(!nombreValido) camposValidos++
+        if(!emailValido) camposValidos++
+        if(!passwordsCoinciden) camposValidos++
 
         if (camposValidos === 0) {
-            const datos = {
+            const datos: RegistroRequest = {
                 nombre: nombreUsuario,
                 email: email,
                 password: password
             }
 
-            
-            
             const respuesta = await registroService(datos)
             if(!respuesta.ok) {
                 alert(respuesta.message)
                 return
             }
             
-            if(respuesta.ok){
-                console.log("respuesta: ", respuesta)
-                alert(respuesta.message)
-                navigate("/login")
-            } 
+            alert(respuesta.message)
+            navigate("/login")
 
         }
     }

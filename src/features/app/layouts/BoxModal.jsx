@@ -1,11 +1,11 @@
-import { useCajas } from "../context/cajasContext"
-import CardElement from "../components/CardElement.jsx"
+import { useLecciones } from "../context/LeccionesContext"
+import CardElement from "../components/CardElement.tsx"
 import { eliminarTarjetaService } from "../services/lecciones.service.js"
 import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
 
-    const { leccionActiva, setLeccionActiva, eliminarTarjetaContext } = useCajas()
+    const { leccionActiva, setLeccionActiva, eliminarTarjetaContext } = useLecciones()
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva.cajas[indiceCajaNum]?.tarjetas || []
 
@@ -13,8 +13,8 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }) {
     console.log("indice caja numero: ", indiceCajaNum)
 
     const eliminarTarjeta = async (indexAEliminar, cajaElegida, indiceCajaNum) => {
-        const elimada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
-        if(!elimada) alert("No se ha podido eliminar la tarjeta.")
+        const eliminada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
+        if(!eliminada) alert("No se ha podido eliminar la tarjeta.")
         
         setEstiloDisplay(false)
     }

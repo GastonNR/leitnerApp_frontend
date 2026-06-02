@@ -1,13 +1,13 @@
 import React, { act, useState } from 'react'
 import "../css/sidebar.css"
 import CountCards from '../components/CountCards'
-import { useCajas } from '../context/cajasContext'
+import { useLecciones } from '../context/LeccionesContext.tsx'
 import { guardarNuevaTarjeta } from '../services/lecciones.service'
-import QuestionAnswer from '../components/QuestionAnswer.jsx'
+import QuestionAnswer from '../components/QuestionAnswer.tsx'
 
 export default function Sidebar() {
     
-    const { leccionActiva, setLeccionActiva, leccionActivaId, setLecciones, crearNuevaTarjeta } = useCajas()
+    const { leccionActiva, setLeccionActiva, leccionActivaId, setLecciones, crearNuevaTarjeta } = useLecciones()
 
     const [pregunta, setPregunta] = useState(null)
     const [respuesta, setRespuesta] = useState(null)

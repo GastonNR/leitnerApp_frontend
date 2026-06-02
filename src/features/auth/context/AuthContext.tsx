@@ -1,13 +1,14 @@
-import { createContext, useState, useContext, useEffect } from "react"
+import { createContext, useState, useContext, useEffect, ReactNode } from "react"
+import { Usuario, AuthContextType, LoginResponse, LoginRequest, ApiError, AuthProviderProps } from '../types/auth.types'
 import { loginService } from "../services/auth.service"
 
-const AuthContext = createContext()
+const AuthContext = createContext<AuthContextType | null>(null)
 
-export default function AuthProvider({ children }){
+export default function AuthProvider({ children }: AuthProviderProps){
 
-    const [usuario, setUsuario] = useState(null)
-    const [token, setToken] = useState(localStorage.getItem("token"))
-    const [loading, setLoading] = useState(true)
+    const [usuario, setUsuario] = useState<Usuario | null>(null)
+    const [token, setToken] = useState<string | null>(localStorage.getItem("token"))
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(()=>{
 
@@ -19,7 +20,7 @@ export default function AuthProvider({ children }){
         setLoading(false)
     }, [])
 
-    const login = async (datos)=>{
+    const login = async (datos: LoginRequest): Promise<LoginResponse | ApiError> =>{
 
         const respuesta = await loginService(datos)
 
@@ -31,10 +32,9 @@ export default function AuthProvider({ children }){
             setToken(respuesta.token)
             setUsuario(respuesta.usuario)
 
-            return {ok: true}
         }
         
-        if(!respuesta.ok) return respuesta
+        return respuesta
 
     }
 
@@ -61,4 +61,10 @@ export default function AuthProvider({ children }){
     )
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): AuthContextType =>{
+    const context = useContext(AuthContext)
+
+    if(!context) throw Error("useContext debe utilizarse dentro del AuthProvider")
+    return context
+
+} 

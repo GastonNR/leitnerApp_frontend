@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useCajas } from "../context/cajasContext";
+import { useLecciones } from "../context/LeccionesContext";
 import "../css/leccionesModal.css";
 
 export default function LeccionesModal() {
-    const { lecciones, leccionActiva, crearLeccion, cambiarLeccion, eliminarLeccion, setModalLeccionesAbierto } = useCajas();
+    const { lecciones, leccionActiva, crearLeccion, cambiarLeccion, eliminarLeccion, setModalLeccionesAbierto } = useLecciones();
     const [vista, setVista] = useState("lista"); // "lista" | "nueva"
     const [nombreNueva, setNombreNueva] = useState("");
     const [error, setError] = useState("");

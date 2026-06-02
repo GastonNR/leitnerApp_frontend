@@ -1,33 +1,37 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useAuth } from '../context/AuthContext.js'
 import { useState } from 'react'
-import InputPassword from '../components/InputPassword.jsx'
+import InputPassword from '../components/InputPassword.js'
 import Input from '../components/Input.jsx'
 import ButtonSubmit from '../components/ButtonSubmit.jsx'
 import styles from '../css/auth.module.css'
+import type { LoginRequest } from '../types/auth.types.js'
 
 export default function LoginForm() {
 
     const navigate = useNavigate()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errorEmail, setErrorEmail] = useState(false)
-    const [errorPass, setErrorPass] = useState(false)
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [errorEmail, setErrorEmail] = useState<boolean>(false)
+    const [errorPass, setErrorPass] = useState<boolean>(false)
     const { login } = useAuth()
 
-    async function validar() {
+    async function validar(): Promise<void> {
 
         const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-        let camposValidos = 0;
+        let camposValidos = 0
 
         if (!email_regex.test(email)) {
             setErrorEmail(prev=>!prev)
-            camposValidos++;
+            camposValidos++
         }
 
         if (camposValidos === 0) {
-            const datos = { email: email, password: password }
+            const datos: LoginRequest = {
+                email: email,
+                password: password
+            }
 
             const respuesta = await login(datos)
             
