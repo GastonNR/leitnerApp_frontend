@@ -4,7 +4,8 @@ import LoginForm from "./features/auth/pages/LoginForm.tsx"
 import Registro from "./features/auth/pages/Registro.tsx"
 import LeitnerApp from "./features/app/pages/LeitnerApp.jsx"
 import RutaProtegida from "./routes/RutaProtegida.jsx"
-import CajasProvider from "./features/app/context/cajasContext.jsx"
+
+import LeccionesProvider from "./features/app/context/LeccionesContext.tsx"
 import AuthProvider from "./features/auth/context/AuthContext.tsx"
 import "./index.css"
 
@@ -20,9 +21,9 @@ function App() {
 
           <Route element={<RutaProtegida />} >
             <Route path="/leitnerApp" element={
-              <CajasProvider>
+              <LeccionesProvider>
                 <LeitnerApp />
-              </CajasProvider>
+              </LeccionesProvider>
             } />
           </Route>
 

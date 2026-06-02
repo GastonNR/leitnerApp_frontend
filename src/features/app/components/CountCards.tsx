@@ -1,6 +1,6 @@
-import React from 'react'
+import type { CountCardsProps } from "../types/components.types"
 
-export default function CountCards({id, texto, resaltado, caja}) {
+export default function CountCards({id, texto, resaltado, caja}: CountCardsProps) {
 
   const cantidadTarjetas = caja?.tarjetas?.length || 0
 

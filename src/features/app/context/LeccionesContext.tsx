@@ -1,38 +1,44 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { crearLeccionRequest, deleteLecciones, eliminarTarjetaService, getLecciones, guardarLeccion, guardarNuevaTarjeta } from "../services/lecciones.service";
-import { useAuth } from '../../auth/context/AuthContext.tsx'
+import type {
+  LeccionesContextType,
+  LeccionesProviderProps,
+  Leccion,
+  Tarjeta
+} from '../types/context.types'
+import { useAuth } from '../../auth/context/AuthContext'
 
-const CajasContext = createContext();
+const LeccionesContext = createContext<LeccionesContextType | null>(null)
 
-export default function CajasProvider({ children }) {
+export default function LeccionesProvider({ children }: LeccionesProviderProps) {
 
-  const [tarjetasDeHoy, setTarjetasDeHoy] = useState([])
+  const [tarjetasDeHoy, setTarjetasDeHoy] = useState<Tarjeta[]>([])
   const { token } = useAuth()
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState<boolean>(true)
 
   // Manejo de lecciones
-  const [lecciones, setLecciones] = useState([]); // [{ id, nombre, cajas }]
-  const [leccionActivaId, setLeccionActivaId] = useState(localStorage.getItem("leccion_activa") || null) // 'id'
+  const [lecciones, setLecciones] = useState<Leccion[]>([]); // [{ id, nombre, cajas }]
+  const [leccionActivaId, setLeccionActivaId] = useState<string | null>(localStorage.getItem("leccion_activa") || null) // 'id'
   const leccionActiva = lecciones.find(l => l._id === leccionActivaId)
 
   // Modal de lecciones
-  const [modalLeccionesAbierto, setModalLeccionesAbierto] = useState(false);
+  const [modalLeccionesAbierto, setModalLeccionesAbierto] = useState<boolean>(false);
 
   //Trae todas las lecciones de la base de datos al inicio.
   useEffect(() => {
-    const traerLeccionesDB = async () => {
+    const traerLeccionesDB = async (): Promise<void> => {
       try {
-        const leccionesEncontradas = await getLecciones(token)
+        const leccionesEncontradas: Array<Leccion> = await getLecciones(token)
 
         if (leccionesEncontradas?.length > 0) {
           setLecciones(leccionesEncontradas)
 
           const idGuardado = localStorage.getItem("leccion_activa")
           const existeLeccion = leccionesEncontradas.some(l => l._id === idGuardado)
-          const idInicial = existeLeccion ? idGuardado : leccionesEncontradas[0]._id
-
+          const idInicial: string | null = existeLeccion ? idGuardado : leccionesEncontradas[0]._id
+          if(idInicial) localStorage.setItem("leccion_activa", idInicial)
           setLeccionActivaId(idInicial)
-          localStorage.setItem("leccion_activa", idInicial)
+          
         }
 
 
@@ -87,11 +93,11 @@ export default function CajasProvider({ children }) {
   }, [leccionActiva])
 
   // Crear nueva lección
-  const crearLeccion = async (nombre) => {
+  const crearLeccion = async (nombre: string): Promise<void> => {
 
     try {
       const nombreNuevaLeccion = nombre.trim()
-      const nuevaLeccion = await crearLeccionRequest(nombreNuevaLeccion, token)
+      const nuevaLeccion: Leccion = await crearLeccionRequest(nombreNuevaLeccion, token)
 
       setLecciones(prev => [...prev, nuevaLeccion])
       setLeccionActivaId(nuevaLeccion._id)
@@ -108,7 +114,7 @@ export default function CajasProvider({ children }) {
   }
 
   // Cambiar a una lección existente
-  const cambiarLeccion = (leccionId) => {
+  const cambiarLeccion = (leccionId: string) => {
 
     setLeccionActivaId(leccionId)
     localStorage.setItem("leccion_activa", leccionId)
@@ -118,19 +124,19 @@ export default function CajasProvider({ children }) {
   }
 
   // Eliminar lección
-  const eliminarLeccion = async (id) => {
+  const eliminarLeccion = async (id: string): Promise<void> => {
 
     try {
       await deleteLecciones(id, token)
 
-      const nuevasLecciones = lecciones.filter(l => l._id !== id)
+      const nuevasLecciones: Array<Leccion> = lecciones.filter(l => l._id !== id)
       setLecciones(nuevasLecciones)
 
       if (leccionActivaId === id) {
-        const nuevaLeccionActiva = nuevasLecciones[0]?._id || null
+        const nuevaLeccionActiva: string | null = nuevasLecciones[0]?._id || null
         setLeccionActivaId(nuevaLeccionActiva)
 
-        if (!nuevaLeccionActiva) {
+        if (nuevaLeccionActiva) {
           localStorage.setItem("leccion_activa", nuevaLeccionActiva)
         } else {
           localStorage.removeItem("leccion_activa")
@@ -149,7 +155,10 @@ export default function CajasProvider({ children }) {
   //===========//
   // TARJETAS //
   //==========//
-  const crearNuevaTarjeta = async (leccionId, tarjeta) => {
+  const crearNuevaTarjeta = async (leccionId: string, tarjeta: Tarjeta) => {
+
+    if(!leccionActiva) return
+
     const nuevaTarjeta = await guardarNuevaTarjeta(leccionActiva._id, tarjeta, token)
 
     const nuevasCajas = leccionActiva.cajas.map((caja, index) => {
@@ -179,9 +188,9 @@ export default function CajasProvider({ children }) {
     )
   }
 
-  const actualizarTarjeta = async (esCorrecta, tarjeta) => {
+  const actualizarTarjeta = async (esCorrecta: boolean, tarjeta: Tarjeta): Promise<Leccion[]> => {
 
-    const leccionesActualizadas = lecciones.map(leccion => {
+    const leccionesActualizadas: Leccion[] = lecciones.map(leccion => {
 
       if (leccion._id !== leccionActivaId) return leccion
 
@@ -209,7 +218,7 @@ export default function CajasProvider({ children }) {
     return leccionesActualizadas
   }
 // ACTUALIZA LAS TARJETAS DESPUÉS DE UNA REVISIÓN DE LA LECCIÓN ACTIVA
-  const guardar = async (leccionesActualizadas) => {
+  const guardar = async (leccionesActualizadas: Leccion[]): Promise<{ok: true} | undefined> => {
 
     const leccionActualizada = leccionesActualizadas.find(
       l => l._id === leccionActivaId
@@ -232,7 +241,7 @@ export default function CajasProvider({ children }) {
     }
   }
 
-  const eliminarTarjetaContext = async (indexCaja, cajaElegida, indiceCajaNum) => {
+  const eliminarTarjetaContext = async (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
 
     const tarjetaId = cajaElegida[indexCaja]._id
     const eliminarYActualizar = await eliminarTarjetaService(tarjetaId, token)
@@ -263,7 +272,7 @@ export default function CajasProvider({ children }) {
 
   //RETURN
   return (
-    <CajasContext.Provider value={{
+    <LeccionesContext.Provider value={{
       tarjetasDeHoy,
       lecciones,
       setLecciones,
@@ -281,8 +290,15 @@ export default function CajasProvider({ children }) {
       setModalLeccionesAbierto,
     }}>
       {children}
-    </CajasContext.Provider>
+    </LeccionesContext.Provider>
   );
 }
 
-export const useCajas = () => useContext(CajasContext);
+export const useLecciones = () => {
+  const context = useContext(LeccionesContext)
+
+  if(!context) throw new Error("useLecciones debe utilizarse dentro de LeccionesProvider")
+  
+  return context
+
+}

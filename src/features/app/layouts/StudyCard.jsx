@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import "../css/studyCard.css"
-import { useCajas } from '../context/cajasContext'
+import { useLecciones } from '../context/LeccionesContext'
 
 export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }) {
 
-    const { leccionActivaId, lecciones, setLecciones, actualizarTarjeta, guardar } = useCajas()
+    const { leccionActivaId, lecciones, setLecciones, actualizarTarjeta, guardar } = useLecciones()
 
     const [flipped, setFlipped] = useState(false)
 

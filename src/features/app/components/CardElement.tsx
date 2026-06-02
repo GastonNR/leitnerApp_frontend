@@ -1,7 +1,7 @@
-//import { useCajas } from "../context/cajasContext"
+import type { CardElementProps } from "../types/components.types"
 import "../css/cardElement.css"
 
-export default function CardElement({ pregunta, respuesta, proxima_revision, onEliminar }) {
+export default function CardElement({ pregunta, respuesta, proxima_revision, onEliminar }: CardElementProps) {
 
   return (
     <div className="cardElement">
