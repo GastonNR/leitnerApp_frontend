@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
+import { useState, MouseEvent } from 'react'
 import "../css/studyCard.css"
 import { useLecciones } from '../context/LeccionesContext'
+import { StudyCardProps } from '../types/components.types'
 
-export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }) {
+export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }: StudyCardProps) {
 
-    const { leccionActivaId, lecciones, setLecciones, actualizarTarjeta, guardar } = useLecciones()
+    const { actualizarTarjeta, guardar } = useLecciones()
 
-    const [flipped, setFlipped] = useState(false)
+    const [flipped, setFlipped] = useState<boolean>(false)
 
-    const handleFlipped = () => {
+    const handleFlipped = (): void => {
         setFlipped(prev => !prev)
     }
 
-    const manejoDeCajas = async (e) => {
+    const manejoDeCajas = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
 
-        const boton = e.target.id
-
+        const boton = event.currentTarget.id
         if (boton !== 'btn-correct' && boton !== 'btn-incorrect') return
 
         const esCorrecta = boton === 'btn-correct'
@@ -34,7 +34,7 @@ export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarj
         } else {
             setTarjetaIndex(-1)
             const estaGuardada = await guardar(leccionesActualizadas)
-            if(estaGuardada.ok) alert("Lección actualizada")
+            if(estaGuardada?.ok) alert("Lección actualizada")
         }
     }
 

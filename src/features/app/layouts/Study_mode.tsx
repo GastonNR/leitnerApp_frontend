@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import "../css/study_mode.css"
+import { useState } from 'react'
 import StudyCard from './StudyCard'
 import { useLecciones } from '../context/LeccionesContext'
+import "../css/study_mode.css"
 
 export default function Study_mode() {
 
     const {tarjetasDeHoy} = useLecciones()
-    const [tarjetaIndex, setTarjetaIndex] = useState(0)
+    const [tarjetaIndex, setTarjetaIndex] = useState<number>(0)
 
     return (
         <div id="study-container" className="study-container">

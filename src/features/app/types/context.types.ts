@@ -13,7 +13,7 @@ export interface LeccionesContextType{
     crearLeccion: (nombre: string)=> Promise<void>
     cambiarLeccion: (leccionId: string)=> void
     eliminarLeccion: (id: string)=> Promise<void>
-    crearNuevaTarjeta: (leccionId: string, tarjeta: Tarjeta)=> Promise<void>
+    crearNuevaTarjeta: (leccionId: string, tarjeta: NuevaTarjeta)=> Promise<void>
     actualizarTarjeta: (esCorrecta: boolean, tarjeta: Tarjeta)=> Promise<Leccion[]>
     guardar: (leccionesActualizadas: Leccion[])=> Promise<{ok: true} | undefined>
     eliminarTarjetaContext: (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number)=> Promise<boolean>
@@ -43,4 +43,9 @@ export interface Tarjeta{
     proxima_revision: Date
     es_correcta: boolean
     _id: string
+}
+
+export interface NuevaTarjeta{
+    pregunta: string
+    respuesta: string
 }

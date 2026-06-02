@@ -1,10 +1,18 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { crearLeccionRequest, deleteLecciones, eliminarTarjetaService, getLecciones, guardarLeccion, guardarNuevaTarjeta } from "../services/lecciones.service";
+import {
+  crearLeccionService,
+  deleteLeccionService,
+  eliminarTarjetaService,
+  getLeccionesService,
+  guardarLeccionService,
+  crearNuevaTarjetaService
+} from "../services/lecciones.service";
 import type {
   LeccionesContextType,
   LeccionesProviderProps,
   Leccion,
-  Tarjeta
+  Tarjeta,
+  NuevaTarjeta
 } from '../types/context.types'
 import { useAuth } from '../../auth/context/AuthContext'
 
@@ -28,7 +36,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   useEffect(() => {
     const traerLeccionesDB = async (): Promise<void> => {
       try {
-        const leccionesEncontradas: Array<Leccion> = await getLecciones(token)
+        const leccionesEncontradas: Array<Leccion> = await getLeccionesService()
 
         if (leccionesEncontradas?.length > 0) {
           setLecciones(leccionesEncontradas)
@@ -97,7 +105,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
 
     try {
       const nombreNuevaLeccion = nombre.trim()
-      const nuevaLeccion: Leccion = await crearLeccionRequest(nombreNuevaLeccion, token)
+      const nuevaLeccion: Leccion = await crearLeccionService(nombreNuevaLeccion)
 
       setLecciones(prev => [...prev, nuevaLeccion])
       setLeccionActivaId(nuevaLeccion._id)
@@ -127,7 +135,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   const eliminarLeccion = async (id: string): Promise<void> => {
 
     try {
-      await deleteLecciones(id, token)
+      await deleteLeccionService(id)
 
       const nuevasLecciones: Array<Leccion> = lecciones.filter(l => l._id !== id)
       setLecciones(nuevasLecciones)
@@ -155,11 +163,11 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   //===========//
   // TARJETAS //
   //==========//
-  const crearNuevaTarjeta = async (leccionId: string, tarjeta: Tarjeta) => {
+  const crearNuevaTarjeta = async (leccionId: string, tarjeta: NuevaTarjeta) => {
 
     if(!leccionActiva) return
 
-    const nuevaTarjeta = await guardarNuevaTarjeta(leccionActiva._id, tarjeta, token)
+    const nuevaTarjeta = await crearNuevaTarjetaService(leccionActiva._id, tarjeta)
 
     const nuevasCajas = leccionActiva.cajas.map((caja, index) => {
 
@@ -226,7 +234,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
 
     if (!leccionActualizada) return
 
-    const respuesta = await guardarLeccion(leccionActualizada, token)
+    const respuesta: Leccion = await guardarLeccionService(leccionActualizada)
 
     if (respuesta) {
 
@@ -244,7 +252,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   const eliminarTarjetaContext = async (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
 
     const tarjetaId = cajaElegida[indexCaja]._id
-    const eliminarYActualizar = await eliminarTarjetaService(tarjetaId, token)
+    const eliminarYActualizar = await eliminarTarjetaService(tarjetaId)
 
     setLecciones(prev =>
       

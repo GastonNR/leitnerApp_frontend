@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, MouseEvent, ChangeEvent, KeyboardEvent } from "react"
 import { useLecciones } from "../context/LeccionesContext";
 import "../css/leccionesModal.css";
 
 export default function LeccionesModal() {
-    const { lecciones, leccionActiva, crearLeccion, cambiarLeccion, eliminarLeccion, setModalLeccionesAbierto } = useLecciones();
-    const [vista, setVista] = useState("lista"); // "lista" | "nueva"
-    const [nombreNueva, setNombreNueva] = useState("");
-    const [error, setError] = useState("");
+    const { lecciones, leccionActiva, crearLeccion, cambiarLeccion, eliminarLeccion, setModalLeccionesAbierto } = useLecciones()
+    const [vista, setVista] = useState<string>("lista")
+    const [nombreNueva, setNombreNueva] = useState<string>("")
+    const [error, setError] = useState<string>("")
 
-    const handleCrear = () => {
+    const handleCrear = async (): Promise<void> => {
         if (!nombreNueva.trim()) {
             setError("El nombre no puede estar vacío.");
             return;
@@ -22,13 +22,13 @@ export default function LeccionesModal() {
         setError("");
     };
 
-    const handleEliminar = (e, id) => {
-        e.stopPropagation();
+    const handleEliminar = async (e: MouseEvent<HTMLButtonElement>, id: string): Promise<void> => {
+        e.stopPropagation()
         if (window.confirm("¿Eliminás esta lección? Se perderán todas sus tarjetas.")) {
             console.log("Lección id: ", id)
-            eliminarLeccion(id);
+            await eliminarLeccion(id)
         }
-    };
+    }
 
     return (
         <div className="lm-overlay" onClick={() => setModalLeccionesAbierto(false)}>
@@ -91,7 +91,7 @@ export default function LeccionesModal() {
                                                 )}
                                                 <button
                                                     className="lm-btn-eliminar"
-                                                    onClick={(e) => handleEliminar(e, leccion._id)}
+                                                    onClick={(e: MouseEvent<HTMLButtonElement>) => handleEliminar(e, leccion._id)}
                                                     aria-label="Eliminar lección"
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,8 +120,8 @@ export default function LeccionesModal() {
                                 className={`lm-input ${error ? "lm-input--error" : ""}`}
                                 placeholder="Ej: Inglés, Biología, Historia..."
                                 value={nombreNueva}
-                                onChange={e => { setNombreNueva(e.target.value); setError(""); }}
-                                onKeyDown={e => e.key === "Enter" && handleCrear()}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => { setNombreNueva(e.target.value); setError(""); }}
+                                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleCrear()}
                                 autoFocus
                             />
                             {error && <p className="lm-error">{error}</p>}

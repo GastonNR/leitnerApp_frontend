@@ -1,9 +1,7 @@
-import Header from '../layouts/Header.jsx'
-import Sidebar from '../layouts/Sidebar.jsx'
-import Study_mode from '../layouts/Study_mode.jsx'
-import Boxes from '../layouts/Boxes.jsx'
-//import BoxModal from '../layouts/BoxModal.jsx'
-//import LeccionesProvider from '../context/LeccionesContext.tsx'
+import Header from '../layouts/Header.tsx'
+import Sidebar from '../layouts/Sidebar.tsx'
+import Study_mode from '../layouts/Study_mode.tsx'
+import Boxes from '../layouts/Boxes.tsx'
 import "../css/leitnerApp.css"
 
 export default function LeitnerApp () {

@@ -1,13 +1,12 @@
-import React, { MouseEventHandler } from "react"
-import CountCards from "../components/CountCards"
-import { Caja } from "./context.types"
+import { MouseEventHandler, Dispatch, SetStateAction } from "react"
+import { Caja, Tarjeta } from "./context.types"
 
 export interface BoxProps{
     caja: string
     periodo: string
     parrafo: string
-    setEstiloDisplay: React.Dispatch<React.SetStateAction<boolean>>
-    setIndiceCaja: React.Dispatch<React.SetStateAction<string>>
+    setEstiloDisplay: Dispatch<SetStateAction<boolean>>
+    setIndiceCaja: Dispatch<SetStateAction<string>>
 }
 
 export interface CardElementProps{
@@ -28,5 +27,17 @@ export interface QuestionAnswerProps{
     textAreaId: string
     textLabel: string
     value: string
-    setOnChange: React.Dispatch<React.SetStateAction<string>>
+    setOnChange: Dispatch<SetStateAction<string>>
+}
+
+export interface BoxModalProps{
+    setEstiloDisplay: Dispatch<SetStateAction<boolean>>
+    indiceCaja: string
+}
+
+export interface StudyCardProps{
+    cantTarjetas: number
+    tarjeta: Tarjeta
+    tarjetaIndex: number
+    setTarjetaIndex: Dispatch<SetStateAction<number>>
 }

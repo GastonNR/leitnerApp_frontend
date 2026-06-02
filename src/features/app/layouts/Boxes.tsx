@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import "../css/boxes.css"
+import { useState } from 'react'
 import Box from '../components/Box'
 import BoxModal from './BoxModal'
+import "../css/boxes.css"
 
 export default function Boxes() {
 
-  const [ estiloDisplay, setEstiloDisplay ] = useState(false)
-  const [ indiceCaja, setIndiceCaja] = useState(null)
+  const [ estiloDisplay, setEstiloDisplay ] = useState<boolean>(false)
+  const [ indiceCaja, setIndiceCaja] = useState<string>('')
 
   return (
 
