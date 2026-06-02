@@ -2,7 +2,7 @@ const API_URL = import.meta.env.VITE_HOME_URL
 
 // MANEJO DE LECCIONES
 
-export const crearLeccionRequest = async (nuevaLeccion, token) => {
+export const crearLeccionService = async (nuevaLeccion, token) => {
 
     const res = await fetch(`${API_URL}/leccion`, {
         method: "POST",
@@ -20,7 +20,7 @@ export const crearLeccionRequest = async (nuevaLeccion, token) => {
 
 }
 
-export const getLecciones = async (token) => {
+export const getLeccionesService = async (token) => {
 
     const res = await fetch(`${API_URL}/`, {
         method: 'GET',
@@ -35,7 +35,7 @@ export const getLecciones = async (token) => {
 
 }
 
-export const deleteLecciones = async (id, token) =>{
+export const deleteLeccionService = async (id, token) =>{
 
     const res = await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
@@ -49,7 +49,7 @@ export const deleteLecciones = async (id, token) =>{
 
 }
 
-export const guardarLeccion = async (leccion, token) => {
+export const guardarLeccionService = async (leccion, token) => {
 
     const leccionId = leccion._id
     
@@ -76,7 +76,7 @@ export const guardarLeccion = async (leccion, token) => {
 
 // MANEJO DE TARJETAS
 
-export const guardarNuevaTarjeta = async (leccion_id, datosTarjeta, token) => {
+export const crearNuevaTarjetaService = async (leccion_id, datosTarjeta, token) => {
     
     const nuevaTarjeta = await fetch(`${API_URL}/leccion/${leccion_id}`, {
         method: 'POST',

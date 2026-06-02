@@ -1,7 +1,7 @@
 import { replace, useNavigate } from 'react-router-dom'
 import { useLecciones } from '../context/LeccionesContext'
 import LeccionesModal from './LeccionesModal'
-import { guardarLeccion } from '../services/lecciones.service'
+import { guardarLeccionService } from '../services/lecciones.service'
 import { useAuth } from '../../auth/context/AuthContext'
 import "../css/header.css"
 
@@ -17,7 +17,7 @@ export default function Header() {
 
   async function guardar(): Promise<void> {
     const leccion = leccionActiva
-    const leccionActualizada = await guardarLeccion(leccion)
+    const leccionActualizada = await guardarLeccionService(leccion)
 
     if(leccionActualizada) alert("Lección guardada.")
     
