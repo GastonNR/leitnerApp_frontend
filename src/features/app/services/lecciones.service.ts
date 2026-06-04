@@ -6,9 +6,10 @@ import { CrearLeccionResponse, DeleteLeccionResponse } from "../types/services.t
 
 export const crearLeccionService = async (nuevaLeccion: string): Promise<Leccion> => {
 
-    const {data} = await api.post<CrearLeccionResponse>('/lecciones', nuevaLeccion)
+    const {data} = await api.post<CrearLeccionResponse>('/lecciones/leccion', {nuevaLeccion})
 
-    if(!data.ok) throw new Error("Error al crear lección.")    
+    if(!data.ok) throw new Error("Error al crear lección.")
+    console.log("data: ", data)   
     return data.nuevaLeccion
 
 }

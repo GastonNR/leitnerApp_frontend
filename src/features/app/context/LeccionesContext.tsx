@@ -106,7 +106,6 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
     try {
       const nombreNuevaLeccion = nombre.trim()
       const nuevaLeccion: Leccion = await crearLeccionService(nombreNuevaLeccion)
-
       setLecciones(prev => [...prev, nuevaLeccion])
       setLeccionActivaId(nuevaLeccion._id)
 
