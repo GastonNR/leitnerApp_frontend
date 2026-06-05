@@ -106,7 +106,6 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
     try {
       const nombreNuevaLeccion = nombre.trim()
       const nuevaLeccion: Leccion = await crearLeccionService(nombreNuevaLeccion)
-
       setLecciones(prev => [...prev, nuevaLeccion])
       setLeccionActivaId(nuevaLeccion._id)
 
@@ -227,17 +226,16 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   }
 // ACTUALIZA LAS TARJETAS DESPUÉS DE UNA REVISIÓN DE LA LECCIÓN ACTIVA
   const guardar = async (leccionesActualizadas: Leccion[]): Promise<{ok: true} | undefined> => {
-
+    
     const leccionActualizada = leccionesActualizadas.find(
       l => l._id === leccionActivaId
     )
-
+    
     if (!leccionActualizada) return
 
     const respuesta: Leccion = await guardarLeccionService(leccionActualizada)
 
     if (respuesta) {
-
       setLecciones(prev =>
         prev.map(leccion => {
           if (leccion._id !== leccionActivaId) return leccion
