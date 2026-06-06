@@ -1,4 +1,5 @@
-import type { CountCardsProps } from "../types/components.types"
+import type { CountCardsProps } from "../../types/components.types"
+import Circle from "../atoms/Circle"
 
 export default function CountCards({id, texto, resaltado, caja}: CountCardsProps) {
 
@@ -7,7 +8,7 @@ export default function CountCards({id, texto, resaltado, caja}: CountCardsProps
   return (
     <div className="texto_caja_sidebar">
         <span className="texto__span">{texto}</span>
-        <span id={id} className={resaltado}>{cantidadTarjetas}</span>
+        <Circle id={id} resaltado={resaltado} cantidadTarjetas={cantidadTarjetas} />
     </div>
   )
 }

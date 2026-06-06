@@ -1,5 +1,5 @@
 import Header from '../layouts/Header.tsx'
-import Sidebar from '../layouts/Sidebar.tsx'
+import Sidebar from '../components/organisms/Sidebar.js'
 import Study_mode from '../layouts/Study_mode.tsx'
 import Boxes from '../layouts/Boxes.tsx'
 import "../css/leitnerApp.css"
