@@ -1,4 +1,4 @@
-import BookIcon from '../atoms/BookIcon'
+import BookIcon from '../atoms/IconSvg'
 
 interface ActiveLectionHeaderProps{
     nombreLeccionActiva: string

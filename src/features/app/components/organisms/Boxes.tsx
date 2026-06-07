@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Box from '../components/molecules/Box'
+import Box from '../molecules/Box'
 import BoxModal from './BoxModal'
 import "../css/boxes.css"
 

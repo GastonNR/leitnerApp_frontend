@@ -1,7 +1,10 @@
-import { useLecciones } from "../context/LeccionesContext"
-import CardElement from "../components/CardElement"
-import { BoxModalProps } from "../types/components.types"
-import type { Tarjeta } from "../types/context.types"
+import { useLecciones } from "../../context/LeccionesContext"
+import CardElement from "../molecules/CardElement"
+import { BoxModalProps } from "../../types/components.types"
+import type { Tarjeta } from "../../types/context.types"
+import CustomButton from "../molecules/CustomButton"
+import Heading from "../atoms/Heading"
+import Paragraph from "../atoms/Paragraph"
 import "../css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps) {
@@ -10,13 +13,13 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva?.cajas[indiceCajaNum]?.tarjetas || []
 
-    console.log("indice caja: ", indiceCaja)
-    console.log("indice caja numero: ", indiceCajaNum)
+    //console.log("indice caja: ", indiceCaja)
+    //console.log("indice caja numero: ", indiceCajaNum)
 
     const eliminarTarjeta = async (indexAEliminar: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
         const eliminada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
-        if(!eliminada) alert("No se ha podido eliminar la tarjeta.")
-        
+        if (!eliminada) alert("No se ha podido eliminar la tarjeta.")
+
         setEstiloDisplay(false)
     }
 
@@ -24,13 +27,19 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
         <div id="box-modal" className="box-modal">
             <div className="container-box-modal">
                 <div className="contenedor-arriba">
-                    <h3 id="box-modal-title" className="box-modal-texto">Tarjetas en Caja</h3>
-                    <button id="close-box-modal" className="btn_cerrar" onClick={() => setEstiloDisplay(false)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="img_btn_cerrar" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
+
+                    <Heading
+                        id={'box-modal-title'}
+                        nombreEncabezado={'tituloCaja'}
+                        className={'box-modal-texto'}
+                        texto={'Tarjetas en caja'}
+                    />
+
+
+                    <CustomButton id={'close-box-modal'} className={'btn-cerrar'} variante={'cerrar_btn'} onclick={setEstiloDisplay} />
+
                 </div>
+
                 <div className="contenedor-abajo">
                     <div id="box-cards-container" className="box-card-container">
                         {cajaElegida.length > 0 ?
@@ -44,7 +53,10 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                                 />
                             )) : (
                                 <div id="box-empty-message" className="box-empty-message">
-                                    <p className="parr-box-empty-message">No hay tarjetas en esta caja.</p>
+                                    <Paragraph
+                                        className={'parr-box-empty-message'}
+                                        texto={'No hay tarjetas en esta caja.'}
+                                    />
                                 </div>
                             )}
                     </div>

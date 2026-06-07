@@ -1,5 +1,5 @@
 import { useState, MouseEvent, ChangeEvent, KeyboardEvent } from "react"
-import { useLecciones } from "../context/LeccionesContext";
+import { useLecciones } from "../../context/LeccionesContext";
 import "../css/leccionesModal.css";
 
 export default function LeccionesModal() {

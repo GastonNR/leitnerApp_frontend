@@ -1,5 +1,7 @@
 import type { BoxProps } from "../../types/components.types"
+import Button from "../atoms/Button"
 import Heading from "../atoms/Heading"
+import Paragraph from "../atoms/Paragraph"
 import "../css/boxes.css"
 
 export default function Box({caja, periodo, parrafo, setEstiloDisplay, setIndiceCaja}: BoxProps) {
@@ -11,10 +13,9 @@ export default function Box({caja, periodo, parrafo, setEstiloDisplay, setIndice
 
   return (
     <div className="box-highlight box">
-        <Heading nombreEncabezado={'tituloCaja'} clase={'span-caja'} texto={'Caja'} />
-        <h3 className="titulo-caja">Caja {caja} <span className="span-caja">{periodo}</span></h3>
-        <p className="parr_box">{parrafo}</p>
-        <button type='button' className="view-box-btn" data-box="1" onClick={seleccionarCaja}>Ver tarjetas</button>
+        <Heading nombreEncabezado={'tituloCaja'} clase={'span-caja'} texto={`Caja ${periodo}`} />
+        <Paragraph nombreClase={'parr_box'} texto={parrafo} />
+        <Button clase={'view-box-btn'} texto={'Ver tarjetas'} onclick={seleccionarCaja} data_box={'1'} />
     </div>
   )
 }

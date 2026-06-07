@@ -1,4 +1,5 @@
-import type { CardElementProps } from "../types/components.types"
+import type { CardElementProps } from "../../types/components.types"
+import Button from "../atoms/Button"
 import "../css/cardElement.css"
 
 export default function CardElement({ pregunta, respuesta, proxima_revision, onEliminar }: CardElementProps) {
@@ -11,7 +12,7 @@ export default function CardElement({ pregunta, respuesta, proxima_revision, onE
           <div className="proxima_revision">Próxima revisión: { proxima_revision.toLocaleString() }</div>
         </div>
         <div>
-          <button onClick={onEliminar}>Eliminar</button>
+          <Button className={'eliminar-leccion-btn'} texto={'Eliminar'} onclick={onEliminar} />
         </div>
     </div>
   )
