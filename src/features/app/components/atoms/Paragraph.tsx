@@ -1,5 +1,5 @@
 interface ParagraphProps{
-    className: string
+    className?: string
     texto: string
 }
 

@@ -6,7 +6,7 @@ interface CustomButtonProps {
     className: string
     variante: string
     texto?: string
-    onclick: Dispatch<SetStateAction<boolean>>
+    onclick: Dispatch<SetStateAction<any>>
 }
 
 export default function CustomButton({id, className, variante, texto, onclick }: CustomButtonProps) {
@@ -27,5 +27,9 @@ export default function CustomButton({id, className, variante, texto, onclick }:
                 <IconSvg imagenSvg='Xcerrar' />
             </button>
         )
+    }
+
+    if (variante === 'lm-header-btn'){
+        <button className={className} onClick={() => onclick("lista")} >{texto}</button>
     }
 }
