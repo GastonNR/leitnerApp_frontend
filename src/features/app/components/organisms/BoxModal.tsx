@@ -36,7 +36,7 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                     />
 
 
-                    <CustomButton id={'close-box-modal'} className={'btn-cerrar'} variante={'cerrar_btn'} onclick={setEstiloDisplay} />
+                    <CustomButton id={'close-box-modal'} className={'btn-cerrar'} variante={'cerrar_btn'} onclick={()=>setEstiloDisplay(false)} />
 
                 </div>
 
