@@ -27,13 +27,6 @@
     flex-wrap: wrap;
 }
 
-.titulo-header {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
 .header-leccion-activa {
     display: inline-flex;
     align-items: center;

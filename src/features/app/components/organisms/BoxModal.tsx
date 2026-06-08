@@ -30,7 +30,7 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
 
                     <Heading
                         id={'box-modal-title'}
-                        nombreEncabezado={'tituloCaja'}
+                        variante={'h1'}
                         className={'box-modal-texto'}
                         texto={'Tarjetas en caja'}
                     />

@@ -13,7 +13,7 @@ export default function Box({caja, periodo, parrafo, setEstiloDisplay, setIndice
 
   return (
     <div className="box-highlight box">
-        <Heading variante={'tituloCaja'} className={'span-caja'} texto={`Caja ${periodo}`} />
+        <Heading variante={'h3'} className={'titulo_caja'} texto={`Caja ${periodo}`} />
         <Paragraph className={'parr_box'} texto={parrafo} />
         <Button className={'view-box-btn'} texto={'Ver tarjetas'} onclick={seleccionarCaja} data_box={'1'} />
     </div>

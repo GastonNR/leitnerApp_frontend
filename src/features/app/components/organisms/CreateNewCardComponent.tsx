@@ -3,6 +3,7 @@ import { useLecciones } from '../../context/LeccionesContext'
 import QuestionAnswer from '../molecules/QuestionAnswer'
 import type { NuevaTarjeta } from '../../types/context.types'
 import Button from '../atoms/Button'
+import Heading from '../atoms/Heading'
 
 
 export default function CreateNewCardComponent() {
@@ -47,7 +48,8 @@ export default function CreateNewCardComponent() {
 
     return (
         <div className="contenedor_sidebar_inferior">
-            <h2 className="sidebar_titulo">Crear nueva tarjeta</h2>
+            <Heading variante={'h2'} className={'sidebar_titulo'} texto={'Crear nueva tarjeta'} />
+            
             <form id="new-card-form" className="form_card">
                 <QuestionAnswer
                     textAreaId={'card-question'}

@@ -1,0 +1,32 @@
+.titulo_caja {
+    font-weight: 600;
+    color: rgba(31, 41, 55, 1);
+    margin-bottom: 0.5rem;
+}
+.span-caja {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(107, 114, 128, 1);
+}
+.box-modal-texto{
+    font-size:1.125rem;
+    line-height:1.75rem;
+    font-weight: 600;
+    --tw-text-opacity:1;
+    color:rgb(31 41 55 / var(--tw-text-opacity, 1));
+}
+
+.sidebar_titulo {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    color: rgba(31, 41, 55, 1);
+    margin-bottom: 1rem;
+}
+
+.titulo-header {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}

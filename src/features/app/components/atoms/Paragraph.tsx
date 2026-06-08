@@ -1,3 +1,5 @@
+import './css/paragraph.modules.css'
+
 interface ParagraphProps{
     id?: string
     className?: string

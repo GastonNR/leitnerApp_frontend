@@ -1,3 +1,5 @@
+import './css/iconSvg.modules.css'
+
 interface IconSvgProps {
     imagenSvg: string
 }

@@ -1,9 +1,9 @@
 import { useState, MouseEvent } from 'react'
 import "../css/studyCard.css"
-import { useLecciones } from '../context/LeccionesContext'
-import { StudyCardProps } from '../types/components.types'
-import Paragraph from '../components/atoms/Paragraph'
-import Button from '../components/atoms/Button'
+import { useLecciones } from '../../context/LeccionesContext'
+import { StudyCardProps } from '../../types/components.types'
+import Paragraph from '../../components/atoms/Paragraph'
+import Button from '../../components/atoms/Button'
 
 export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }: StudyCardProps) {
 

@@ -4,6 +4,8 @@ import { useLecciones } from '../../context/LeccionesContext'
 import QuestionAnswer from '../molecules/QuestionAnswer'
 import { NuevaTarjeta } from '../../types/context.types'
 import "../../css/sidebar.css"
+import Heading from '../atoms/Heading'
+import Paragraph from '../atoms/Paragraph'
 
 
 export default function Sidebar() {
@@ -13,8 +15,8 @@ export default function Sidebar() {
     return (
         <div className="sidebar">
             <div className="sidebar_superior">
-                <h2 className="sidebar_titulo">Sistema Leitner</h2>
-                <p className="sidebar_parr">Organiza tus tarjetas en 5 cajas según tu nivel de conocimiento. Las tarjetas se mueven entre cajas según tu desempeño.</p>
+                <Heading variante={'h2'} className={'sidebar_titulo'} texto={'Sistema Leitner'} />
+                <Paragraph className={'sidebar_parr'} texto={'Organiza tus tarjetas en 5 cajas según tu nivel de conocimiento. Las tarjetas se mueven entre cajas según tu desempeño.'} />
 
                 {leccionActiva && (
                     <div className="contenedor_texto_caja_sidebar">

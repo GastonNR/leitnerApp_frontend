@@ -1,9 +1,12 @@
+import './css/heading.modules.css'
+
+type HeadingVariante = 'h1' | 'h2' | 'h3'
 
 interface HeadingProps{
   id?: string
   className: string
   texto: string
-  variante: string
+  variante: HeadingVariante
 }
 
 export default function Heading({id, variante, className, texto}: HeadingProps) {

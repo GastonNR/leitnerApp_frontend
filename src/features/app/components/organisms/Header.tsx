@@ -38,11 +38,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="header"> // organismo
+      <header className="header">
           <div className="container-header">
 
               <div className="header-izquierda">
-                  <Heading variante={'tituloIcono'} className={'titulo-header'} texto={'LeitnerApp'}/>
+                  <Heading variante={'h1'} className={'titulo-header'} texto={'LeitnerApp'}/>
                   {leccionActiva && (
                     <ActiveLectionHeader nombreLeccionActiva={leccionActiva.nombre}/>
                   )}

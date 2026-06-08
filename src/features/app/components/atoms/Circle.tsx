@@ -1,3 +1,4 @@
+import './css/circle.modules.css'
 
 interface CircleProps{
     id: string
