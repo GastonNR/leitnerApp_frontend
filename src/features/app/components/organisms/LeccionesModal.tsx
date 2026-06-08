@@ -3,7 +3,7 @@ import { useLecciones } from "../../context/LeccionesContext"
 import CustomButton from "../molecules/CustomButton"
 import Button from "../atoms/Button";
 import Paragraph from "../atoms/Paragraph";
-import "../css/leccionesModal.css";
+import "../../css/leccionesModal.css";
 
 export default function LeccionesModal() {
     const { lecciones, leccionActiva, crearLeccion, cambiarLeccion, eliminarLeccion, setModalLeccionesAbierto } = useLecciones()

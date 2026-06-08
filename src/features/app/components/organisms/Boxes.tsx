@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Box from '../molecules/Box'
 import BoxModal from './BoxModal'
-import "../css/boxes.css"
+import "../../css/boxes.css"
 
 export default function Boxes() {
 

@@ -2,8 +2,8 @@ import { useState, MouseEvent } from 'react'
 import CountCards from '../molecules/CountCards'
 import { useLecciones } from '../../context/LeccionesContext'
 import QuestionAnswer from '../molecules/QuestionAnswer'
-import "../css/sidebar.css"
 import { NuevaTarjeta } from '../../types/context.types'
+import "../../css/sidebar.css"
 
 
 export default function Sidebar() {

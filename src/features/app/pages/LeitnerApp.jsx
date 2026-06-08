@@ -1,10 +1,11 @@
-import Header from '../components/template/Header.js'
-import Sidebar from '../organisms/Sidebar.js'
-import Study_mode from '../organisms/Study_mode.js'
-import Boxes from '../organisms/Boxes.js'
-import "../css/leitnerApp.css"
-import LeitnerAppLayout from '../components/template/LeitnerAppLayout.js'
-import CreateNewCardComponent from '../components/organisms/CreateNewCardComponent.js'
+import Header from '../components/organisms/Header'
+import Sidebar from '../components/organisms/Sidebar'
+//import Study_mode from '../organisms/Study_mode.js'
+import Boxes from '../components/organisms/Boxes'
+import LeitnerAppLayout from '../components/template/LeitnerAppLayout'
+import Calendar from '../components/organisms/Calendar'
+import CreateNewCardComponent from '../components/organisms/CreateNewCardComponent'
+//import "../css/leitnerApp.css"
 
 export default function LeitnerApp () {
   return (

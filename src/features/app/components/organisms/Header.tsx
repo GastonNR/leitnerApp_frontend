@@ -3,11 +3,11 @@ import { useLecciones } from '../../context/LeccionesContext'
 import LeccionesModal from './LeccionesModal'
 //import { guardarLeccionService } from '../services/lecciones.service'
 import { useAuth } from '../../../auth/context/AuthContext'
-import "../css/header.css"
 import ActiveLectionHeader from '../molecules/ActiveLectionHeader'
 import Heading from '../atoms/Heading'
 import Button from '../atoms/Button'
 import CustomButton from '../molecules/CustomButton'
+import "../../css/header.css"
 
 export default function Header() {
   const navigate = useNavigate()
