@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, MouseEvent } from 'react'
 import IconSvg from '../atoms/IconSvg'
 
 interface CustomButtonProps {
@@ -6,16 +6,15 @@ interface CustomButtonProps {
     className: string
     variante: 'btn_leccion' | 'cerrar_btn' | 'lm-header-btn'
     texto?: string
-    onclick: ()=> void
-    //onclick: Dispatch<SetStateAction<any>>
+    onclick: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-export default function CustomButton({id, className, variante, texto, onclick }: CustomButtonProps) {
+export default function CustomButton({ id, className, variante, texto, onclick }: CustomButtonProps) {
 
     const incons: Partial<Record<typeof variante, string>> = {
         btn_leccion: 'libro',
         cerrar_btn: 'Xcerrar'
-    } 
+    }
 
     if (variante === 'btn_leccion') {
         return (
@@ -35,9 +34,10 @@ export default function CustomButton({id, className, variante, texto, onclick }:
         )
     }
 
-    if (variante === 'lm-header-btn'){
-        return(
+    if (variante === 'lm-header-btn') {
+        return (
             <button className={className} onClick={onclick} >{texto}</button>
         )
     }
+
 }
