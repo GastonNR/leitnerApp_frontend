@@ -41,17 +41,17 @@ export default function LeccionesModal() {
                 <div className="lm-header">
                     <div className="lm-tabs">
                         <CustomButton
-                            variante={'lm-headre-btn'}
+                            variante={'lm-header-btn'}
                             className={`lm-tab ${vista === "lista" ? "lm-tab--active" : ""}`}
                             texto='Mis lecciones'
-                            onclick={setVista}
+                            onclick={()=> setVista('lista')}
                         />
 
                         <CustomButton
-                            variante={'lm-headre-btn'}
+                            variante={'lm-header-btn'}
                             className={`lm-tab ${vista === "nueva" ? "lm-tab--active" : ""}`}
-                            texto='Mis lecciones'
-                            onclick={setVista}
+                            texto='+ Nueva Lección'
+                            onclick={()=> setVista('nueva')}
                         />
 
                         {/*
@@ -74,7 +74,7 @@ export default function LeccionesModal() {
                     <CustomButton
                         className={'lm-close'}
                         variante={'cerrar_btn'}
-                        onclick={setModalLeccionesAbierto}
+                        onclick={()=>setModalLeccionesAbierto(false)}
                     />
                     {/*
                     <button className="lm-close" onClick={() => setModalLeccionesAbierto(false)} aria-label="Cerrar">
@@ -96,7 +96,7 @@ export default function LeccionesModal() {
                                 </svg>
                                 <Paragraph texto={'No tenés lecciones creadas todavía.'} />
                                 
-                                <Button className={'lm-btn-primary'} texto={'Crear primera lección'} onclick={setVista} />
+                                <Button className={'lm-btn-primary'} texto={'Crear primera lección'} onclick={()=>setVista('nueva')} />
                                 {/*
                                 
                                 <button className="lm-btn-primary" onClick={() => setVista("nueva")}>

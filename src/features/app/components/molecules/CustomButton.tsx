@@ -4,16 +4,22 @@ import IconSvg from '../atoms/IconSvg'
 interface CustomButtonProps {
     id?: string
     className: string
-    variante: string
+    variante: 'btn_leccion' | 'cerrar_btn' | 'lm-header-btn'
     texto?: string
-    onclick: Dispatch<SetStateAction<any>>
+    onclick: ()=> void
+    //onclick: Dispatch<SetStateAction<any>>
 }
 
 export default function CustomButton({id, className, variante, texto, onclick }: CustomButtonProps) {
 
+    const incons: Partial<Record<typeof variante, string>> = {
+        btn_leccion: 'libro',
+        cerrar_btn: 'Xcerrar'
+    } 
+
     if (variante === 'btn_leccion') {
         return (
-            <button className={className} onClick={() => onclick(true)}>
+            <button className={className} onClick={onclick}>
                 <IconSvg imagenSvg='libro' />
                 {texto}
             </button>
@@ -23,13 +29,15 @@ export default function CustomButton({id, className, variante, texto, onclick }:
 
     if (variante === 'cerrar_btn') {
         return (
-            <button id={id} className={className} onClick={() => onclick(false)}>
+            <button id={id} className={className} onClick={onclick}>
                 <IconSvg imagenSvg='Xcerrar' />
             </button>
         )
     }
 
     if (variante === 'lm-header-btn'){
-        <button className={className} onClick={() => onclick("lista")} >{texto}</button>
+        return(
+            <button className={className} onClick={onclick} >{texto}</button>
+        )
     }
 }

@@ -50,7 +50,7 @@ export default function Header() {
 
               <div className="header-derecha">
                   <span id="user-name" className="span md:inline">Usuario</span>
-                  <CustomButton variante={'btn_leccion'} className={'header-btn header-btn--leccion'} texto={'Lecciones'} onclick= {setModalLeccionesAbierto}/>
+                  <CustomButton variante={'btn_leccion'} className={'header-btn header-btn--leccion'} texto={'Lecciones'} onclick= {()=>setModalLeccionesAbierto(true)}/>
                   <Button className={'logout-btn'} texto={'Cerrar sesión'} onclick={cerrarSesion}/>
               </div>
           </div>
