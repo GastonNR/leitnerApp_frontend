@@ -2,6 +2,8 @@ import { useState, MouseEvent } from 'react'
 import "../css/studyCard.css"
 import { useLecciones } from '../context/LeccionesContext'
 import { StudyCardProps } from '../types/components.types'
+import Paragraph from '../components/atoms/Paragraph'
+import Button from '../components/atoms/Button'
 
 export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }: StudyCardProps) {
 
@@ -48,44 +50,37 @@ export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarj
                 <div className="card-inner">
 
                     <div className="card-front">
-                        <p id="current-question">
-                            {tarjeta.pregunta}
-                        </p>
+                        <Paragraph id={'current-question'} texto={tarjeta.pregunta} />
                     </div>
 
                     <div className="card-back">
-                        <p id="current-answer">
-                            {tarjeta.respuesta}
-                        </p>
+                        <Paragraph id={'current-answer'} texto={tarjeta.respuesta} />
                     </div>
 
                 </div>
             </div>
 
-            <p className="parr_inf">
-                Haz clic en la tarjeta para voltearla
-            </p>
+            <Paragraph className='parr_inf' texto='Haz click en la tarjeta para voltearla'/>
 
             <div
                 id="answer-buttons"
                 className="grid grid-cols-2 gap-4"
                 style={{ display: flipped ? "flex" : "none" }}
             >
-                <button
+                <Button
                     id="btn-incorrect"
-                    className="answer-buttons btn-incorrect"
-                    onClick={manejoDeCajas}
-                >
-                    No lo sabía
-                </button>
+                    className={'answer-buttons btn-incorrect'}
+                    texto={'No lo sabía'}
+                    onclick={manejoDeCajas}
+                />
 
-                <button
+                <Button
                     id="btn-correct"
-                    className="answer-buttons btn-correct"
-                    onClick={manejoDeCajas}
-                >
-                    Lo sabía
-                </button>
+                    className={'answer-buttons btn-correct'}
+                    texto={'Lo sabía'}
+                    onclick={manejoDeCajas}
+                />
+
             </div>
 
         </div>

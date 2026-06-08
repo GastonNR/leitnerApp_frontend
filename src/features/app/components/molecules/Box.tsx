@@ -13,9 +13,9 @@ export default function Box({caja, periodo, parrafo, setEstiloDisplay, setIndice
 
   return (
     <div className="box-highlight box">
-        <Heading nombreEncabezado={'tituloCaja'} clase={'span-caja'} texto={`Caja ${periodo}`} />
-        <Paragraph nombreClase={'parr_box'} texto={parrafo} />
-        <Button clase={'view-box-btn'} texto={'Ver tarjetas'} onclick={seleccionarCaja} data_box={'1'} />
+        <Heading nombreEncabezado={'tituloCaja'} className={'span-caja'} texto={`Caja ${periodo}`} />
+        <Paragraph className={'parr_box'} texto={parrafo} />
+        <Button className={'view-box-btn'} texto={'Ver tarjetas'} onclick={seleccionarCaja} data_box={'1'} />
     </div>
   )
 }

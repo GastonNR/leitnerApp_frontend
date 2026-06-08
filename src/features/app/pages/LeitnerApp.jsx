@@ -1,25 +1,22 @@
-import Header from '../layouts/Header.tsx'
-import Sidebar from '../components/organisms/Sidebar.js'
-import Study_mode from '../layouts/Study_mode.tsx'
-import Boxes from '../components/organisms/Boxes.js'
+import Header from '../components/template/Header.js'
+import Sidebar from '../organisms/Sidebar.js'
+import Study_mode from '../organisms/Study_mode.js'
+import Boxes from '../organisms/Boxes.js'
 import "../css/leitnerApp.css"
+import LeitnerAppLayout from '../components/template/LeitnerAppLayout.js'
+import CreateNewCardComponent from '../components/organisms/CreateNewCardComponent.js'
 
 export default function LeitnerApp () {
   return (
 
     <div id="main-app" className="main-app">
-        <Header />
-        <main className="main">
-            <div className="div-1">
-                <Sidebar/>
-            </div>
-            <div className="div-2">
-                <Study_mode />
-            </div>
-            <div className='div-3'>
-                <Boxes />              
-            </div>
-        </main>
+        <LeitnerAppLayout
+            header={<Header/>}
+            sidebar={<Sidebar/>}
+            boxes={<Boxes/>}
+            calendar={<Calendar/>}
+            createNewCardComponent={<CreateNewCardComponent/>}
+        />
     </div>
 
   )

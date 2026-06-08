@@ -1,0 +1,22 @@
+import { ReactNode } from "react"
+import styles from './leitnerAppLayout.module.css'
+
+interface LeitnerAppLayoutProps{
+  header: ReactNode
+  sidebar: ReactNode
+  boxes: ReactNode
+  calendar: ReactNode
+  createNewCardComponent: ReactNode
+}
+
+export default function LeitnerAppLayout({ header, sidebar, boxes, calendar, createNewCardComponent}: LeitnerAppLayoutProps) {
+  return (
+    <div className={styles.leitnerAppLayout}>
+      <div className={styles.header_grid}>{header}</div>
+      <div className={styles.sidebar_grid}>{sidebar}</div>
+      <div className={styles.boxes_grid}>{boxes}</div>
+      <div className={styles.calendar_grid}>{calendar}</div>
+      <div className={styles.createNewCard_grid}>{createNewCardComponent}</div>
+    </div>
+  )
+}

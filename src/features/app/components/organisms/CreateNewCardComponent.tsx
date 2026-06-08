@@ -65,7 +65,7 @@ export default function CreateNewCardComponent() {
 
 
                 <Button
-                    clase='btn_crearTarjeta'
+                    className='btn_crearTarjeta'
                     texto={'Crear Tarjeta'}
                     onclick={nuevaTarjeta}
                 />

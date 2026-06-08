@@ -1,10 +1,11 @@
 interface ParagraphProps{
+    id?: string
     className?: string
     texto: string
 }
 
-export default function Paragraph({className, texto}: ParagraphProps){
+export default function Paragraph({id, className, texto}: ParagraphProps){
     return(
-        <p className={className} >{texto} </p>
+        <p id={id} className={className} >{texto}</p>
     )
 }

@@ -1,0 +1,24 @@
+.leinerAppLayout{
+    display: grid;
+    grid-template-areas: 
+        "header header header"
+        "sidebar calendar calendar"
+        "boxes createCard createCard"
+    ;
+}
+
+.header_grid{
+    grid-area: header;
+}
+.sidebar_grid{
+    grid-area: sidebar;
+}
+.boxes_grid{
+    grid-area: boxes;
+}
+.calendar_grid{
+    grid-area: calendar;
+}
+.createNewCard_grid{
+    grid-area: createCard;
+}

@@ -1,4 +1,4 @@
-import BookIcon from '../atoms/IconSvg'
+import IconSvg from '../atoms/IconSvg'
 
 interface ActiveLectionHeaderProps{
     nombreLeccionActiva: string
@@ -7,7 +7,7 @@ interface ActiveLectionHeaderProps{
 export default function ActiveLectionHeader({nombreLeccionActiva}: ActiveLectionHeaderProps) {
     return (
         <span className="header-leccion-activa">
-            <BookIcon/>
+            <IconSvg imagenSvg='libro'/>
             {nombreLeccionActiva}
         </span>
     )
