@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Box from '../molecules/Box'
 import BoxModal from './BoxModal'
-import "../../css/boxes.css"
+import "./css/boxes.css"
 
 export default function Boxes() {
 
@@ -10,7 +10,7 @@ export default function Boxes() {
 
   return (
 
-    <div className="boxes-container md:grid-cols-2 lg:grid-cols-3">
+    <div className="boxes-container">
       <Box caja={"1"} periodo={"(Diario)"} parrafo={"Tarjetas que necesitas repasar todos los días"} setEstiloDisplay={setEstiloDisplay} setIndiceCaja={setIndiceCaja} />
       <Box caja={"2"} periodo={"(3 días)"} parrafo={"Tarjetas que repasas cada 3 días"} setEstiloDisplay={setEstiloDisplay} setIndiceCaja={setIndiceCaja} />
       <Box caja={"3"} periodo={"(7 días)"} parrafo={"Tarjetas que repasas cada semana"} setEstiloDisplay={setEstiloDisplay} setIndiceCaja={setIndiceCaja} />

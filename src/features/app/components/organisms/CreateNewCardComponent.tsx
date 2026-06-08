@@ -4,6 +4,7 @@ import QuestionAnswer from '../molecules/QuestionAnswer'
 import type { NuevaTarjeta } from '../../types/context.types'
 import Button from '../atoms/Button'
 import Heading from '../atoms/Heading'
+import './css/createNewCard.modules.css'
 
 
 export default function CreateNewCardComponent() {
@@ -47,9 +48,9 @@ export default function CreateNewCardComponent() {
     }
 
     return (
-        <div className="contenedor_sidebar_inferior">
+        <div className="contenedor_crearNuevaTarjeta">
             <Heading variante={'h2'} className={'sidebar_titulo'} texto={'Crear nueva tarjeta'} />
-            
+
             <form id="new-card-form" className="form_card">
                 <QuestionAnswer
                     textAreaId={'card-question'}
@@ -65,12 +66,13 @@ export default function CreateNewCardComponent() {
                     setOnChange={setRespuesta}
                 />
 
-
-                <Button
-                    className='btn_crearTarjeta'
-                    texto={'Crear Tarjeta'}
-                    onclick={nuevaTarjeta}
-                />
+                <div className="button_container">
+                    <Button
+                        className='btn_crearTarjeta'
+                        texto={'Crear Tarjeta'}
+                        onclick={nuevaTarjeta}
+                    />
+                </div>
 
             </form>
         </div>

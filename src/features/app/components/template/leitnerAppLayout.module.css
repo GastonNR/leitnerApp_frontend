@@ -1,5 +1,6 @@
 .leitnerAppLayout{
     display: grid;
+    grid-template-columns: 23% 1fr 1fr;
     grid-template-areas: 
         "header header header"
         "sidebar calendar calendar"

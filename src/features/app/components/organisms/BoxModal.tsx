@@ -5,7 +5,7 @@ import type { Tarjeta } from "../../types/context.types"
 import CustomButton from "../molecules/CustomButton"
 import Heading from "../atoms/Heading"
 import Paragraph from "../atoms/Paragraph"
-import "../../css/boxModal.css"
+import "./css/boxModal.css"
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps) {
 

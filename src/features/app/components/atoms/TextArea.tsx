@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react"
+import './css/textArea.modules.css'
 
 interface TextAreaProps{
     textAreaId: string

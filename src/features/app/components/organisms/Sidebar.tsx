@@ -3,9 +3,9 @@ import CountCards from '../molecules/CountCards'
 import { useLecciones } from '../../context/LeccionesContext'
 import QuestionAnswer from '../molecules/QuestionAnswer'
 import { NuevaTarjeta } from '../../types/context.types'
-import "../../css/sidebar.css"
 import Heading from '../atoms/Heading'
 import Paragraph from '../atoms/Paragraph'
+import "./css/sidebar.css"
 
 
 export default function Sidebar() {

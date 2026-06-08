@@ -1,6 +1,6 @@
 import type { CardElementProps } from "../../types/components.types"
 import Button from "../atoms/Button"
-import "../../css/cardElement.css"
+import "./css/cardElement.css"
 
 export default function CardElement({ pregunta, respuesta, proxima_revision, onEliminar }: CardElementProps) {
 
