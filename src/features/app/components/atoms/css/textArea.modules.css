@@ -8,4 +8,5 @@ textarea {
     outline: 2px solid transparent;
     outline-offset: 2px;
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 1);
+    font-size: larger;
 }

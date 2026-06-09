@@ -1,9 +1,9 @@
 import './css/circle.modules.css'
 
 interface CircleProps{
-    id: string
+    id?: string
     resaltado: string
-    cantidadTarjetas: number
+    cantidadTarjetas?: number
 }
 
 export default function Circle({id, resaltado, cantidadTarjetas}: CircleProps) {

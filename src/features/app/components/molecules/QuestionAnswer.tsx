@@ -6,7 +6,7 @@ export default function QuestionAnswer({textAreaId, textLabel, value, setOnChang
     return (
         <div>
             <Label forId={textAreaId} classLabel={'answer-question-label'} text={textLabel}/>
-            <TextArea textAreaId={textAreaId} value={value || ''} setOnChange={(e)=> setOnChange}/>           
+            <TextArea textAreaId={textAreaId} value={value || ''} setOnChange={(value)=> setOnChange(value)}/>           
         </div>
     )
 }
