@@ -57,4 +57,25 @@ export default function IconSvg({ imagenSvg }: IconSvgProps) {
             </svg>
         )
     }
+
+    if (imagenSvg === 'play') {
+        return (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <circle cx="12" cy="12" r="9" strokeWidth="2" />
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 8l6 4-6 4V8z"
+                />
+            </svg>
+        )
+    }
 }

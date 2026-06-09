@@ -4,7 +4,7 @@ import IconSvg from '../atoms/IconSvg'
 interface CustomButtonProps {
     id?: string
     className: string
-    variante: 'btn_leccion' | 'cerrar_btn' | 'lm-header-btn'
+    variante: 'btn_leccion' | 'cerrar_btn' | 'lm-header-btn' | 'btn-iniciar-leccion'
     texto?: string
     onclick: (e: MouseEvent<HTMLButtonElement>) => void
 }
@@ -37,6 +37,14 @@ export default function CustomButton({ id, className, variante, texto, onclick }
     if (variante === 'lm-header-btn') {
         return (
             <button className={className} onClick={onclick} >{texto}</button>
+        )
+    }
+        if (variante === 'btn-iniciar-leccion') {
+        return (
+            <button id={id} className={className} onClick={onclick}>
+                <IconSvg imagenSvg='play' />
+                {texto}
+            </button>
         )
     }
 

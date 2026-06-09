@@ -13,9 +13,6 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva?.cajas[indiceCajaNum]?.tarjetas || []
 
-    //console.log("indice caja: ", indiceCaja)
-    //console.log("indice caja numero: ", indiceCajaNum)
-
     const eliminarTarjeta = async (indexAEliminar: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
         const eliminada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
         if (!eliminada) alert("No se ha podido eliminar la tarjeta.")
@@ -34,7 +31,6 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                         className={'box-modal-texto'}
                         texto={'Tarjetas en caja'}
                     />
-
 
                     <CustomButton id={'close-box-modal'} className={'btn-cerrar'} variante={'cerrar_btn'} onclick={()=>setEstiloDisplay(false)} />
 
