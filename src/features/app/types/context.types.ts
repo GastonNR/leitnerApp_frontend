@@ -25,6 +25,7 @@ export interface LeccionesProviderProps{
 // DOMINIO
 export interface Leccion{
     nombre: string
+    fechaCreacion: Date
     cajas: Caja[]
     _id: string
 }

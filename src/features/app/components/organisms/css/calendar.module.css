@@ -33,3 +33,28 @@ td{
     background-color: var(--color-hoy);
     font-weight: 500;
 }
+
+.scroll_wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.tabla {
+    min-width: calc(DIAS_VISIBLES * 60px); /* 16 columnas visibles */
+    border-collapse: collapse;
+}
+
+.col_hover {
+    background-color: var(--color-hover-col);
+}
+
+.col_hoy {
+    border-left: 2px solid blue;
+    border-right: 2px solid blue;
+    background-color: var(--color-hoy);
+}
+
+.th_dia {
+    min-width: 60px;
+    text-align: center;
+}
