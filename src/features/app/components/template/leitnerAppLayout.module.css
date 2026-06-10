@@ -4,7 +4,7 @@
     grid-template-areas: 
         "header header header"
         "sidebar calendar calendar"
-        "boxes createCard createCard"
+        "sidebar createCard createCard"
     ;
 }
 
@@ -14,9 +14,7 @@
 .sidebar_grid{
     grid-area: sidebar;
 }
-.boxes_grid{
-    grid-area: boxes;
-}
+
 .calendar_grid{
     grid-area: calendar;
 }

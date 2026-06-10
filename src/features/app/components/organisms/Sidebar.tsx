@@ -6,6 +6,7 @@ import { NuevaTarjeta } from '../../types/context.types'
 import Heading from '../atoms/Heading'
 import Paragraph from '../atoms/Paragraph'
 import "./css/sidebar.css"
+import Boxes from './Boxes'
 
 
 export default function Sidebar() {
@@ -28,6 +29,8 @@ export default function Sidebar() {
                     </div>
                 )}
             </div>
+
+            <Boxes />
 
         </div>
     )

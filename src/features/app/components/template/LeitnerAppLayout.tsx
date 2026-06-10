@@ -9,12 +9,11 @@ interface LeitnerAppLayoutProps{
   createNewCardComponent: ReactNode
 }
 
-export default function LeitnerAppLayout({ header, sidebar, boxes, calendar, createNewCardComponent}: LeitnerAppLayoutProps) {
+export default function LeitnerAppLayout({ header, sidebar, calendar, createNewCardComponent}: LeitnerAppLayoutProps) {
   return (
     <div className={styles.leitnerAppLayout}>
       <div className={styles.header_grid}>{header}</div>
       <div className={styles.sidebar_grid}>{sidebar}</div>
-      <div className={styles.boxes_grid}>{boxes}</div>
       <div className={styles.calendar_grid}>{calendar}</div>
       <div className={styles.createNewCard_grid}>{createNewCardComponent}</div>
     </div>

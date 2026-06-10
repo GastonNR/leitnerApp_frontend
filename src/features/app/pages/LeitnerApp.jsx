@@ -14,7 +14,6 @@ export default function LeitnerApp () {
         <LeitnerAppLayout
             header={<Header/>}
             sidebar={<Sidebar/>}
-            boxes={<Boxes/>}
             calendar={<Calendar/>}
             createNewCardComponent={<CreateNewCardComponent/>}
         />
