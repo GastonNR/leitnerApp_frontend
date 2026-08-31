@@ -1,15 +1,16 @@
 .sidebar {
     grid-area: sidebar;
-    width: 24.6rem;
+    /* Sin ancho fijo: ocupa la columna del grid (23%).
+       Más ancho = menos líneas partidas = sidebar más corto. */
 }
 
 .sidebar_superior {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: var(--color-white);
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
                 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    margin: 1rem;
+    padding: 0.75rem;
+    margin: 0.5rem;
 }
 
 .contenedor_texto_caja_sidebar {
@@ -21,19 +22,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 .texto__span {
-    font-size: medium;
+    font-size: var(--font-size-sm);
     line-height: 1.25rem;
 }
 
-
-
 .sidebar > label {
     display: block;
-    font-size: medium;
+    font-size: var(--font-size-sm);
     line-height: 1.25rem;
     color: rgba(55, 65, 81, 1);
     margin-bottom: 0.25rem;

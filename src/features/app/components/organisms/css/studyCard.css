@@ -35,14 +35,14 @@
 }
 
 .card-front {
-    background-color: rgba(255, 255, 255, 1);
-    border: 1px solid rgba(229, 231, 235, 1);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
     padding: 1.5rem;
 }
 
 .card-back {
     background-color: rgba(238, 242, 255, 1);
-    border: 1px solid rgba(229, 231, 235, 1);
+    border: 1px solid var(--color-border);
     padding: 1.5rem;
 }
 
@@ -56,7 +56,7 @@ p.card-inner {
     text-align: center;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: rgba(107, 114, 128, 1);
+    color: var(--color-text-muted);
     margin-bottom: 1.5rem;
 }
 

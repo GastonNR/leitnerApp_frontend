@@ -5,6 +5,9 @@ export interface BoxProps{
     caja: string
     periodo: string
     parrafo: string
+    /* Datos de la caja para mostrar el contador dentro de la tarjeta. */
+    datosCaja?: Caja
+    resaltado: string
     setEstiloDisplay: Dispatch<SetStateAction<boolean>>
     setIndiceCaja: Dispatch<SetStateAction<string>>
 }

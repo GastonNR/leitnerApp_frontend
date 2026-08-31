@@ -41,7 +41,7 @@
 
 .login {
   margin: 1rem;
-  font-size: 1.15rem;
+  font-size: var(--font-size-md);
   background: transparent;
   border: none;
   padding: 8px 12px;
@@ -52,7 +52,7 @@
 
 .primary {
   margin: 1rem;
-  font-size: 1.15rem;
+  font-size: var(--font-size-md);
   background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
   color: white;
   border: none;

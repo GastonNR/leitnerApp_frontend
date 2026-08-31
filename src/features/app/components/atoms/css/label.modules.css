@@ -1,5 +1,5 @@
 .answer-question-label{
-    margin: 1rem;
-    padding: 1rem;
-    font-size:large;
+    margin: 0.5rem;
+    padding: 0;
+    font-size: var(--font-size-sm);
 }

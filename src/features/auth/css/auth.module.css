@@ -12,7 +12,7 @@
     max-width: 28rem;
     margin-left: auto;
     margin-right: auto;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: var(--color-white);
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 
@@ -25,13 +25,13 @@
     font-size: 1.5rem;
     line-height: 2rem;
     text-align: center;
-    color: rgba(67, 56, 202, 1);
+    color: var(--color-primary);
     margin-bottom: 1.5rem;
 }
 
 .subtitulo {
     text-align: center;
-    color: rgba(75, 85, 99, 1);
+    color: var(--color-text-secondary);
     margin-bottom: 2rem;
 }
 
@@ -45,11 +45,11 @@
 }
 
 .parrafo_abajo {
-    font-size: 1.123rem;
+    font-size: var(--font-size-sm);
     line-height: 2rem;
-    color: rgba(75, 85, 99, 1);
+    color: var(--color-text-secondary);
 }
 
 .link {
-    color: rgba(55, 48, 163, 1);
+    color: var(--color-primary-dark);
 }

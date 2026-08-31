@@ -1,0 +1,56 @@
+/* Design tokens extracted from Figma: leitnerApp - Nueva versión con calendario */
+
+:root {
+  /* Colors - brand */
+  --color-primary: #4338ca;
+  --color-primary-dark: #3730a3;
+  --color-accent: #4f46e5;
+  --color-accent-border: #6366f1;
+  --color-danger: #bf3636;
+
+  /* Colors - neutrals */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-surface-muted: #d9d9d9;
+
+  /* Colors - overlays (used on dark header) */
+  --color-overlay-fill: rgba(255, 255, 255, 0.15);
+  --color-overlay-border: rgba(255, 255, 255, 0.25);
+  --color-input-bg: rgba(217, 217, 217, 0.2);
+
+  /* Calendario: se usaban en calendar.module.css sin estar definidas. */
+  --color-hover-col: #f3f4f6;
+  --color-hoy: #eef2ff;
+
+  /* Typography */
+  --font-family-display: 'Roboto', sans-serif;
+  --font-family-base: 'Inter', sans-serif;
+
+  /* Escala tipográfica. En rem sobre una raíz de 16px:
+     el px equivalente queda en el comentario. */
+  --font-size-display: 2rem;      /* 32px */
+  --line-height-display: 2.75rem; /* 44px */
+
+  --font-size-title: 1.5rem;      /* 24px */
+  --line-height-title: 1.5rem;    /* 24px */
+  --letter-spacing-title: 0.15px;
+
+  --font-size-lg: 1.25rem;        /* 20px */
+  --font-size-md: 1rem;           /* 16px */
+  --font-size-sm: 0.875rem;       /* 14px */
+  --font-size-xs: 0.75rem;        /* 12px */
+
+  /* Radius */
+  --radius-pill: 9999px;
+  --radius-lg: 10px;
+  --radius-md: 8px;
+
+  /* Shadows */
+  --shadow-elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --shadow-button: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --shadow-box-card: 4px 6px 4px 0px rgba(0, 0, 0, 0.1);
+}

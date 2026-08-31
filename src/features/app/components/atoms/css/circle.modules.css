@@ -3,7 +3,7 @@
     line-height: 1rem;
     font-weight: 500;
     padding: 0.125rem 0.5rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-pill);
 }
 .cant_cards_1{
     background-color: rgb(226, 158, 155);

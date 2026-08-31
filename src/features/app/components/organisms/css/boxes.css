@@ -1,18 +1,7 @@
 .boxes-container {
     grid-area: boxes;
-    gap: 1rem;
     display: flex;
-    flex-direction: column;    
-    margin: 1rem;
-}
-
-@media(min-width: 1024px){
-    .boxes-container{
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-@media(min-width: 768px){
-    .boxes-container{
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.5rem;
 }

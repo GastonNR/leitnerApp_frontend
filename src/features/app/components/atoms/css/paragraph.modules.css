@@ -1,13 +1,13 @@
 .parr_box {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: var(--font-size-xs);
+    line-height: 1.05rem;
     color: rgba(75, 85, 99, 1);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .sidebar_parr {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: var(--font-size-xs);
+    line-height: 1.05rem;
     color: rgba(75, 85, 99, 1);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
