@@ -1,4 +1,4 @@
-import { replace, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useLecciones } from '../../context/LeccionesContext'
 import LeccionesModal from './LeccionesModal'
 //import { guardarLeccionService } from '../services/lecciones.service'
@@ -14,8 +14,8 @@ import Study_mode from './Study_mode'
 export default function Header() {
   const navigate = useNavigate()
   const [modalStudyCard, setModalStudyCard] = useState<boolean>(false)
-  const { leccionActivaId, leccionActiva, setLecciones, setModalLeccionesAbierto, modalLeccionesAbierto } = useLecciones()
-  const { logout } = useAuth()
+  const { leccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useLecciones()
+  const { logout, usuario } = useAuth()
 
   const cerrarSesion = (): void => {
     logout()
@@ -52,7 +52,7 @@ export default function Header() {
           </div>
 
           <div className="header-derecha">
-            <span id="user-name" className="span md:inline">Usuario</span>
+            <span id="user-name" className="span md:inline">{usuario?.nombre ?? 'Usuario'}</span>
 
             <CustomButton
               variante={'btn_leccion'}

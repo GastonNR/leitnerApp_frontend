@@ -31,11 +31,21 @@ export default function Calendar() {
   const { leccionActiva } = useLecciones()
   const [colResaltada, setColResaltada] = useState<number | null>(null)
 
-  // Generamos las 64 fechas desde la creación de la lección
+  // Generamos 64 fechas a partir de la creación de la lección. Si la lección ya tiene más
+  // de 64 días, la ventana avanza en bloques de 16 días (el período del patrón) para que
+  // hoy siempre sea visible y el patrón conserve su fase.
   const fechas = useMemo<Date[]>(() => {
     if (!leccionActiva?.fechaCreacion) return []
-    const inicio = new Date(leccionActiva.fechaCreacion)
-    inicio.setHours(0, 0, 0, 0)
+    const creacion = new Date(leccionActiva.fechaCreacion)
+    creacion.setHours(0, 0, 0, 0)
+    const hoy = new Date()
+    hoy.setHours(0, 0, 0, 0)
+    const diasDesdeCreacion = Math.max(0, Math.round((hoy.getTime() - creacion.getTime()) / 86_400_000))
+    const desplazamiento = diasDesdeCreacion >= TOTAL_DIAS
+      ? Math.floor(diasDesdeCreacion / DIAS_VISIBLES) * DIAS_VISIBLES
+      : 0
+    const inicio = new Date(creacion)
+    inicio.setDate(creacion.getDate() + desplazamiento)
     return Array.from({ length: TOTAL_DIAS }, (_, i) => {
       const fecha = new Date(inicio)
       fecha.setDate(inicio.getDate() + i)

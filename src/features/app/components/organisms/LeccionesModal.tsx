@@ -23,9 +23,13 @@ export default function LeccionesModal() {
             setError("Ya existe una lección con ese nombre.");
             return;
         }
-        crearLeccion(nombreNueva);
-        setNombreNueva("");
-        setError("");
+        try {
+            await crearLeccion(nombreNueva);
+            setNombreNueva("");
+            setError("");
+        } catch (e) {
+            setError(e instanceof Error ? e.message : "No se pudo crear la lección.");
+        }
     };
 
     const handleEliminar = async (e: MouseEvent<HTMLButtonElement>, id: string): Promise<void> => {

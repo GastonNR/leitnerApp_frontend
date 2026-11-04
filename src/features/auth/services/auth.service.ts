@@ -1,4 +1,4 @@
-import { api } from "../../../shared/api/axios"
+import { api, mensajeDeError } from "../../../shared/api/axios"
 import { LoginRequest, LoginResponse, ApiError, RegistroRequest, RegistroResponse } from "../types/auth.types"
 
 export const loginService = async (datosLogin: LoginRequest): Promise<LoginResponse | ApiError> => {
@@ -6,24 +6,23 @@ export const loginService = async (datosLogin: LoginRequest): Promise<LoginRespo
         const { data } = await api.post<LoginResponse>("/usuarios/login", datosLogin)
         return data
     } catch (error) {
-        console.log("Error en la conexión: ", error)
+        console.error("Error en el login: ", error)
         return {
             ok: false,
-            message: "Error de conexión con el servidor"
+            message: mensajeDeError(error)
         }
     }
 }
 
 export const registroService = async (datosUsuario: RegistroRequest): Promise<RegistroResponse> => {
     try {
-        const { data } = await api.post<RegistroResponse>('usuarios/registro', datosUsuario)
+        const { data } = await api.post<RegistroResponse>('/usuarios/registro', datosUsuario)
         return data
     } catch (error) {
-        console.log("Error en la conexión: ", error)
-
+        console.error("Error en el registro: ", error)
         return {
             ok: false,
-            message: "Error de conexión con el servidor"
+            message: mensajeDeError(error)
         }
     }
 }

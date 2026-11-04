@@ -23,11 +23,11 @@ export default function CreateNewCardComponent() {
 
         let comprobacionCampos: number = 0
 
-        if (!pregunta) {
+        if (!pregunta.trim()) {
             alert("El campo de pregunta está vacío")
             comprobacionCampos++
         }
-        if (!respuesta) {
+        if (!respuesta.trim()) {
             alert("El campo de respuesta está vacío")
             comprobacionCampos++
         }
@@ -39,7 +39,11 @@ export default function CreateNewCardComponent() {
                 respuesta: respuesta
             }
 
-            if (leccionActiva) await crearNuevaTarjeta(leccionActiva._id, nuevaTarjeta)
+            const creada = await crearNuevaTarjeta(leccionActiva._id, nuevaTarjeta)
+            if (!creada) {
+                alert("No se pudo crear la tarjeta. Inténtalo de nuevo.")
+                return
+            }
 
             setPregunta('')
             setRespuesta('')

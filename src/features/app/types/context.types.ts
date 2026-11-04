@@ -10,10 +10,10 @@ export interface LeccionesContextType{
     leccionActiva: Leccion | undefined
     modalLeccionesAbierto: boolean
     setModalLeccionesAbierto: React.Dispatch<SetStateAction<boolean>>
-    crearLeccion: (nombre: string)=> Promise<void>
+    crearLeccion: (nombre: string)=> Promise<void> // lanza Error con el mensaje del backend si falla
     cambiarLeccion: (leccionId: string)=> void
     eliminarLeccion: (id: string)=> Promise<void>
-    crearNuevaTarjeta: (leccionId: string, tarjeta: NuevaTarjeta)=> Promise<void>
+    crearNuevaTarjeta: (leccionId: string, tarjeta: NuevaTarjeta)=> Promise<boolean>
     actualizarTarjeta: (esCorrecta: boolean, tarjeta: Tarjeta)=> Promise<Leccion[]>
     guardar: (leccionesActualizadas: Leccion[])=> Promise<{ok: true} | undefined>
     eliminarTarjetaContext: (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number)=> Promise<boolean>
@@ -42,7 +42,7 @@ export interface Tarjeta{
     nivel: number
     ultima_revision: Date
     proxima_revision: Date
-    es_correcta: boolean
+    es_correcta: boolean | null
     _id: string
 }
 

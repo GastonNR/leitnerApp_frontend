@@ -20,14 +20,13 @@ export default function LoginForm() {
 
         const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-        let camposValidos = 0
+        const emailValido = email_regex.test(email)
+        const passwordValida = password.length > 0
 
-        if (!email_regex.test(email)) {
-            setErrorEmail(prev=>!prev)
-            camposValidos++
-        }
+        setErrorEmail(!emailValido)
+        setErrorPass(!passwordValida)
 
-        if (camposValidos === 0) {
+        if (emailValido && passwordValida) {
             const datos: LoginRequest = {
                 email: email,
                 password: password

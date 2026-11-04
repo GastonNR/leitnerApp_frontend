@@ -15,6 +15,7 @@ export default function Study_mode({setModalStudyCard}: Study_modeProps) {
 
     const { tarjetasDeHoy } = useLecciones()
     const [tarjetaIndex, setTarjetaIndex] = useState<number>(0)
+    const restantes = tarjetaIndex >= 0 ? Math.max(tarjetasDeHoy.length - tarjetaIndex, 0) : 0
 
     return (
         <div className="study_modal">
@@ -30,11 +31,11 @@ export default function Study_mode({setModalStudyCard}: Study_modeProps) {
                 </div>
                 <div className="contenedor-tarjetas">
                     <div>
-                        <span id="cards-remaining" className="cards-remaining">0 tarjetas restantes</span>
+                        <span id="cards-remaining" className="cards-remaining">{restantes} tarjeta{restantes !== 1 ? 's' : ''} restante{restantes !== 1 ? 's' : ''}</span>
                     </div>
                 </div>
                 {
-                    (tarjetasDeHoy.length > 0 && tarjetaIndex >= 0) ?
+                    (tarjetaIndex >= 0 && tarjetaIndex < tarjetasDeHoy.length) ?
                         <StudyCard
                             cantTarjetas={tarjetasDeHoy.length}
                             tarjeta={tarjetasDeHoy[tarjetaIndex]}

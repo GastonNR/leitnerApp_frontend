@@ -9,7 +9,7 @@ export default function CardElement({ pregunta, respuesta, proxima_revision, onE
         <div>
           <div className="pregunta">{pregunta}</div>
           <div className="respuesta">{respuesta}</div>
-          <div className="proxima_revision">Próxima revisión: { proxima_revision.toLocaleString() }</div>
+          <div className="proxima_revision">Próxima revisión: { new Date(proxima_revision).toLocaleDateString() }</div>
         </div>
         <div>
           <Button className={'eliminar-leccion-btn'} texto={'Eliminar'} onclick={onEliminar} />

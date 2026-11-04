@@ -1,12 +1,19 @@
-import { createContext, useState, useContext, useEffect, ReactNode } from "react"
+import { createContext, useState, useContext, useEffect, useCallback } from "react"
 import { Usuario, AuthContextType, LoginResponse, LoginRequest, ApiError, AuthProviderProps } from '../types/auth.types'
 import { loginService } from "../services/auth.service"
+import { SESION_EXPIRADA_EVENT } from "../../../shared/api/axios"
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
+function leerUsuarioGuardado(): Usuario | null {
+    const id = localStorage.getItem("id")
+    const nombre = localStorage.getItem("nombre_usuario")
+    return id && nombre ? { id, nombre } : null
+}
+
 export default function AuthProvider({ children }: AuthProviderProps){
 
-    const [usuario, setUsuario] = useState<Usuario | null>(null)
+    const [usuario, setUsuario] = useState<Usuario | null>(leerUsuarioGuardado)
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"))
     const [loading, setLoading] = useState<boolean>(true)
 
@@ -33,19 +40,26 @@ export default function AuthProvider({ children }: AuthProviderProps){
             setUsuario(respuesta.usuario)
 
         }
-        
+
         return respuesta
 
     }
 
-    const logout = ()=>{
+    const logout = useCallback(()=>{
         setUsuario(null)
         setToken(null)
         localStorage.removeItem("token")
         localStorage.removeItem("id")
         localStorage.removeItem("nombre_usuario")
-        
-    }
+        localStorage.removeItem("leccion_activa")
+    }, [])
+
+    // Token expirado o inválido (lo detecta el interceptor de axios): se cierra la sesión
+    // y RutaProtegida redirige fuera de la app.
+    useEffect(()=>{
+        window.addEventListener(SESION_EXPIRADA_EVENT, logout)
+        return () => window.removeEventListener(SESION_EXPIRADA_EVENT, logout)
+    }, [logout])
 
     return(
         <AuthContext.Provider value={{
@@ -67,4 +81,4 @@ export const useAuth = (): AuthContextType =>{
     if(!context) throw Error("useContext debe utilizarse dentro del AuthProvider")
     return context
 
-} 
+}

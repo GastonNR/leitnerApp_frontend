@@ -37,6 +37,7 @@ export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarj
             setTarjetaIndex(-1)
             const estaGuardada = await guardar(leccionesActualizadas)
             if(estaGuardada?.ok) alert("Lección actualizada")
+            else alert("No se pudo guardar la sesión de estudio. Inténtalo de nuevo.")
         }
     }
 

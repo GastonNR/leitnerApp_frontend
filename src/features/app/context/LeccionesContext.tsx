@@ -15,6 +15,7 @@ import type {
   NuevaTarjeta
 } from '../types/context.types'
 import { useAuth } from '../../auth/context/AuthContext'
+import { mensajeDeError } from "../../../shared/api/axios"
 
 const LeccionesContext = createContext<LeccionesContextType | null>(null)
 
@@ -66,36 +67,39 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   //Carga las tarjetas del día.
   useEffect(() => {
 
-    if (leccionActiva?.cajas?.length === 5) {
+    if (leccionActiva?.cajas?.length !== 5) {
+      // Sin lección activa (p. ej. se borró la última) no debe quedar nada para estudiar.
+      setTarjetasDeHoy([])
+      return
+    }
 
-      const hoy = new Date().toLocaleDateString('sv-SE')
+    const hoy = new Date().toLocaleDateString('sv-SE')
 
-      const todasLasTarjetas = leccionActiva.cajas.flatMap(
-        caja => caja.tarjetas || []
-      )
+    const todasLasTarjetas = leccionActiva.cajas.flatMap(
+      caja => caja.tarjetas || []
+    )
 
-      const tarjetasHoy = todasLasTarjetas.filter((tarjeta) => {
+    const tarjetasHoy = todasLasTarjetas.filter((tarjeta) => {
 
-        if (!tarjeta.proxima_revision) return false
+      if (!tarjeta.proxima_revision) return false
 
-        const fechaRevision = new Date(
-          tarjeta.proxima_revision
-        ).toLocaleDateString('sv-SE')
+      const fechaRevision = new Date(
+        tarjeta.proxima_revision
+      ).toLocaleDateString('sv-SE')
 
-        return fechaRevision <= hoy
-      })
+      return fechaRevision <= hoy
+    })
 
-      if (tarjetasHoy.length > 0) {
+    if (tarjetasHoy.length > 0) {
 
-        setTarjetasDeHoy(tarjetasHoy)
+      setTarjetasDeHoy(tarjetasHoy)
 
-      } else {
+    } else {
 
-        const tarjetasCaja1 =
-          leccionActiva.cajas[0]?.tarjetas || []
+      const tarjetasCaja1 =
+        leccionActiva.cajas[0]?.tarjetas || []
 
-        setTarjetasDeHoy(tarjetasCaja1)
-      }
+      setTarjetasDeHoy(tarjetasCaja1)
     }
 
   }, [leccionActiva])
@@ -115,6 +119,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
 
     } catch (error) {
       console.error("Error al crear una nueva lección", error)
+      throw new Error(mensajeDeError(error, "No se pudo crear la lección."))
 
     }
 
@@ -162,37 +167,34 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   //===========//
   // TARJETAS //
   //==========//
-  const crearNuevaTarjeta = async (leccionId: string, tarjeta: NuevaTarjeta) => {
+  const crearNuevaTarjeta = async (leccionId: string, tarjeta: NuevaTarjeta): Promise<boolean> => {
 
-    if(!leccionActiva) return
+    try {
+      const nuevaTarjeta = await crearNuevaTarjetaService(leccionId, tarjeta)
 
-    const nuevaTarjeta = await crearNuevaTarjetaService(leccionActiva._id, tarjeta)
+      // Se actualiza la lección a la que pertenece la tarjeta, partiendo del estado más reciente,
+      // aunque el usuario haya cambiado de lección mientras se esperaba la respuesta.
+      setLecciones(prevLecciones =>
+        prevLecciones.map(leccion => {
+          if (leccion._id !== leccionId) return leccion
 
-    const nuevasCajas = leccionActiva.cajas.map((caja, index) => {
+          return {
+            ...leccion,
+            cajas: leccion.cajas.map((caja, index) =>
+              index === 0
+                ? { ...caja, tarjetas: [...(caja.tarjetas || []), nuevaTarjeta] }
+                : caja
+            )
+          }
+        })
+      )
 
-      if (index === 0) {
-        const tarjetasActualizadas = [...(caja.tarjetas || []), nuevaTarjeta]
-        return { ...caja, tarjetas: tarjetasActualizadas }
+      return true
 
-      } else {
-        return caja
-
-      }
-    })
-
-    setLecciones(prevLecciones =>
-      prevLecciones.map(leccion => {
-        if (leccion._id !== leccionActivaId) return leccion
-
-        const leccionActualizada = {
-          ...leccion,
-          cajas: nuevasCajas
-        }
-
-        return leccionActualizada
-      })
-
-    )
+    } catch (error) {
+      console.error("Error al crear la tarjeta", error)
+      return false
+    }
   }
 
   const actualizarTarjeta = async (esCorrecta: boolean, tarjeta: Tarjeta): Promise<Leccion[]> => {
@@ -233,24 +235,35 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
     
     if (!leccionActualizada) return
 
-    const respuesta: Leccion = await guardarLeccionService(leccionActualizada)
+    try {
+      const respuesta: Leccion = await guardarLeccionService(leccionActualizada)
 
-    if (respuesta) {
       setLecciones(prev =>
         prev.map(leccion => {
-          if (leccion._id !== leccionActivaId) return leccion
+          if (leccion._id !== leccionActualizada._id) return leccion
           return respuesta
         })
       )
 
       return {ok: true}
+
+    } catch (error) {
+      console.error("Error al guardar la lección", error)
+      return
     }
   }
 
   const eliminarTarjetaContext = async (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
 
-    const tarjetaId = cajaElegida[indexCaja]._id
-    const eliminarYActualizar = await eliminarTarjetaService(tarjetaId)
+    const tarjetaId = cajaElegida[indexCaja]?._id
+    if (!tarjetaId) return false
+
+    try {
+      await eliminarTarjetaService(tarjetaId)
+    } catch (error) {
+      console.error("Error al eliminar la tarjeta", error)
+      return false
+    }
 
     setLecciones(prev =>
       
