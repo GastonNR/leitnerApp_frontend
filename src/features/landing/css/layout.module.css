@@ -1,39 +1,12 @@
-/* Tokens y base de la landing. Todo cuelga de .page para que nada
-   se filtre al resto de la app (antes global.css cambiaba el body). */
+/* Base de la landing. Los colores vienen de .marca (src/shared/styles/marca.css).
+   Todo cuelga de .page para que nada se filtre al resto de la app. */
 .page {
-  --l-navy-950: #060b1a;
-  --l-navy-900: #0a1430;
-  --l-navy-800: #12204a;
-  --l-blue: #2563eb;
-  --l-sky: #38bdf8;
-  --l-cyan: #22d3ee;
-  --l-yellow: #facc15;
-  --l-ink: #0f172a;
-  --l-text: #334155;
-  --l-muted: #64748b;
-  --l-bg: #f5f8ff;
-  --l-surface: #ffffff;
-  --l-border: #e2e8f5;
-  --l-on-dark: #e6edff;
-  --l-on-dark-muted: #9fb0d6;
-
-  --l-box-1: #fb7185;
-  --l-box-2: #fb923c;
-  --l-box-3: #facc15;
-  --l-box-4: #38bdf8;
-  --l-box-5: #34d399;
-
-  --l-gradient: linear-gradient(120deg, #38bdf8 0%, #22d3ee 45%, #facc15 100%);
-  --l-radius: 20px;
-  --l-max: 1180px;
-  --l-display: 'Poppins', system-ui, sans-serif;
-
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background: var(--l-bg);
   color: var(--l-ink);
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--l-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -54,7 +27,7 @@
 
 /* Que el header fijo no tape el título al saltar a una sección */
 .page :global(section[id]) {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 80px;
 }
 
 .page :global(.l-container) {

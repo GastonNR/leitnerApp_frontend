@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png'
 import styles from '../css/footer.module.css'
 
 export default function Footer() {
@@ -8,7 +7,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={`l-container ${styles.inner}`}>
         <div className={styles.brand}>
-          <img src={logo} alt="" width="32" height="32" />
+          <img src="/logo.svg" alt="" width="40" height="40" />
           <span>Leitner<span>App</span></span>
         </div>
 

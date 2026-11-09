@@ -1,12 +1,26 @@
-import React, { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import InputPassword from '../components/InputPassword'
+import AuthLayout from '../components/AuthLayout'
+import Aviso from '../components/Aviso'
 import Input from '../components/Input'
+import InputPassword from '../components/InputPassword'
 import ButtonSubmit from '../components/ButtonSubmit'
 import { registroService } from '../services/auth.service'
 import styles from '../css/auth.module.css'
-import { RegistroRequest } from '../types/auth.types'
+import type { RegistroRequest } from '../types/auth.types'
 
+const NOMBRE_REGEX = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9._-]{4,20}$/
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+const PASSWORD_MIN = 6
+
+interface ErroresRegistro {
+    nombre: string | null
+    email: string | null
+    password: string | null
+    repPassword: string | null
+}
+
+const SIN_ERRORES: ErroresRegistro = { nombre: null, email: null, password: null, repPassword: null }
 
 export default function Registro() {
 
@@ -16,98 +30,106 @@ export default function Registro() {
     const [nombreUsuario, setNombreUsuario] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [rep_pass, setRep_pass] = useState<string>('')
+    const [repPassword, setRepPassword] = useState<string>('')
 
-    // MANEJO DE ERRORES EN LA VALIDACIÓN DE CAMPOS
-    const [errorNombre, setErrorNombre] = useState<boolean>(false)
-    const [errorEmail, setErrorEmail] = useState<boolean>(false)
-    const [errorPassword, setErrorPassword] = useState<boolean>(false)
-    const [errorRep_pass, setErrorRep_pass] = useState<boolean>(false)
+    // ERRORES Y ESTADO DEL ENVÍO
+    const [errores, setErrores] = useState<ErroresRegistro>(SIN_ERRORES)
+    const [errorServidor, setErrorServidor] = useState<string | null>(null)
+    const [enviando, setEnviando] = useState<boolean>(false)
 
+    const cambiar = (campo: keyof ErroresRegistro, setter: (v: string) => void) => (valor: string) => {
+        setter(valor)
+        setErrores(prev => ({ ...prev, [campo]: null }))
+        setErrorServidor(null)
+    }
 
-    async function registrarUsuario(): Promise<void> {
+    async function registrarUsuario(e: FormEvent<HTMLFormElement>): Promise<void> {
+        e.preventDefault()
+        if (enviando) return
 
-        const nombre_regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9._-]{4,20}$/
-        const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
-        let camposValidos = 0;
-
-        const nombreValido = nombre_regex.test(nombreUsuario)
-        const emailValido = email_regex.test(email)
-        const passwordsCoinciden = password === rep_pass
-
-        setErrorNombre(!nombreValido)
-        setErrorEmail(!emailValido)
-        setErrorPassword(!passwordsCoinciden)
-        setErrorRep_pass(!passwordsCoinciden)
-
-        if(!nombreValido) camposValidos++
-        if(!emailValido) camposValidos++
-        if(!passwordsCoinciden) camposValidos++
-
-        if (camposValidos === 0) {
-            const datos: RegistroRequest = {
-                nombre: nombreUsuario,
-                email: email,
-                password: password
-            }
-
-            const respuesta = await registroService(datos)
-            if(!respuesta.ok) {
-                alert(respuesta.message)
-                return
-            }
-            
-            alert(respuesta.message)
-            navigate("/login")
-
+        const nuevosErrores: ErroresRegistro = {
+            nombre: NOMBRE_REGEX.test(nombreUsuario)
+                ? null
+                : 'Entre 4 y 20 caracteres: letras, números, punto, guion o guion bajo.',
+            email: EMAIL_REGEX.test(email) ? null : 'Escribe un correo electrónico válido.',
+            password: password.length >= PASSWORD_MIN ? null : `Usa al menos ${PASSWORD_MIN} caracteres.`,
+            repPassword: password === repPassword ? null : 'Las contraseñas no coinciden.',
         }
+        setErrores(nuevosErrores)
+        if (Object.values(nuevosErrores).some(Boolean)) return
+
+        const datos: RegistroRequest = {
+            nombre: nombreUsuario,
+            email: email,
+            password: password
+        }
+
+        setEnviando(true)
+        const respuesta = await registroService(datos)
+        setEnviando(false)
+
+        if (!respuesta.ok) {
+            setErrorServidor(respuesta.message)
+            return
+        }
+
+        navigate("/login", { state: { registrado: true } })
     }
 
     return (
-        <div className={styles.auth_container}>
-            <div id="register-page" className={styles.auth_form}>
-                <h2 className={styles.titulo}>Crear cuenta</h2>
+        <AuthLayout
+            titulo="Crea tu cuenta"
+            subtitulo="Empieza a entrenar tu memoria en menos de un minuto."
+            pie={
+                <p>¿Ya tienes una cuenta?{' '}
+                    <Link to="/login" id="show-login" className={styles.link}>Inicia sesión</Link>
+                </p>
+            }
+        >
+            {errorServidor && <Aviso tipo="error">{errorServidor}</Aviso>}
 
-                <form id="register-form" className="space-y-4">
-                    <Input
-                        labelText={'Nombre de usuario'}
-                        inputType={'text'}
-                        inputId={'reg-name'}
-                        setOnChange={setNombreUsuario}
-                        error={errorNombre}
-                    />
+            <form id="register-form" className={styles.form} onSubmit={registrarUsuario} noValidate>
+                <Input
+                    labelText={'Nombre de usuario'}
+                    inputType={'text'}
+                    inputId={'reg-name'}
+                    placeholder={'Ej: ana_garcia'}
+                    autoComplete={'username'}
+                    hint={'Entre 4 y 20 caracteres.'}
+                    setOnChange={cambiar('nombre', setNombreUsuario)}
+                    error={errores.nombre}
+                />
 
-                    <Input
-                        labelText={'Correo electrónico'}
-                        inputType={'email'}
-                        inputId={'reg-email'}
-                        setOnChange={setEmail}
-                        error={errorEmail}
-                    />
+                <Input
+                    labelText={'Correo electrónico'}
+                    inputType={'email'}
+                    inputId={'reg-email'}
+                    placeholder={'tu@correo.com'}
+                    autoComplete={'email'}
+                    setOnChange={cambiar('email', setEmail)}
+                    error={errores.email}
+                />
 
-                    <InputPassword
-                        labelText={'Contraseña'}
-                        inputId={'reg-password'}
-                        setOnChange={setPassword}
-                        error={errorPassword}
-                    />
+                <InputPassword
+                    labelText={'Contraseña'}
+                    inputId={'reg-password'}
+                    placeholder={`Mínimo ${PASSWORD_MIN} caracteres`}
+                    autoComplete={'new-password'}
+                    setOnChange={cambiar('password', setPassword)}
+                    error={errores.password}
+                />
 
-                    <InputPassword
-                        labelText={'Repetir Contraseña'}
-                        inputId={'rep-reg-password'}
-                        setOnChange={setRep_pass}
-                        error={errorRep_pass}
-                    />
+                <InputPassword
+                    labelText={'Repetir contraseña'}
+                    inputId={'rep-reg-password'}
+                    placeholder={'Vuelve a escribirla'}
+                    autoComplete={'new-password'}
+                    setOnChange={cambiar('repPassword', setRepPassword)}
+                    error={errores.repPassword}
+                />
 
-                    <ButtonSubmit text={'Registrarse'} onclick={registrarUsuario} />
-
-                </form>
-
-                <div className={styles.bottom_div}>
-                    <p className={styles.parrafo_abajo}>¿Ya tienes una cuenta? <Link to="/login" id="show-login" className={styles.link}>Inicia sesión</Link></p>
-                </div>
-            </div>
-        </div>
+                <ButtonSubmit text={'Crear cuenta'} loading={enviando} loadingText={'Creando cuenta…'} />
+            </form>
+        </AuthLayout>
     )
 }

@@ -9,7 +9,7 @@ export default function LandingLayout({ children }) {
   useReveal(pageRef)
 
   return (
-    <div className={styles.page} ref={pageRef}>
+    <div className={`marca ${styles.page}`} ref={pageRef}>
       <Header />
       <main className={styles.main}>{children}</main>
       <Footer />

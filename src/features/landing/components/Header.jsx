@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../auth/context/AuthContext'
-import logo from '../assets/logo.png'
 import styles from '../css/header.module.css'
 
 export default function Header() {
@@ -19,7 +18,7 @@ export default function Header() {
     <header className={`${styles.header} ${conScroll ? styles.scrolled : ''}`}>
       <div className={`l-container ${styles.inner}`}>
         <a href="#inicio" className={styles.brand}>
-          <img src={logo} alt="" width="40" height="40" className={styles.logo} />
+          <img src="/logo.svg" alt="" width="52" height="52" className={styles.logo} />
           <span className={styles.title}>Leitner<span>App</span></span>
         </a>
 
