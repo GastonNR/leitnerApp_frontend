@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react'
-import { useLecciones } from '../../context/LeccionesContext'
+import { useAsignaturas } from '../../context/AsignaturasContext'
 import { useAuth } from '../../../auth/context/AuthContext'
 import { venceHoy } from '../../utils/fechas'
 import Study_mode from './Study_mode'
@@ -7,11 +7,13 @@ import styles from './css/studyHero.module.css'
 
 // Panel "Hoy": cuántas tarjetas tocan, de qué cajas vienen y el botón para estudiar.
 export default function StudyHero() {
-    const { leccionActiva, tarjetasDeHoy, setModalLeccionesAbierto } = useLecciones()
+    const { asignaturas, temaActivo, tarjetasDeHoy, setModalTemasAbierto } = useAsignaturas()
     const { usuario } = useAuth()
     const [estudiando, setEstudiando] = useState<boolean>(false)
 
-    if (!leccionActiva) {
+    if (!temaActivo) {
+        // Sin asignaturas, o con asignaturas pero todavía sin temas
+        const sinAsignaturas = asignaturas.length === 0
         return (
             <section className={`${styles.panel} ${styles.vacio}`}>
                 <span className={styles.iconoVacio} aria-hidden="true">
@@ -20,20 +22,23 @@ export default function StudyHero() {
                         <path d="M8 8h6M8 12h4" />
                     </svg>
                 </span>
-                <h1 className={styles.titulo}>Hola, {usuario?.nombre ?? 'de nuevo'}. Crea tu primera lección</h1>
+                <h1 className={styles.titulo}>
+                    Hola, {usuario?.nombre ?? 'de nuevo'}. {sinAsignaturas ? 'Crea tu primera asignatura' : 'Crea tu primer tema'}
+                </h1>
                 <p className={styles.texto}>
-                    Una lección es un tema (por ejemplo <em>Inglés</em> o <em>Biología</em>) con sus propias 5 cajas.
-                    Después le agregas tarjetas y empiezas a repasar.
+                    Organiza lo que estudias en asignaturas (por ejemplo <em>Inglés</em> o <em>Biología</em>) y
+                    divide cada una en temas (<em>Verbos irregulares</em>, <em>La célula</em>…). Cada tema tiene
+                    sus propias 5 cajas: le agregas tarjetas y empiezas a repasar.
                 </p>
-                <button type="button" className={styles.boton} onClick={() => setModalLeccionesAbierto(true)}>
-                    Crear lección
+                <button type="button" className={styles.boton} onClick={() => setModalTemasAbierto(true)}>
+                    {sinAsignaturas ? 'Crear asignatura' : 'Crear tema'}
                 </button>
             </section>
         )
     }
 
-    const totalTarjetas = leccionActiva.cajas.reduce((acc, c) => acc + (c.tarjetas?.length ?? 0), 0)
-    const vencidasPorCaja = leccionActiva.cajas.map(c => (c.tarjetas ?? []).filter(venceHoy).length)
+    const totalTarjetas = temaActivo.cajas.reduce((acc, c) => acc + (c.tarjetas?.length ?? 0), 0)
+    const vencidasPorCaja = temaActivo.cajas.map(c => (c.tarjetas ?? []).filter(venceHoy).length)
     const vencidas = vencidasPorCaja.reduce((a, b) => a + b, 0)
     const hayParaEstudiar = tarjetasDeHoy.length > 0
 
@@ -46,7 +51,7 @@ export default function StudyHero() {
         titulo = 'Estás al día'
         texto = `No hay repasos pendientes. Si quieres, puedes practicar las ${tarjetasDeHoy.length} tarjeta${tarjetasDeHoy.length !== 1 ? 's' : ''} de la caja 1.`
     } else if (totalTarjetas === 0) {
-        titulo = 'Tu lección está vacía'
+        titulo = 'Este tema está vacío'
         texto = 'Agrega tu primera tarjeta en la pestaña «Nueva tarjeta».'
     } else {
         titulo = 'Estás al día'

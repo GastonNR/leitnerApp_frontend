@@ -20,9 +20,6 @@ export interface CardElementProps{
     imagen?: string | null
     onEditar: () => void
     onEliminar: () => void
-    /* Agregar o reemplazar la imagen (ya comprimida). Devuelve true o un mensaje de error. */
-    onCambiarImagen: (imagen: Blob) => Promise<true | string>
-    onQuitarImagen: () => Promise<true | string>
 }
 
 export interface QuestionAnswerProps{

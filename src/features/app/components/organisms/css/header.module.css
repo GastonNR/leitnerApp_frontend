@@ -33,8 +33,8 @@
     color: var(--d-accent);
 }
 
-/* Selector de lección */
-.leccion {
+/* Selector de tema (asignatura arriba, tema abajo) */
+.tema {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -52,35 +52,38 @@
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.leccion:hover {
+.tema:hover {
     border-color: var(--d-border-strong);
     background: var(--d-surface-2);
 }
 
-.leccion:focus-visible,
+.tema:focus-visible,
 .logout:focus-visible {
     outline: 2px solid var(--d-accent);
     outline-offset: 2px;
 }
 
-.leccion > svg:first-child {
+.tema > svg:first-child {
     flex-shrink: 0;
     color: var(--d-muted);
 }
 
-.leccionTexto {
+.temaTexto {
     display: flex;
     flex-direction: column;
     min-width: 0;
     line-height: 1.2;
 }
 
-.leccionEtiqueta {
+.temaEtiqueta {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 0.7rem;
     color: var(--d-muted);
 }
 
-.leccionNombre {
+.temaNombre {
     font-weight: 600;
     font-size: 0.92rem;
     white-space: nowrap;
@@ -166,7 +169,7 @@
         display: none;
     }
 
-    .leccion {
+    .tema {
         margin-left: 0;
         flex: 1;
         max-width: none;

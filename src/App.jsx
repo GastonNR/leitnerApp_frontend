@@ -5,7 +5,7 @@ import Registro from "./features/auth/pages/Registro.tsx"
 import LeitnerApp from "./features/app/pages/LeitnerApp.jsx"
 import RutaProtegida from "./routes/RutaProtegida.jsx"
 
-import LeccionesProvider from "./features/app/context/LeccionesContext.tsx"
+import AsignaturasProvider from "./features/app/context/AsignaturasContext.tsx"
 import AuthProvider from "./features/auth/context/AuthContext.tsx"
 import "./index.css"
 
@@ -21,9 +21,9 @@ function App() {
 
           <Route element={<RutaProtegida />} >
             <Route path="/leitnerApp" element={
-              <LeccionesProvider>
+              <AsignaturasProvider>
                 <LeitnerApp />
-              </LeccionesProvider>
+              </AsignaturasProvider>
             } />
           </Route>
 

@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { useLecciones } from '../../context/LeccionesContext'
-import type { Leccion, Tarjeta } from '../../types/context.types'
+import { useAsignaturas } from '../../context/AsignaturasContext'
+import type { Tarjeta, Tema } from '../../types/context.types'
 import StudyCard from './StudyCard'
 import CerrarModal from '../molecules/CerrarModal'
 import modal from './css/modal.module.css'
@@ -15,27 +15,26 @@ type Fase = 'estudiando' | 'guardando' | 'guardada' | 'error'
 
 export default function Study_mode({ setModalStudyCard }: Study_modeProps) {
 
-    const { tarjetasDeHoy, leccionActiva, actualizarTarjeta, guardar } = useLecciones()
+    const { tarjetasDeHoy, temaActivo, asignaturaActiva, actualizarTarjeta, guardar } = useAsignaturas()
 
-    // Las tarjetas de la sesión se fijan al abrir: al guardar, la lección cambia
+    // Las tarjetas de la sesión se fijan al abrir: al guardar, el tema cambia
     // y tarjetasDeHoy se recalcula, pero la sesión en curso no debe moverse.
     const [sesion] = useState<Tarjeta[]>(() => tarjetasDeHoy)
     const [indice, setIndice] = useState<number>(0)
     const [aciertos, setAciertos] = useState<number>(0)
     const [fase, setFase] = useState<Fase>(sesion.length > 0 ? 'estudiando' : 'guardada')
     const [ocupado, setOcupado] = useState<boolean>(false)
-    const pendientes = useRef<Leccion[] | null>(null)
+    const pendientes = useRef<Tema | null>(null)
     const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
     useEffect(() => () => clearTimeout(timer.current), [])
 
     const cerrar = () => setModalStudyCard(false)
 
-    const guardarSesion = async (leccionesActualizadas: Leccion[]) => {
-        pendientes.current = leccionesActualizadas
+    const guardarSesion = async (tema: Tema) => {
+        pendientes.current = tema
         setFase('guardando')
-        const resultado = await guardar(leccionesActualizadas)
-        setFase(resultado?.ok ? 'guardada' : 'error')
+        setFase(await guardar(tema) ? 'guardada' : 'error')
     }
 
     const responder = async (esCorrecta: boolean) => {
@@ -43,7 +42,7 @@ export default function Study_mode({ setModalStudyCard }: Study_modeProps) {
         setOcupado(true)
         if (esCorrecta) setAciertos(a => a + 1)
 
-        const leccionesActualizadas = await actualizarTarjeta(esCorrecta, sesion[indice])
+        const temaActualizado = actualizarTarjeta(esCorrecta, sesion[indice])
 
         if (indice < sesion.length - 1) {
             timer.current = setTimeout(() => {
@@ -55,7 +54,8 @@ export default function Study_mode({ setModalStudyCard }: Study_modeProps) {
 
         setIndice(sesion.length)
         setOcupado(false)
-        await guardarSesion(leccionesActualizadas)
+        if (temaActualizado) await guardarSesion(temaActualizado)
+        else setFase('error')
     }
 
     const respondidas = Math.min(indice, sesion.length)
@@ -73,7 +73,7 @@ export default function Study_mode({ setModalStudyCard }: Study_modeProps) {
             >
                 <div className={styles.header}>
                     <div className={styles.headerTexto}>
-                        <span className={styles.eyebrow}>{leccionActiva?.nombre}</span>
+                        <span className={styles.eyebrow}>{asignaturaActiva?.nombre} · {temaActivo?.nombre}</span>
                         <h2 id="study-title" className={styles.titulo}>Repaso de hoy</h2>
                     </div>
                     <CerrarModal className={styles.cerrar} onclick={cerrar} />

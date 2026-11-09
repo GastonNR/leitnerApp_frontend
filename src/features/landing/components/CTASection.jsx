@@ -12,9 +12,9 @@ export default function CTASection() {
         <div className={styles.inner} data-reveal>
           <div className={styles.glow} aria-hidden="true" />
           <h2>Tu memoria, entrenada cada día</h2>
-          <p>Crea tu primera lección en un minuto y empieza a recordar lo que estudias.</p>
+          <p>Crea tu primera asignatura en un minuto y empieza a recordar lo que estudias.</p>
           <Link to={token ? '/leitnerApp' : '/registro'} className="l-btn l-btn-primary">
-            {token ? 'Ir a mis lecciones' : 'Crear mi cuenta'}
+            {token ? 'Ir a mis asignaturas' : 'Crear mi cuenta'}
           </Link>
         </div>
       </div>

@@ -24,9 +24,9 @@ const features = [
     icon: icono(<><rect x="3" y="6" width="14" height="12" rx="2" /><path d="M7 3h12a2 2 0 0 1 2 2v10" /></>),
   },
   {
-    id: 'lecciones',
-    title: 'Una lección por tema',
-    desc: 'Inglés, Biología, Historia… cada lección tiene sus propias 5 cajas y avanza a su ritmo.',
+    id: 'temas',
+    title: 'Asignaturas divididas en temas',
+    desc: 'Inglés, Biología, Historia… cada asignatura se divide en temas, y cada tema tiene sus propias 5 cajas y avanza a su ritmo.',
     color: '#fb923c',
     icon: icono(<><path d="M4 19V6a2 2 0 0 1 2-2h12v15H6a2 2 0 0 0-2 2" /><path d="M8 8h6M8 12h4" /></>),
   },

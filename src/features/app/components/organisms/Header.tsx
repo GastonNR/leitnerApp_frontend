@@ -1,12 +1,12 @@
 import { useNavigate, Link } from 'react-router-dom'
-import { useLecciones } from '../../context/LeccionesContext'
+import { useAsignaturas } from '../../context/AsignaturasContext'
 import { useAuth } from '../../../auth/context/AuthContext'
-import LeccionesModal from './LeccionesModal'
+import TemasModal from './TemasModal'
 import styles from './css/header.module.css'
 
 export default function Header() {
   const navigate = useNavigate()
-  const { leccionActiva, setModalLeccionesAbierto, modalLeccionesAbierto } = useLecciones()
+  const { temaActivo, asignaturaActiva, setModalTemasAbierto, modalTemasAbierto } = useAsignaturas()
   const { logout, usuario } = useAuth()
 
   const nombre = usuario?.nombre ?? 'Usuario'
@@ -26,20 +26,20 @@ export default function Header() {
             <span className={styles.brandText}>Leitner<span>App</span></span>
           </Link>
 
-          {/* Selector de lección: abre el modal de lecciones */}
+          {/* Selector de tema: abre el modal de asignaturas y temas */}
           <button
             type="button"
-            className={styles.leccion}
-            onClick={() => setModalLeccionesAbierto(true)}
+            className={styles.tema}
+            onClick={() => setModalTemasAbierto(true)}
             aria-haspopup="dialog"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M4 19V6a2 2 0 0 1 2-2h12v15H6a2 2 0 0 0-2 2" />
               <path d="M8 8h6M8 12h4" />
             </svg>
-            <span className={styles.leccionTexto}>
-              <span className={styles.leccionEtiqueta}>Lección activa</span>
-              <span className={styles.leccionNombre}>{leccionActiva?.nombre ?? 'Elegir lección'}</span>
+            <span className={styles.temaTexto}>
+              <span className={styles.temaEtiqueta}>{asignaturaActiva?.nombre ?? 'Asignaturas y temas'}</span>
+              <span className={styles.temaNombre}>{temaActivo?.nombre ?? 'Elegir tema'}</span>
             </span>
             <svg className={styles.chevron} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M6 9l6 6 6-6" />
@@ -60,7 +60,7 @@ export default function Header() {
 
         </div>
       </header>
-      {modalLeccionesAbierto && <LeccionesModal />}
+      {modalTemasAbierto && <TemasModal />}
     </>
   )
 }

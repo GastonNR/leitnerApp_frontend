@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, FormEvent, KeyboardEvent, type CSSProperties } from 'react'
-import { useLecciones } from '../../context/LeccionesContext'
+import { useAsignaturas } from '../../context/AsignaturasContext'
 import { useImagen } from '../../hooks/useImagen'
 import QuestionAnswer from '../molecules/QuestionAnswer'
 import SelectorImagen from '../molecules/SelectorImagen'
@@ -51,7 +51,7 @@ export default function CreateNewCardComponent({ tarjeta, caja, onCerrar }: Crea
         ? { titulo: 'titulo-editar-tarjeta', form: 'edit-card-form', pregunta: 'edit-question', respuesta: 'edit-answer', textos: 'edit-columna-textos', imagen: 'edit-columna-imagen' }
         : { titulo: 'titulo-nueva-tarjeta', form: 'new-card-form', pregunta: 'card-question', respuesta: 'card-answer', textos: 'columna-textos', imagen: 'columna-imagen' }
 
-    const { leccionActiva, crearNuevaTarjeta, editarTarjeta } = useLecciones()
+    const { temaActivo, crearNuevaTarjeta, editarTarjeta } = useAsignaturas()
     const [pregunta, setPregunta] = useState<string>(tarjeta?.pregunta ?? '')
     const [respuesta, setRespuesta] = useState<string>(tarjeta?.respuesta ?? '')
     const [errores, setErrores] = useState<Errores>({ pregunta: null, respuesta: null })
@@ -105,11 +105,11 @@ export default function CreateNewCardComponent({ tarjeta, caja, onCerrar }: Crea
     }
 
     async function crear() {
-        if (!leccionActiva) return
+        if (!temaActivo) return
         const nueva: NuevaTarjeta = { pregunta, respuesta, imagen }
 
         setEnviando(true)
-        const creada = await crearNuevaTarjeta(leccionActiva._id, nueva)
+        const creada = await crearNuevaTarjeta(temaActivo._id, nueva)
         setEnviando(false)
 
         if (creada !== true) {

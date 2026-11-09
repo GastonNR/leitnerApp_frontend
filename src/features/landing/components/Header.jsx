@@ -30,7 +30,7 @@ export default function Header() {
 
         <div className={styles.actions}>
           {token ? (
-            <Link to="/leitnerApp" className="l-btn l-btn-primary">Ir a mis lecciones</Link>
+            <Link to="/leitnerApp" className="l-btn l-btn-primary">Ir a mis asignaturas</Link>
           ) : (
             <>
               <Link to="/login" className={styles.login}>Iniciar sesión</Link>

@@ -1,5 +1,5 @@
 import Circle from '../atoms/Circle'
-import { useLecciones } from '../../context/LeccionesContext'
+import { useAsignaturas } from '../../context/AsignaturasContext'
 import styles from './css/calendar.module.css'
 import { useState, useMemo } from 'react'
 import clsx from 'clsx'
@@ -28,15 +28,15 @@ function formatearFecha(fecha: Date): string {
 }
 
 export default function Calendar() {
-  const { leccionActiva } = useLecciones()
+  const { temaActivo } = useAsignaturas()
   const [colResaltada, setColResaltada] = useState<number | null>(null)
 
-  // Generamos 64 fechas a partir de la creación de la lección. Si la lección ya tiene más
+  // Generamos 64 fechas a partir de la creación del tema. Si el tema ya tiene más
   // de 64 días, la ventana avanza en bloques de 16 días (el período del patrón) para que
   // hoy siempre sea visible y el patrón conserve su fase.
   const fechas = useMemo<Date[]>(() => {
-    if (!leccionActiva?.fechaCreacion) return []
-    const creacion = new Date(leccionActiva.fechaCreacion)
+    if (!temaActivo?.fechaCreacion) return []
+    const creacion = new Date(temaActivo.fechaCreacion)
     creacion.setHours(0, 0, 0, 0)
     const hoy = new Date()
     hoy.setHours(0, 0, 0, 0)
@@ -51,9 +51,9 @@ export default function Calendar() {
       fecha.setDate(inicio.getDate() + i)
       return fecha
     })
-  }, [leccionActiva?.fechaCreacion])
+  }, [temaActivo?.fechaCreacion])
 
-  // Índice del día de hoy dentro del rango de la lección
+  // Índice del día de hoy dentro del rango del tema
   const diaHoyIdx = useMemo<number | null>(() => {
     const hoy = new Date()
     hoy.setHours(0, 0, 0, 0)
@@ -66,14 +66,14 @@ export default function Calendar() {
     return PATRON_CALENDARIO.map(fila => extenderPatron(fila, TOTAL_DIAS))
   }, [])
 
-  if (!leccionActiva) return null
+  if (!temaActivo) return null
 
   return (
     <section className={styles.contenedor_calendario} aria-labelledby="titulo-calendario">
       <div className={styles.head}>
         <div>
           <h2 id="titulo-calendario" className={styles.titulo}>Calendario de repaso</h2>
-          <p className={styles.texto}>Qué cajas conviene repasar cada día desde que creaste la lección. El número es la cantidad de tarjetas en esa caja.</p>
+          <p className={styles.texto}>Qué cajas conviene repasar cada día desde que creaste el tema. El número es la cantidad de tarjetas en esa caja.</p>
         </div>
         {diaHoyIdx !== null && <span className={styles.leyendaHoy}>Hoy</span>}
       </div>
@@ -99,7 +99,7 @@ export default function Calendar() {
 
           <tbody>
             {CAJAS.map((label, cajaIdx) => {
-              const cantidadTarjetas = leccionActiva.cajas[cajaIdx]?.tarjetas.length ?? 0
+              const cantidadTarjetas = temaActivo.cajas[cajaIdx]?.tarjetas.length ?? 0
 
               return (
                 <tr key={label}>

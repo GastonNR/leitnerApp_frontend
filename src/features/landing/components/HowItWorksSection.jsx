@@ -4,8 +4,8 @@ import styles from '../css/how.module.css'
 const steps = [
   {
     id: 1,
-    title: 'Crea una lección',
-    desc: 'Elige un tema: un idioma, una materia o lo que estés estudiando.',
+    title: 'Crea asignaturas y temas',
+    desc: 'Una asignatura por materia o idioma, dividida en los temas que estés estudiando.',
   },
   {
     id: 2,

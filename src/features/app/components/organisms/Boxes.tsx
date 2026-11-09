@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Box from '../molecules/Box'
 import BoxModal from './BoxModal'
-import { useLecciones } from '../../context/LeccionesContext'
+import { useAsignaturas } from '../../context/AsignaturasContext'
 import { venceHoy } from '../../utils/fechas'
 import styles from './css/boxes.module.css'
 
@@ -17,9 +17,9 @@ export default function Boxes() {
 
   const [ estiloDisplay, setEstiloDisplay ] = useState<boolean>(false)
   const [ indiceCaja, setIndiceCaja ] = useState<string>('')
-  const { leccionActiva } = useLecciones()
+  const { temaActivo } = useAsignaturas()
 
-  const cajas = leccionActiva?.cajas ?? []
+  const cajas = temaActivo?.cajas ?? []
   const cantidades = CAJAS.map((_, i) => cajas[i]?.tarjetas?.length ?? 0)
   const total = cantidades.reduce((a, b) => a + b, 0)
   const maximo = Math.max(1, ...cantidades)

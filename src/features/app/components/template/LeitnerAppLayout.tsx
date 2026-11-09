@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { useLecciones } from "../../context/LeccionesContext"
+import { useAsignaturas } from "../../context/AsignaturasContext"
 import { venceHoy } from "../../utils/fechas"
 import Pestanas from "../molecules/Pestanas"
 import styles from './leitnerAppLayout.module.css'
@@ -30,18 +30,18 @@ const iconoRepaso = (
 // "Nueva tarjeta" y "Repaso y calendario". Nada hace scroll a nivel de página.
 // En pantallas chicas se apila y la página vuelve a desplazarse con normalidad.
 export default function LeitnerAppLayout({ header, hero, boxes, calendar, createNewCardComponent }: LeitnerAppLayoutProps) {
-  const { leccionActiva } = useLecciones()
+  const { temaActivo } = useAsignaturas()
 
-  if (!leccionActiva) {
+  if (!temaActivo) {
     return (
       <div className={`dashboard ${styles.page}`}>
         {header}
-        <main className={styles.sinLeccion}>{hero}</main>
+        <main className={styles.sinTema}>{hero}</main>
       </div>
     )
   }
 
-  const vencidas = leccionActiva.cajas.reduce((n, c) => n + (c.tarjetas ?? []).filter(venceHoy).length, 0)
+  const vencidas = temaActivo.cajas.reduce((n, c) => n + (c.tarjetas ?? []).filter(venceHoy).length, 0)
 
   return (
     <div className={`dashboard ${styles.page}`}>

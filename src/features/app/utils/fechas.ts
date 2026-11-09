@@ -1,6 +1,6 @@
 import type { Tarjeta } from "../types/context.types"
 
-// Fecha local en formato AAAA-MM-DD, para comparar solo el día (igual que LeccionesContext)
+// Fecha local en formato AAAA-MM-DD, para comparar solo el día (igual que AsignaturasContext)
 const dia = (fecha: Date | string): string => new Date(fecha).toLocaleDateString('sv-SE')
 
 /** true si la tarjeta toca hoy o ya venció */

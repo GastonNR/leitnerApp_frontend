@@ -1,10 +1,9 @@
 import { createPortal } from 'react-dom'
 import { lazy, Suspense, useState, type CSSProperties } from "react"
-import { useLecciones } from "../../context/LeccionesContext"
+import { useAsignaturas } from "../../context/AsignaturasContext"
 import CardElement from "../molecules/CardElement"
 import CerrarModal from "../molecules/CerrarModal"
 import { BoxModalProps } from "../../types/components.types"
-import type { Tarjeta } from "../../types/context.types"
 import modal from "./css/modal.module.css"
 import styles from "./css/boxModal.module.css"
 
@@ -16,16 +15,16 @@ const PERIODOS = ['se repasa cada día', 'se repasa cada 3 días', 'se repasa ca
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps) {
 
-    const { leccionActiva, eliminarTarjetaContext, cambiarImagenTarjeta, eliminarImagenTarjeta } = useLecciones()
+    const { temaActivo, eliminarTarjeta } = useAsignaturas()
     const indiceCajaNum = Number(indiceCaja) - 1
-    const cajaElegida = leccionActiva?.cajas[indiceCajaNum]?.tarjetas || []
+    const cajaElegida = temaActivo?.cajas[indiceCajaNum]?.tarjetas || []
     const cerrar = () => setEstiloDisplay(false)
     // Tarjeta abierta en el modal de edición (se busca por id para ver siempre la versión actual)
     const [editandoId, setEditandoId] = useState<string | null>(null)
     const editando = cajaElegida.find(t => t._id === editandoId) ?? null
 
-    const eliminarTarjeta = async (indexAEliminar: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
-        const eliminada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
+    const borrar = async (tarjetaId: string) => {
+        const eliminada = await eliminarTarjeta(tarjetaId)
         if (!eliminada) alert("No se ha podido eliminar la tarjeta.")
     }
 
@@ -55,16 +54,14 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                 <div className={modal.body}>
                     {cajaElegida.length > 0 ? (
                         <ul id="box-cards-container" className={styles.lista}>
-                            {cajaElegida.map((tarjeta, index) => (
+                            {cajaElegida.map(tarjeta => (
                                 <CardElement
                                     key={tarjeta._id}
                                     pregunta={tarjeta.pregunta}
                                     proxima_revision={tarjeta.proxima_revision}
                                     imagen={tarjeta.imagen}
                                     onEditar={() => setEditandoId(tarjeta._id)}
-                                    onEliminar={() => eliminarTarjeta(index, cajaElegida, indiceCajaNum)}
-                                    onCambiarImagen={imagen => cambiarImagenTarjeta(tarjeta._id, imagen)}
-                                    onQuitarImagen={() => eliminarImagenTarjeta(tarjeta._id)}
+                                    onEliminar={() => borrar(tarjeta._id)}
                                 />
                             ))}
                         </ul>

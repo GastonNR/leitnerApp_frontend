@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { obtenerImagenService } from '../services/lecciones.service'
+import { obtenerImagenService } from '../services/estudio.service'
 
 // Caché en memoria: cada imagen se descarga una sola vez por sesión.
 // Las imágenes no cambian (una imagen nueva tiene otro id), así que no caducan.

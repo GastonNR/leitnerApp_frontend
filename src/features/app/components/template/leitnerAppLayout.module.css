@@ -35,7 +35,7 @@
     min-width: 0;
 }
 
-.sinLeccion {
+.sinTema {
     width: 100%;
     max-width: 720px;
     margin: 0 auto;
@@ -94,7 +94,7 @@
         min-width: 0;
     }
 
-    .sinLeccion {
+    .sinTema {
         overflow-y: auto;
     }
 }

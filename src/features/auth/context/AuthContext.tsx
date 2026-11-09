@@ -51,7 +51,8 @@ export default function AuthProvider({ children }: AuthProviderProps){
         localStorage.removeItem("token")
         localStorage.removeItem("id")
         localStorage.removeItem("nombre_usuario")
-        localStorage.removeItem("leccion_activa")
+        localStorage.removeItem("tema_activo")
+        localStorage.removeItem("leccion_activa") // estructura anterior
     }, [])
 
     // Token expirado o inválido (lo detecta el interceptor de axios): se cierra la sesión

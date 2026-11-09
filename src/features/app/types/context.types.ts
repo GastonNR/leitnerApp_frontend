@@ -1,32 +1,43 @@
 import { ReactNode, SetStateAction } from "react"
 
-// LECCIONES CONTEXT
-export interface LeccionesContextType{
+// ASIGNATURAS CONTEXT
+export interface AsignaturasContextType{
+    asignaturas: Asignatura[]
+    // Tema que se estudia ahora y la asignatura a la que pertenece
+    temaActivo: Tema | undefined
+    asignaturaActiva: Asignatura | undefined
+    // Tarjetas del tema activo que tocan hoy (o la caja 1 si no toca ninguna)
     tarjetasDeHoy: Tarjeta[]
-    lecciones: Array<Leccion>
-    setLecciones: React.Dispatch<React.SetStateAction<Leccion[]>>
-    leccionActivaId: string | null
-    setLeccionActivaId: React.Dispatch<SetStateAction<string | null>>
-    leccionActiva: Leccion | undefined
-    modalLeccionesAbierto: boolean
-    setModalLeccionesAbierto: React.Dispatch<SetStateAction<boolean>>
-    crearLeccion: (nombre: string)=> Promise<void> // lanza Error con el mensaje del backend si falla
-    cambiarLeccion: (leccionId: string)=> void
-    eliminarLeccion: (id: string)=> Promise<void>
-    crearNuevaTarjeta: (leccionId: string, tarjeta: NuevaTarjeta)=> Promise<true | string> // true o el mensaje de error
-    actualizarTarjeta: (esCorrecta: boolean, tarjeta: Tarjeta)=> Promise<Leccion[]>
-    guardar: (leccionesActualizadas: Leccion[])=> Promise<{ok: true} | undefined>
-    eliminarTarjetaContext: (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number)=> Promise<boolean>
-    cambiarImagenTarjeta: (tarjetaId: string, imagen: Blob)=> Promise<true | string> // true o el mensaje de error
-    eliminarImagenTarjeta: (tarjetaId: string)=> Promise<true | string>
+    modalTemasAbierto: boolean
+    setModalTemasAbierto: React.Dispatch<SetStateAction<boolean>>
+    // Las de crear lanzan Error con el mensaje del backend si fallan
+    crearAsignatura: (nombre: string)=> Promise<Asignatura>
+    eliminarAsignatura: (asignaturaId: string)=> Promise<void>
+    crearTema: (asignaturaId: string, nombre: string)=> Promise<Tema> // queda como tema activo
+    eliminarTema: (temaId: string)=> Promise<void>
+    cambiarTema: (temaId: string)=> void
+    crearNuevaTarjeta: (temaId: string, tarjeta: NuevaTarjeta)=> Promise<true | string> // true o el mensaje de error
+    // Sesión de estudio: marcar una respuesta (solo en el navegador) y guardar el tema
+    actualizarTarjeta: (esCorrecta: boolean, tarjeta: Tarjeta)=> Tema | undefined
+    guardar: (tema: Tema)=> Promise<boolean>
+    eliminarTarjeta: (tarjetaId: string)=> Promise<boolean>
     editarTarjeta: (tarjetaId: string, datos: EdicionTarjeta)=> Promise<true | string> // true o el mensaje de error
 }
 
-export interface LeccionesProviderProps{
+export interface AsignaturasProviderProps{
     children: ReactNode
 }
+
 // DOMINIO
-export interface Leccion{
+// Asignatura → temas → 5 cajas → tarjetas
+export interface Asignatura{
+    nombre: string
+    fechaCreacion: Date
+    temas: Tema[]
+    _id: string
+}
+
+export interface Tema{
     nombre: string
     fechaCreacion: Date
     cajas: Caja[]
