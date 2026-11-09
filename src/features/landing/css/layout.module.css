@@ -1,11 +1,177 @@
-.page{
-  display:flex;
-  min-height:100vh;
-  flex-direction:column;
+/* Tokens y base de la landing. Todo cuelga de .page para que nada
+   se filtre al resto de la app (antes global.css cambiaba el body). */
+.page {
+  --l-navy-950: #060b1a;
+  --l-navy-900: #0a1430;
+  --l-navy-800: #12204a;
+  --l-blue: #2563eb;
+  --l-sky: #38bdf8;
+  --l-cyan: #22d3ee;
+  --l-yellow: #facc15;
+  --l-ink: #0f172a;
+  --l-text: #334155;
+  --l-muted: #64748b;
+  --l-bg: #f5f8ff;
+  --l-surface: #ffffff;
+  --l-border: #e2e8f5;
+  --l-on-dark: #e6edff;
+  --l-on-dark-muted: #9fb0d6;
+
+  --l-box-1: #fb7185;
+  --l-box-2: #fb923c;
+  --l-box-3: #facc15;
+  --l-box-4: #38bdf8;
+  --l-box-5: #34d399;
+
+  --l-gradient: linear-gradient(120deg, #38bdf8 0%, #22d3ee 45%, #facc15 100%);
+  --l-radius: 20px;
+  --l-max: 1180px;
+  --l-display: 'Poppins', system-ui, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--l-bg);
+  color: var(--l-ink);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
-.container{
-  flex:1;
-  max-width:1100px;
-  margin:0 auto;
-  padding:36px 20px;
+
+/* :where() deja la especificidad baja para que los módulos puedan dar color a sus enlaces */
+.page :where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page :global(h1),
+.page :global(h2),
+.page :global(h3) {
+  font-family: var(--l-display);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Que el header fijo no tape el título al saltar a una sección */
+.page :global(section[id]) {
+  scroll-margin-top: 72px;
+}
+
+.page :global(.l-container) {
+  width: 100%;
+  max-width: var(--l-max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.page :global(.l-gradient-text) {
+  background: var(--l-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page :global(.l-eyebrow) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--l-blue);
+}
+
+.page :global(.l-section-head) {
+  max-width: 680px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.page :global(.l-section-head h2) {
+  font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+  margin: 12px 0 14px;
+}
+
+.page :global(.l-section-head p) {
+  color: var(--l-muted);
+  font-size: 1.075rem;
+  line-height: 1.65;
+}
+
+/* Botones compartidos */
+.page :global(.l-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--l-display);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.page :global(.l-btn:hover) {
+  transform: translateY(-2px);
+}
+
+.page :global(.l-btn:focus-visible) {
+  outline: 3px solid var(--l-sky);
+  outline-offset: 3px;
+}
+
+.page :global(.l-btn-primary) {
+  background: var(--l-yellow);
+  color: var(--l-navy-950);
+  box-shadow: 0 10px 30px -8px rgba(250, 204, 21, 0.55);
+}
+
+.page :global(.l-btn-primary:hover) {
+  box-shadow: 0 16px 36px -8px rgba(250, 204, 21, 0.7);
+}
+
+.page :global(.l-btn-ghost) {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--l-on-dark);
+}
+
+.page :global(.l-btn-ghost:hover) {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Aparición al hacer scroll (la activa useReveal) */
+.page :global([data-reveal]) {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.page :global([data-reveal].is-visible) {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page :global([data-reveal]) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .page :global(*) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.main {
+  flex: 1;
 }

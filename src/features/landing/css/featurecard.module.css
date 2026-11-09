@@ -1,28 +1,64 @@
-.card{
-    background:var(--card-bg);
-    padding:18px;
-    border-radius:12px;
-    box-shadow:0 6px 24px rgba(16,24,40,0.04);
-    border:1px solid rgba(15,23,36,0.03);
+.card {
+  position: relative;
+  padding: 28px 24px;
+  border-radius: var(--l-radius);
+  background: var(--l-bg);
+  border: 1px solid var(--l-border);
+  overflow: hidden;
 }
 
-.icon{
-    font-size:28px;
-    width:56px;
-    height:56px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(90deg,var(--primary-start),var(--primary-end));
-    color:white;
-    margin-bottom:12px;
+.card::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
 }
-.title{
-    font-weight:600;
-    margin:0 0 8px;
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--l-border));
+  box-shadow: 0 24px 40px -28px color-mix(in srgb, var(--accent) 80%, transparent);
 }
-.desc{
-    color:var(--muted);
-    margin:0;
+
+.card:hover::after {
+  transform: scaleX(1);
+}
+
+/* La transición del hover convive con la de aparición (data-reveal) */
+.card:global(.is-visible) {
+  transition: opacity 0.7s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.card:global(.is-visible):hover {
+  transform: translateY(-6px);
+  transition-delay: 0s;
+}
+
+.icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--l-navy-950);
+  background: color-mix(in srgb, var(--accent) 30%, white);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, white);
+}
+
+.title {
+  font-size: 1.15rem;
+  margin: 0 0 8px;
+}
+
+.desc {
+  color: var(--l-muted);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.95rem;
 }

@@ -2,25 +2,42 @@ import React from 'react'
 import styles from '../css/how.module.css'
 
 const steps = [
-  { id: 1, title: 'Creas tarjetas', desc: 'Añade preguntas y respuestas en segundos.' },
-  { id: 2, title: 'Estudias diariamente', desc: 'Sesiones cortas y enfocadas cada día.' },
-  { id: 3, title: 'El sistema mueve las tarjetas', desc: 'Las tarjetas avanzan según tu rendimiento.' },
+  {
+    id: 1,
+    title: 'Crea una lección',
+    desc: 'Elige un tema: un idioma, una materia o lo que estés estudiando.',
+  },
+  {
+    id: 2,
+    title: 'Añade tus tarjetas',
+    desc: 'Escribe una pregunta y su respuesta. Mejor cortas, con una sola idea cada una.',
+  },
+  {
+    id: 3,
+    title: 'Estudia unos minutos al día',
+    desc: 'Responde las tarjetas de hoy y LeitnerApp las mueve de caja y agenda el próximo repaso.',
+  },
 ]
 
 export default function HowItWorksSection() {
   return (
-    <section id="how" className={styles.how}>
-      <h2>Cómo funciona</h2>
-      <div className={styles.steps}>
-        {steps.map(s => (
-          <div key={s.id} className={styles.step}>
-            <div className={styles.index}>{s.id}</div>
-            <div>
+    <section id="como-funciona" className={styles.how}>
+      <div className="l-container">
+        <div className="l-section-head" data-reveal>
+          <span className="l-eyebrow">Cómo empezar</span>
+          <h2>De cero a estudiar en tres pasos</h2>
+          <p>Sin configuraciones ni curvas de aprendizaje. Creas tus tarjetas y el método hace el resto.</p>
+        </div>
+
+        <ol className={styles.steps}>
+          {steps.map((s, i) => (
+            <li key={s.id} className={styles.step} data-reveal style={{ '--reveal-delay': `${i * 0.12}s` }}>
+              <span className={styles.index} aria-hidden="true">{s.id}</span>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
-            </div>
-          </div>
-        ))}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )

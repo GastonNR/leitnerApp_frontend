@@ -1,68 +1,111 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--l-navy-950);
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.scrolled {
+  background: rgba(6, 11, 26, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
   gap: 16px;
+  height: 72px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  overflow: hidden
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.35));
 }
 
 .title {
+  font-family: var(--l-display);
   font-weight: 700;
-  font-size: 25px
+  font-size: 1.3rem;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.title span {
+  color: var(--l-yellow);
 }
 
 .nav {
-  display: none
+  display: none;
+  gap: 32px;
 }
 
 .nav a {
-  margin: 0 10px;
-  color: var(--muted)
+  color: var(--l-on-dark-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: #fff;
 }
 
 .actions {
   display: flex;
-  gap: 10px;
-  align-items: center
+  align-items: center;
+  gap: 8px;
 }
 
-.login {
-  margin: 1rem;
-  font-size: var(--font-size-md);
-  background: transparent;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: var(--muted);
-  box-shadow: 0 6px 18px rgba(3, 38, 80, 0.12);
+.actions :global(.l-btn) {
+  padding: 10px 18px;
+  font-size: 0.9rem;
 }
 
-.primary {
-  margin: 1rem;
-  font-size: var(--font-size-md);
-  background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
-  color: white;
-  border: none;
+.actions .login {
+  color: var(--l-on-dark);
+  font-weight: 500;
+  font-size: 0.95rem;
   padding: 10px 14px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(3, 38, 80, 0.12);
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
 }
 
-@media(min-width:768px) {
+.actions .login:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* En móviles chicos el registro queda en el hero; acá solo "Iniciar sesión". */
+@media (max-width: 420px) {
+  .cta {
+    display: none !important;
+  }
+}
+
+@media (min-width: 900px) {
   .nav {
-    display: block
+    display: flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .actions :global(.l-btn) {
+    padding: 9px 14px;
   }
 }

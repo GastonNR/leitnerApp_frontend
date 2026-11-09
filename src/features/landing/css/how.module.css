@@ -1,47 +1,78 @@
 .how {
-  padding: 40px 20px;
-  background: linear-gradient(180deg, rgba(124, 58, 237, 0.03), transparent)
-}
-
-.how h2 {
-  text-align: center;
-  margin-bottom: 18px
+  padding: 96px 0;
 }
 
 .steps {
-  display: flex;
-  flex-direction: column;
-  gap: 14px
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .step {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  background: var(--card-bg);
-  padding: 14px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04)
+  position: relative;
+  text-align: center;
+  padding: 0 12px;
 }
 
 .index {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
-  color: white;
-  display: flex;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  font-family: var(--l-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--l-navy-950);
+  background: var(--l-gradient);
+  box-shadow: 0 16px 32px -14px rgba(34, 211, 238, 0.7);
+  transform: rotate(-4deg);
 }
 
-@media(min-width:768px) {
+.step:nth-child(2) .index {
+  transform: rotate(3deg);
+}
+
+.step h3 {
+  font-size: 1.25rem;
+  margin: 0 0 10px;
+}
+
+.step p {
+  color: var(--l-muted);
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 320px;
+}
+
+/* Línea que une los pasos en escritorio */
+@media (min-width: 860px) {
   .steps {
-    flex-direction: row
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 
-  .step {
-    flex: 1
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 16.6%;
+    right: 16.6%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #bfdbfe 0 8px, transparent 8px 16px);
+  }
+}
+
+@media (max-width: 420px) {
+  .how {
+    padding: 72px 0;
   }
 }
