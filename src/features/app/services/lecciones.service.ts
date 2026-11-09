@@ -39,9 +39,37 @@ export const guardarLeccionService = async (leccion: Leccion): Promise<Leccion> 
 
 // MANEJO DE TARJETAS
 
+function nombreArchivo(imagen: Blob): string {
+    const extension = imagen.type.split('/')[1] || 'img'
+    return `imagen.${extension}`
+}
+
+// Descarga una imagen con el token (un <img src> no puede enviarlo).
+export const obtenerImagenService = async (imagenId: string): Promise<Blob> => {
+    const {data} = await api.get<Blob>(`/imagenes/${imagenId}`, { responseType: 'blob' })
+    return data
+}
+
 export const crearNuevaTarjetaService = async (leccion_id: string, datosTarjeta: NuevaTarjeta): Promise<Tarjeta> => {
     
-    const {data} = await api.post<Tarjeta>(`/lecciones/leccion/${leccion_id}`, datosTarjeta)
+    const { pregunta, respuesta, imagen } = datosTarjeta
+
+    if (!imagen) {
+        const {data} = await api.post<Tarjeta>(`/lecciones/leccion/${leccion_id}`, { pregunta, respuesta })
+        return data
+    }
+
+    // Con imagen: multipart/form-data en una sola petición (tarjeta + imagen).
+    // El Content-Type explícito evita que axios convierta el FormData a JSON;
+    // el navegador completa el boundary.
+    const formulario = new FormData()
+    formulario.append('pregunta', pregunta)
+    formulario.append('respuesta', respuesta)
+    formulario.append('imagen', imagen, nombreArchivo(imagen))
+
+    const {data} = await api.post<Tarjeta>(`/lecciones/leccion/${leccion_id}`, formulario, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    })
     return data
 
 }
@@ -51,4 +79,22 @@ export const eliminarTarjetaService = async (tarjetaId: string): Promise<void> =
     const respuesta = await api.delete(`/lecciones/leccion/${tarjetaId}`)
     if(respuesta.status !== 204) throw new Error('No se pudo eliminar la tarjeta.')
 
+}
+// IMAGEN DE UNA TARJETA EXISTENTE
+
+// Agrega o reemplaza la imagen. Devuelve la tarjeta actualizada.
+export const cambiarImagenTarjetaService = async (tarjetaId: string, imagen: Blob): Promise<Tarjeta> => {
+    const formulario = new FormData()
+    formulario.append('imagen', imagen, nombreArchivo(imagen))
+
+    const {data} = await api.put<Tarjeta>(`/imagenes/tarjeta/${tarjetaId}`, formulario, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    return data
+}
+
+// Quita la imagen. Devuelve la tarjeta actualizada.
+export const eliminarImagenTarjetaService = async (tarjetaId: string): Promise<Tarjeta> => {
+    const {data} = await api.delete<Tarjeta>(`/imagenes/tarjeta/${tarjetaId}`)
+    return data
 }

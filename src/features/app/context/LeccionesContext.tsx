@@ -5,7 +5,9 @@ import {
   eliminarTarjetaService,
   getLeccionesService,
   guardarLeccionService,
-  crearNuevaTarjetaService
+  crearNuevaTarjetaService,
+  cambiarImagenTarjetaService,
+  eliminarImagenTarjetaService
 } from "../services/lecciones.service";
 import type {
   LeccionesContextType,
@@ -16,6 +18,7 @@ import type {
 } from '../types/context.types'
 import { useAuth } from '../../auth/context/AuthContext'
 import { mensajeDeError } from "../../../shared/api/axios"
+import { precargarImagen } from "../hooks/useImagen"
 
 const LeccionesContext = createContext<LeccionesContextType | null>(null)
 
@@ -167,10 +170,11 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
   //===========//
   // TARJETAS //
   //==========//
-  const crearNuevaTarjeta = async (leccionId: string, tarjeta: NuevaTarjeta): Promise<boolean> => {
+  const crearNuevaTarjeta = async (leccionId: string, tarjeta: NuevaTarjeta): Promise<true | string> => {
 
     try {
       const nuevaTarjeta = await crearNuevaTarjetaService(leccionId, tarjeta)
+      if (nuevaTarjeta.imagen && tarjeta.imagen) precargarImagen(nuevaTarjeta.imagen, tarjeta.imagen)
 
       // Se actualiza la lección a la que pertenece la tarjeta, partiendo del estado más reciente,
       // aunque el usuario haya cambiado de lección mientras se esperaba la respuesta.
@@ -193,7 +197,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
 
     } catch (error) {
       console.error("Error al crear la tarjeta", error)
-      return false
+      return mensajeDeError(error, 'No se pudo crear la tarjeta. Inténtalo de nuevo.')
     }
   }
 
@@ -287,6 +291,44 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
     return true
   }
 
+  // Actualiza solo la imagen de una tarjeta, esté en la lección y caja que esté.
+  // No toca el resto de campos (por ejemplo, es_correcta de una sesión en curso).
+  const fijarImagenEnEstado = (tarjetaId: string, imagen: string | null) => {
+    setLecciones(prev =>
+      prev.map(leccion => ({
+        ...leccion,
+        cajas: leccion.cajas.map(caja =>
+          caja.tarjetas.some(t => t._id === tarjetaId)
+            ? { ...caja, tarjetas: caja.tarjetas.map(t => t._id === tarjetaId ? { ...t, imagen } : t) }
+            : caja
+        )
+      }))
+    )
+  }
+
+  const cambiarImagenTarjeta = async (tarjetaId: string, imagen: Blob): Promise<true | string> => {
+    try {
+      const tarjeta = await cambiarImagenTarjetaService(tarjetaId, imagen)
+      if (tarjeta.imagen) precargarImagen(tarjeta.imagen, imagen)
+      fijarImagenEnEstado(tarjetaId, tarjeta.imagen ?? null)
+      return true
+    } catch (error) {
+      console.error("Error al cambiar la imagen", error)
+      return mensajeDeError(error, 'No se pudo guardar la imagen.')
+    }
+  }
+
+  const eliminarImagenTarjeta = async (tarjetaId: string): Promise<true | string> => {
+    try {
+      await eliminarImagenTarjetaService(tarjetaId)
+      fijarImagenEnEstado(tarjetaId, null)
+      return true
+    } catch (error) {
+      console.error("Error al quitar la imagen", error)
+      return mensajeDeError(error, 'No se pudo quitar la imagen.')
+    }
+  }
+
   if (loading) return <p>Cargando cajas...</p>;
 
   //RETURN
@@ -304,6 +346,8 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
       crearNuevaTarjeta,
       actualizarTarjeta,
       eliminarTarjetaContext,
+      cambiarImagenTarjeta,
+      eliminarImagenTarjeta,
       guardar,
       modalLeccionesAbierto,
       setModalLeccionesAbierto,

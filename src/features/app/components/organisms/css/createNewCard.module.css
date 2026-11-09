@@ -35,6 +35,13 @@
     font-size: 0.85rem;
 }
 
+.columna {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
 /* Pregunta y respuesta lado a lado si hay espacio */
 .form {
     display: grid;
@@ -120,6 +127,12 @@
     }
 
     .form > div:not(.acciones) {
+        min-height: 0;
+    }
+
+    /* Pregunta y respuesta se reparten el alto; la imagen ocupa toda su columna */
+    .columna > div {
+        flex: 1;
         min-height: 0;
     }
 

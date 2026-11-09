@@ -18,7 +18,11 @@ export interface CardElementProps{
     pregunta: string
     respuesta: string
     proxima_revision: Date
+    imagen?: string | null
     onEliminar: MouseEventHandler<HTMLButtonElement>
+    /* Agregar o reemplazar la imagen (ya comprimida). Devuelve true o un mensaje de error. */
+    onCambiarImagen: (imagen: Blob) => Promise<true | string>
+    onQuitarImagen: () => Promise<true | string>
 }
 
 export interface QuestionAnswerProps{

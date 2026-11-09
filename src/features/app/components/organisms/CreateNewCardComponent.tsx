@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, FormEvent, KeyboardEvent } from 'react'
 import { useLecciones } from '../../context/LeccionesContext'
 import QuestionAnswer from '../molecules/QuestionAnswer'
+import SelectorImagen from '../molecules/SelectorImagen'
 import type { NuevaTarjeta } from '../../types/context.types'
 import styles from './css/createNewCard.module.css'
 
@@ -17,6 +18,7 @@ export default function CreateNewCardComponent() {
     const [errores, setErrores] = useState<Errores>({ pregunta: null, respuesta: null })
     const [aviso, setAviso] = useState<{ tipo: 'ok' | 'error', texto: string } | null>(null)
     const [enviando, setEnviando] = useState<boolean>(false)
+    const [imagen, setImagen] = useState<Blob | null>(null)
     const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
     useEffect(() => () => clearTimeout(timer.current), [])
@@ -38,19 +40,20 @@ export default function CreateNewCardComponent() {
         setErrores(nuevosErrores)
         if (nuevosErrores.pregunta || nuevosErrores.respuesta) return
 
-        const nueva: NuevaTarjeta = { pregunta, respuesta }
+        const nueva: NuevaTarjeta = { pregunta, respuesta, imagen }
 
         setEnviando(true)
         const creada = await crearNuevaTarjeta(leccionActiva._id, nueva)
         setEnviando(false)
 
-        if (!creada) {
-            setAviso({ tipo: 'error', texto: 'No se pudo crear la tarjeta. Inténtalo de nuevo.' })
+        if (creada !== true) {
+            setAviso({ tipo: 'error', texto: creada })
             return
         }
 
         setPregunta('')
         setRespuesta('')
+        setImagen(null)
         // Listo para escribir la siguiente
         document.getElementById('card-question')?.focus()
         setAviso({ tipo: 'ok', texto: 'Tarjeta creada en la caja 1.' })
@@ -81,23 +84,34 @@ export default function CreateNewCardComponent() {
             </div>
 
             <form id="new-card-form" className={styles.form} onSubmit={nuevaTarjeta} onKeyDown={atajoTeclado} noValidate>
-                <QuestionAnswer
-                    textAreaId={'card-question'}
-                    textLabel={'Pregunta'}
-                    placeholder={'Ej: ¿Cuál es la capital de Australia?'}
-                    value={pregunta}
-                    error={errores.pregunta}
-                    setOnChange={cambiar('pregunta', setPregunta)}
-                />
+                {/* Izquierda: pregunta y respuesta. Derecha: imagen de la pregunta */}
+                <div className={styles.columna}>
+                    <QuestionAnswer
+                        textAreaId={'card-question'}
+                        textLabel={'Pregunta'}
+                        placeholder={'Ej: ¿Cuál es la capital de Australia?'}
+                        value={pregunta}
+                        error={errores.pregunta}
+                        setOnChange={cambiar('pregunta', setPregunta)}
+                    />
+                    <QuestionAnswer
+                        textAreaId={'card-answer'}
+                        textLabel={'Respuesta'}
+                        placeholder={'Ej: Canberra'}
+                        value={respuesta}
+                        error={errores.respuesta}
+                        setOnChange={cambiar('respuesta', setRespuesta)}
+                    />
+                </div>
 
-                <QuestionAnswer
-                    textAreaId={'card-answer'}
-                    textLabel={'Respuesta'}
-                    placeholder={'Ej: Canberra'}
-                    value={respuesta}
-                    error={errores.respuesta}
-                    setOnChange={cambiar('respuesta', setRespuesta)}
-                />
+                <div className={styles.columna}>
+                    <SelectorImagen
+                        imagen={imagen}
+                        onCambiar={valor => { setImagen(valor); setAviso(null) }}
+                        deshabilitado={enviando}
+                        expandido
+                    />
+                </div>
 
                 <div className={styles.acciones}>
                     <p className={`${styles.aviso} ${aviso?.tipo === 'error' ? styles.avisoError : ''}`} role="status" aria-live="polite">

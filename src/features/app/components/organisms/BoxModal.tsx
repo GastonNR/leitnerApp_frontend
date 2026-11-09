@@ -12,7 +12,7 @@ const PERIODOS = ['se repasa cada día', 'se repasa cada 3 días', 'se repasa ca
 
 export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps) {
 
-    const { leccionActiva, eliminarTarjetaContext } = useLecciones()
+    const { leccionActiva, eliminarTarjetaContext, cambiarImagenTarjeta, eliminarImagenTarjeta } = useLecciones()
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva?.cajas[indiceCajaNum]?.tarjetas || []
     const cerrar = () => setEstiloDisplay(false)
@@ -54,7 +54,10 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                                     pregunta={tarjeta.pregunta}
                                     respuesta={tarjeta.respuesta}
                                     proxima_revision={tarjeta.proxima_revision}
+                                    imagen={tarjeta.imagen}
                                     onEliminar={() => eliminarTarjeta(index, cajaElegida, indiceCajaNum)}
+                                    onCambiarImagen={imagen => cambiarImagenTarjeta(tarjeta._id, imagen)}
+                                    onQuitarImagen={() => eliminarImagenTarjeta(tarjeta._id)}
                                 />
                             ))}
                         </ul>

@@ -16,6 +16,18 @@
     border-radius: var(--d-radius);
 }
 
+/* Con imagen la tarjeta crece para que la imagen se vea bien */
+.conImagen {
+    height: min(440px, 58vh);
+}
+
+.imagen {
+    flex-shrink: 1;
+    min-height: 0;
+    max-height: 62%;
+    max-width: 100%;
+}
+
 .card:focus-visible {
     outline: 2px solid var(--d-accent);
     outline-offset: 3px;
@@ -143,6 +155,10 @@
 @media (max-width: 420px) {
     .card {
         height: 220px;
+    }
+
+    .conImagen {
+        height: min(400px, 60vh);
     }
 
     .pregunta {
