@@ -1,5 +1,5 @@
 import { api } from "../../../shared/api/axios"
-import { Leccion, NuevaTarjeta, Tarjeta } from "../types/context.types"
+import { EdicionTarjeta, Leccion, NuevaTarjeta, Tarjeta } from "../types/context.types"
 import { CrearLeccionResponse, DeleteLeccionResponse } from "../types/services.types"
 
 // MANEJO DE LECCIONES
@@ -80,6 +80,27 @@ export const eliminarTarjetaService = async (tarjetaId: string): Promise<void> =
     if(respuesta.status !== 204) throw new Error('No se pudo eliminar la tarjeta.')
 
 }
+// Edita texto e imagen en una sola petición. El progreso de la tarjeta no cambia.
+export const editarTarjetaService = async (tarjetaId: string, datos: EdicionTarjeta): Promise<Tarjeta> => {
+
+    const { pregunta, respuesta, imagen, quitarImagen } = datos
+
+    if (!imagen) {
+        const {data} = await api.patch<Tarjeta>(`/lecciones/leccion/${tarjetaId}`, { pregunta, respuesta, quitarImagen: !!quitarImagen })
+        return data
+    }
+
+    const formulario = new FormData()
+    formulario.append('pregunta', pregunta)
+    formulario.append('respuesta', respuesta)
+    formulario.append('imagen', imagen, nombreArchivo(imagen))
+
+    const {data} = await api.patch<Tarjeta>(`/lecciones/leccion/${tarjetaId}`, formulario, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    return data
+}
+
 // IMAGEN DE UNA TARJETA EXISTENTE
 
 // Agrega o reemplaza la imagen. Devuelve la tarjeta actualizada.

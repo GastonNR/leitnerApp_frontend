@@ -1,0 +1,77 @@
+/* Franja superior del editor, dentro del mismo borde que el textarea */
+.barra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 6px;
+    border-bottom: 1px solid var(--d-border);
+    background: var(--d-surface-2);
+}
+
+.tamano {
+    height: 28px;
+    padding: 0 6px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    font: inherit;
+    font-size: 0.82rem;
+    color: var(--d-text-2);
+    cursor: pointer;
+}
+
+.tamano:hover {
+    background: var(--d-bg);
+}
+
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 28px;
+    min-width: 28px;
+    padding: 0 6px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    font: inherit;
+    color: var(--d-text-2);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.boton:hover {
+    background: var(--d-bg);
+    color: var(--d-text);
+}
+
+.activo,
+.activo:hover {
+    color: var(--d-accent);
+    background: var(--d-accent-soft);
+    border-color: #d5deef;
+}
+
+.boton:focus-visible,
+.tamano:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 1px;
+}
+
+.letra {
+    font-size: 0.95rem;
+    line-height: 1;
+}
+
+.italica {
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.separador {
+    width: 1px;
+    height: 18px;
+    margin: 0 4px;
+    background: var(--d-border);
+}

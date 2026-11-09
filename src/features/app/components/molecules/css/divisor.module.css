@@ -1,0 +1,81 @@
+/* Zona de agarre de 14px con una línea fina y un "asa" al centro */
+.divisor {
+    position: relative;
+    flex-shrink: 0;
+    height: 14px;
+    margin: 2px 0;
+    cursor: row-resize;
+    touch-action: none;
+    border-radius: 6px;
+}
+
+.divisor::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--d-border);
+    transition: background-color 0.15s ease;
+}
+
+.agarre {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    height: 6px;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: var(--d-surface);
+    border: 1px solid var(--d-border-strong);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.divisor:hover::before,
+.divisor:active::before {
+    background: var(--d-accent);
+}
+
+.divisor:hover .agarre,
+.divisor:active .agarre {
+    background: var(--d-accent);
+    border-color: var(--d-accent);
+}
+
+.divisor:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 1px;
+}
+
+/* Vertical: entre dos columnas */
+.vertical {
+    height: auto;
+    width: 14px;
+    margin: 0 2px;
+    cursor: col-resize;
+    align-self: stretch;
+}
+
+.vertical::before {
+    left: 50%;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    height: auto;
+}
+
+.vertical .agarre {
+    width: 6px;
+    height: 40px;
+}
+
+/* En pantallas chicas los campos se apilan con su altura natural:
+   ahí se usa el borde de redimensionar del propio textarea */
+@media (max-width: 1023px) {
+    .divisor {
+        display: none;
+    }
+}

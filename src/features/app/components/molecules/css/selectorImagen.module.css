@@ -57,6 +57,10 @@
     border: 1px solid var(--d-border);
 }
 
+.sinCorte {
+    white-space: nowrap;
+}
+
 .elegir {
     padding: 0;
     border: 0;

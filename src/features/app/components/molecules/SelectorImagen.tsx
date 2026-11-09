@@ -8,13 +8,16 @@ interface SelectorImagenProps {
     deshabilitado?: boolean
     /* Ocupa todo el alto disponible (columna del formulario en escritorio) */
     expandido?: boolean
+    /* Imagen que la tarjeta ya tiene (al editar), mientras no se elija otra */
+    urlActual?: string | null
 }
 
 // Imagen opcional de la pregunta: se elige desde la computadora, se arrastra o se
 // pega con Ctrl+V. Se comprime aquí mismo, antes de llegar al formulario.
-export default function SelectorImagen({ imagen, onCambiar, deshabilitado = false, expandido = false }: SelectorImagenProps) {
+export default function SelectorImagen({ imagen, onCambiar, deshabilitado = false, expandido = false, urlActual = null }: SelectorImagenProps) {
     const id = useId()
     const input = useRef<HTMLInputElement>(null)
+    const raiz = useRef<HTMLDivElement>(null)
     const [arrastrando, setArrastrando] = useState(false)
     const [procesando, setProcesando] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -48,6 +51,8 @@ export default function SelectorImagen({ imagen, onCambiar, deshabilitado = fals
     // El texto pegado en los campos no se toca.
     useEffect(() => {
         function alPegar(e: ClipboardEvent) {
+            // Si el formulario está oculto (otra pestaña), la imagen no es para él.
+            if (!raiz.current || raiz.current.closest('[hidden]')) return
             const archivo = [...(e.clipboardData?.files ?? [])].find(f => f.type.startsWith('image/'))
             if (!archivo) return
             e.preventDefault()
@@ -76,16 +81,17 @@ export default function SelectorImagen({ imagen, onCambiar, deshabilitado = fals
     }
 
     const idAyuda = `${id}-ayuda`
+    const mostrada = vista ?? urlActual
 
     return (
-        <div className={`${styles.campo} ${expandido ? styles.expandido : ''}`}>
+        <div ref={raiz} className={`${styles.campo} ${expandido ? styles.expandido : ''}`}>
             <span className={styles.label}>
                 Imagen <span className={styles.opcional}>(opcional, se muestra con la pregunta)</span>
             </span>
 
-            {vista ? (
+            {mostrada ? (
                 <div className={styles.vista}>
-                    <img src={vista} alt="Vista previa de la imagen de la pregunta" />
+                    <img src={mostrada} alt="Vista previa de la imagen de la pregunta" />
                     <div className={styles.vistaAcciones}>
                         <button type="button" className={styles.accion} onClick={() => input.current?.click()} disabled={deshabilitado || procesando}>
                             Cambiar
@@ -113,7 +119,7 @@ export default function SelectorImagen({ imagen, onCambiar, deshabilitado = fals
                                 <button type="button" className={styles.elegir} onClick={() => input.current?.click()} disabled={deshabilitado}>
                                     Elige un archivo
                                 </button>
-                                , arrástralo aquí o pégalo con <kbd>Ctrl</kbd> + <kbd>V</kbd>
+                                , arrástralo aquí o <span className={styles.sinCorte}>pégalo con <kbd>Ctrl</kbd> + <kbd>V</kbd></span>
                             </>
                         )}
                     </p>

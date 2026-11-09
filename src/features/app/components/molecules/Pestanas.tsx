@@ -29,7 +29,8 @@ function leerGuardada(clave: string | undefined, validas: string[]): string | nu
 }
 
 // Pestañas accesibles (patrón WAI-ARIA tabs): flechas para moverse, Inicio/Fin,
-// y solo se monta el panel activo.
+// Todos los paneles quedan montados y los inactivos se ocultan, así no se
+// pierde lo que se estaba haciendo en uno (p. ej. una tarjeta a medio escribir).
 export default function Pestanas({ pestanas, inicial, claveGuardado, etiqueta }: PestanasProps) {
     const ids = pestanas.map(p => p.id)
     const [activa, setActiva] = useState<string>(() => leerGuardada(claveGuardado, ids) ?? inicial)
@@ -83,14 +84,18 @@ export default function Pestanas({ pestanas, inicial, claveGuardado, etiqueta }:
                 })}
             </div>
 
-            <div
-                role="tabpanel"
-                id={`panel-${actual.id}`}
-                aria-labelledby={`tab-${actual.id}`}
-                className={styles.panel}
-            >
-                {actual.contenido}
-            </div>
+            {pestanas.map(p => (
+                <div
+                    key={p.id}
+                    role="tabpanel"
+                    id={`panel-${p.id}`}
+                    aria-labelledby={`tab-${p.id}`}
+                    className={styles.panel}
+                    hidden={p.id !== actual.id}
+                >
+                    {p.contenido}
+                </div>
+            ))}
         </div>
     )
 }

@@ -19,6 +19,7 @@ export interface LeccionesContextType{
     eliminarTarjetaContext: (indexCaja: number, cajaElegida: Tarjeta[], indiceCajaNum: number)=> Promise<boolean>
     cambiarImagenTarjeta: (tarjetaId: string, imagen: Blob)=> Promise<true | string> // true o el mensaje de error
     eliminarImagenTarjeta: (tarjetaId: string)=> Promise<true | string>
+    editarTarjeta: (tarjetaId: string, datos: EdicionTarjeta)=> Promise<true | string> // true o el mensaje de error
 }
 
 export interface LeccionesProviderProps{
@@ -48,6 +49,15 @@ export interface Tarjeta{
     /* _id de la imagen asociada a la pregunta (se descarga de /imagenes/:id) */
     imagen?: string | null
     _id: string
+}
+
+// Cambios de una tarjeta existente. imagen: la nueva (reemplaza a la actual);
+// quitarImagen: borrar la actual sin poner otra.
+export interface EdicionTarjeta{
+    pregunta: string
+    respuesta: string
+    imagen?: Blob | null
+    quitarImagen?: boolean
 }
 
 export interface NuevaTarjeta{

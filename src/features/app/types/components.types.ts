@@ -16,9 +16,9 @@ export interface BoxProps{
 
 export interface CardElementProps{
     pregunta: string
-    respuesta: string
     proxima_revision: Date
     imagen?: string | null
+    onEditar: () => void
     onEliminar: () => void
     /* Agregar o reemplazar la imagen (ya comprimida). Devuelve true o un mensaje de error. */
     onCambiarImagen: (imagen: Blob) => Promise<true | string>
@@ -31,6 +31,7 @@ export interface QuestionAnswerProps{
     value: string
     placeholder?: string
     error?: string | null
+    autoFocus?: boolean
     setOnChange: (valor: string) => void
 }
 

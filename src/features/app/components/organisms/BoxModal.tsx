@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom'
-import type { CSSProperties } from "react"
+import { lazy, Suspense, useState, type CSSProperties } from "react"
 import { useLecciones } from "../../context/LeccionesContext"
 import CardElement from "../molecules/CardElement"
 import CerrarModal from "../molecules/CerrarModal"
@@ -7,6 +7,10 @@ import { BoxModalProps } from "../../types/components.types"
 import type { Tarjeta } from "../../types/context.types"
 import modal from "./css/modal.module.css"
 import styles from "./css/boxModal.module.css"
+
+// El modal de edición trae el editor de texto (TipTap): se descarga aparte,
+// igual que el formulario de nueva tarjeta (pages/LeitnerApp.jsx).
+const EditarTarjetaModal = lazy(() => import("./EditarTarjetaModal"))
 
 const PERIODOS = ['se repasa cada día', 'se repasa cada 3 días', 'se repasa cada semana', 'se repasa cada 2 semanas', 'se repasa cada mes']
 
@@ -16,6 +20,9 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
     const indiceCajaNum = Number(indiceCaja) - 1
     const cajaElegida = leccionActiva?.cajas[indiceCajaNum]?.tarjetas || []
     const cerrar = () => setEstiloDisplay(false)
+    // Tarjeta abierta en el modal de edición (se busca por id para ver siempre la versión actual)
+    const [editandoId, setEditandoId] = useState<string | null>(null)
+    const editando = cajaElegida.find(t => t._id === editandoId) ?? null
 
     const eliminarTarjeta = async (indexAEliminar: number, cajaElegida: Tarjeta[], indiceCajaNum: number) => {
         const eliminada = await eliminarTarjetaContext(indexAEliminar, cajaElegida, indiceCajaNum)
@@ -52,9 +59,9 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                                 <CardElement
                                     key={tarjeta._id}
                                     pregunta={tarjeta.pregunta}
-                                    respuesta={tarjeta.respuesta}
                                     proxima_revision={tarjeta.proxima_revision}
                                     imagen={tarjeta.imagen}
+                                    onEditar={() => setEditandoId(tarjeta._id)}
                                     onEliminar={() => eliminarTarjeta(index, cajaElegida, indiceCajaNum)}
                                     onCambiarImagen={imagen => cambiarImagenTarjeta(tarjeta._id, imagen)}
                                     onQuitarImagen={() => eliminarImagenTarjeta(tarjeta._id)}
@@ -74,6 +81,16 @@ export default function BoxModal({ setEstiloDisplay, indiceCaja }: BoxModalProps
                         </div>
                     )}
                 </div>
+
+                {editando && (
+                    <Suspense fallback={null}>
+                        <EditarTarjetaModal
+                            tarjeta={editando}
+                            caja={indiceCajaNum + 1}
+                            onCerrar={() => setEditandoId(null)}
+                        />
+                    </Suspense>
+                )}
             </div>
         </div>,
         document.body

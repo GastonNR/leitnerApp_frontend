@@ -111,6 +111,40 @@
     cursor: wait;
 }
 
+/* Cancelar (al editar) */
+.botonSecundario {
+    flex-shrink: 0;
+    padding: 10px 18px;
+    border-radius: var(--d-radius-sm);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--d-text-2);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border-strong);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.botonSecundario:hover:not(:disabled) {
+    background: var(--d-surface-2);
+}
+
+.botonSecundario:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 2px;
+}
+
+.botonSecundario:disabled {
+    opacity: 0.6;
+}
+
+/* Dentro del modal de edición el borde y la sombra los pone el modal */
+.enModal {
+    border: none;
+    box-shadow: none;
+}
+
 /* Escritorio: el formulario ocupa toda la pestaña y los campos crecen */
 @media (min-width: 1024px) {
     .contenedor {
@@ -120,27 +154,43 @@
         min-height: 320px;
     }
 
+    /* Textos | divisor | imagen. El ancho de cada columna lo fija el divisor
+       vertical con --fr-texto / --fr-imagen (estilo en línea del form) */
     .form {
         flex: 1;
         min-height: 0;
+        grid-template-columns: minmax(0, var(--fr-texto, 1fr)) auto minmax(0, var(--fr-imagen, 1fr));
         grid-template-rows: minmax(0, 1fr) auto;
+        column-gap: 4px;
     }
 
     .form > div:not(.acciones) {
         min-height: 0;
     }
 
-    /* Pregunta y respuesta se reparten el alto; la imagen ocupa toda su columna */
-    .columna > div {
+    /* La imagen ocupa toda su columna */
+    .columna:not(.columnaTexto) > div {
         flex: 1;
         min-height: 0;
     }
 
-    .form textarea {
+    /* Pregunta y respuesta: el divisor fija cuánto crece cada una (flex-grow
+       en línea); el mínimo evita que una quede sin espacio para escribir */
+    .columnaTexto {
+        gap: 0;
+    }
+
+    .columnaTexto > .panel {
+        flex-shrink: 1;
+        flex-basis: 0;
+        min-height: 130px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .panel > div {
         flex: 1;
-        min-height: 96px;
-        resize: none;
-        font-size: 1.02rem;
+        min-height: 0;
     }
 }
 

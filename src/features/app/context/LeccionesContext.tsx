@@ -7,14 +7,16 @@ import {
   guardarLeccionService,
   crearNuevaTarjetaService,
   cambiarImagenTarjetaService,
-  eliminarImagenTarjetaService
+  eliminarImagenTarjetaService,
+  editarTarjetaService
 } from "../services/lecciones.service";
 import type {
   LeccionesContextType,
   LeccionesProviderProps,
   Leccion,
   Tarjeta,
-  NuevaTarjeta
+  NuevaTarjeta,
+  EdicionTarjeta
 } from '../types/context.types'
 import { useAuth } from '../../auth/context/AuthContext'
 import { mensajeDeError } from "../../../shared/api/axios"
@@ -306,6 +308,33 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
     )
   }
 
+  // Edita una tarjeta sin moverla de caja: solo cambian texto e imagen.
+  const editarTarjeta = async (tarjetaId: string, datos: EdicionTarjeta): Promise<true | string> => {
+    try {
+      const editada = await editarTarjetaService(tarjetaId, datos)
+      if (editada.imagen && datos.imagen) precargarImagen(editada.imagen, datos.imagen)
+      setLecciones(prev =>
+        prev.map(leccion => ({
+          ...leccion,
+          cajas: leccion.cajas.map(caja =>
+            caja.tarjetas.some(t => t._id === tarjetaId)
+              ? {
+                  ...caja,
+                  tarjetas: caja.tarjetas.map(t => t._id === tarjetaId
+                    ? { ...t, pregunta: editada.pregunta, respuesta: editada.respuesta, imagen: editada.imagen ?? null }
+                    : t)
+                }
+              : caja
+          )
+        }))
+      )
+      return true
+    } catch (error) {
+      console.error("Error al editar la tarjeta", error)
+      return mensajeDeError(error, 'No se pudo actualizar la tarjeta. Inténtalo de nuevo.')
+    }
+  }
+
   const cambiarImagenTarjeta = async (tarjetaId: string, imagen: Blob): Promise<true | string> => {
     try {
       const tarjeta = await cambiarImagenTarjetaService(tarjetaId, imagen)
@@ -348,6 +377,7 @@ export default function LeccionesProvider({ children }: LeccionesProviderProps) 
       eliminarTarjetaContext,
       cambiarImagenTarjeta,
       eliminarImagenTarjeta,
+      editarTarjeta,
       guardar,
       modalLeccionesAbierto,
       setModalLeccionesAbierto,

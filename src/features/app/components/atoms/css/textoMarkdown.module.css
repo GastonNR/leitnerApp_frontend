@@ -1,0 +1,61 @@
+/* Texto de una tarjeta con formato Markdown. Los tamaños son relativos (em)
+   para que el mismo texto se vea proporcionado en la tarjeta de estudio
+   (grande) y en la lista de la caja (chica). */
+.md {
+    overflow-wrap: anywhere;
+}
+
+.md > * + * {
+    margin-top: 0.35em;
+}
+
+.md strong {
+    font-weight: 700;
+}
+
+.md em {
+    font-style: italic;
+}
+
+/* Las listas se alinean a la izquierda aunque el contenedor esté centrado
+   (tarjeta de estudio): inline-block + text-align left. */
+.md ul,
+.md ol {
+    display: inline-block;
+    padding-left: 1.35em;
+    text-align: left;
+}
+
+.md ul {
+    list-style: disc;
+}
+
+.md ol {
+    list-style: decimal;
+}
+
+.md li + li {
+    margin-top: 0.15em;
+}
+
+.md li > ul,
+.md li > ol {
+    display: block;
+    margin-top: 0.15em;
+}
+
+.md li::marker {
+    color: var(--d-muted);
+}
+
+.titulo {
+    font-size: 1.45em;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.subtitulo {
+    font-size: 1.2em;
+    font-weight: 650;
+    line-height: 1.3;
+}
