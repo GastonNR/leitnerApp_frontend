@@ -126,6 +126,20 @@
     background: var(--d-accent-soft);
 }
 
+@media (min-width: 1024px) and (max-height: 760px) {
+    .panel {
+        padding: 18px 24px;
+    }
+
+    .titulo {
+        font-size: 1.3rem;
+    }
+
+    .desglose {
+        margin-top: 10px;
+    }
+}
+
 @media (max-width: 720px) {
     .panel {
         flex-direction: column;

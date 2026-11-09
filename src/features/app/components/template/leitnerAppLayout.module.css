@@ -9,63 +9,108 @@
     letter-spacing: -0.01em;
 }
 
-.main {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-        "hero"
-        "boxes"
-        "create"
-        "calendar";
-    gap: 20px;
-    width: 100%;
-    max-width: 1760px;
-    margin: 0 auto;
-    padding: 24px 20px 48px;
+/* Móvil / tablet: todo apilado, la página hace scroll */
+.cuerpo {
+    display: flex;
+    flex-direction: column;
 }
 
-.hero { grid-area: hero; min-width: 0; }
-.boxes { grid-area: boxes; min-width: 0; }
-.create { grid-area: create; min-width: 0; }
-.calendar { grid-area: calendar; min-width: 0; }
+.sidebar {
+    padding: 16px 16px 0;
+}
+
+.main {
+    min-width: 0;
+    padding: 16px 16px 40px;
+}
+
+.repaso {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hero,
+.calendar {
+    min-width: 0;
+}
 
 .sinLeccion {
+    width: 100%;
     max-width: 720px;
-    padding-top: 48px;
+    margin: 0 auto;
+    padding: 48px 16px;
 }
 
-/* Escritorio: columna de cajas fija a la izquierda */
+/* Escritorio: una sola pantalla, sin scroll de página */
 @media (min-width: 1024px) {
+    .page {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+    }
+
+    .cuerpo {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+    }
+
+    .sidebar {
+        min-height: 0;
+        padding: 0;
+        background: var(--d-surface);
+        border-right: 1px solid var(--d-border);
+        overflow-y: auto;
+    }
+
     .main {
-        grid-template-columns: 300px minmax(0, 1fr);
-        grid-template-rows: auto auto 1fr;
-        grid-template-areas:
-            "boxes hero"
-            "boxes create"
-            "boxes calendar";
-        align-items: start;
-        gap: 24px;
-        padding: 28px 32px 56px;
+        min-height: 0;
+        padding: 16px 32px 24px;
+        overflow: hidden;
+    }
+
+    /* Repaso: el panel "Hoy" a su altura natural y el calendario llena el resto */
+    .repaso {
+        height: 100%;
+        min-height: 0;
+    }
+
+    .hero {
+        flex-shrink: 0;
+    }
+
+    .calendar {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+    }
+
+    .calendar > * {
+        flex: 1;
+        min-width: 0;
     }
 
     .sinLeccion {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-areas: "hero";
-    }
-
-    .boxes {
-        align-self: stretch;
-    }
-
-    .boxesSticky {
-        position: sticky;
-        top: 88px;
+        overflow-y: auto;
     }
 }
 
-@media (max-width: 420px) {
+@media (min-width: 1440px) {
+    .cuerpo {
+        grid-template-columns: 300px minmax(0, 1fr);
+    }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
     .main {
-        gap: 16px;
-        padding: 16px 12px 40px;
+        padding: 8px 32px 16px;
+    }
+
+    .repaso {
+        gap: 12px;
     }
 }

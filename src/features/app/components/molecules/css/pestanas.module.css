@@ -1,0 +1,80 @@
+.pestanas {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    height: 100%;
+}
+
+.lista {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--d-border);
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--d-muted);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab:hover {
+    color: var(--d-text);
+}
+
+.tab:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: -2px;
+    border-radius: 6px 6px 0 0;
+}
+
+.tabActiva {
+    color: var(--d-text);
+    font-weight: 600;
+    border-bottom-color: var(--d-accent);
+}
+
+.icono {
+    display: flex;
+    color: var(--d-faint);
+}
+
+.tabActiva .icono {
+    color: var(--d-accent);
+}
+
+.contador {
+    min-width: 20px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--d-accent);
+    background: var(--d-accent-soft);
+}
+
+/* El panel ocupa todo el alto restante; si la pantalla es muy baja, scroll interno */
+.panel {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+@media (max-width: 1023px) {
+    .panel {
+        overflow: visible;
+    }
+}

@@ -113,6 +113,50 @@ th.col_hoy {
     font-weight: 700;
 }
 
+/* Escritorio: el calendario llena el alto libre de la pestaña */
+@media (min-width: 1024px) {
+    .contenedor_calendario {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding: 18px 22px;
+    }
+
+    .head {
+        flex-shrink: 0;
+        margin-bottom: 12px;
+    }
+
+    .scroll_wrapper {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+    }
+
+    .tabla {
+        height: 100%;
+    }
+
+    .celda {
+        height: auto;
+    }
+}
+
+/* Pantallas bajas: se quita la explicación para que entren las 5 filas */
+@media (min-width: 1024px) and (max-height: 760px) {
+    .texto {
+        display: none;
+    }
+
+    .head {
+        margin-bottom: 8px;
+    }
+
+    .contenedor_calendario {
+        padding: 14px 18px;
+    }
+}
+
 @media (max-width: 720px) {
     .contenedor_calendario {
         padding: 18px;

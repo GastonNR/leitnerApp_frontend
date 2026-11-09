@@ -50,6 +50,21 @@
     gap: 12px;
 }
 
+.atajo {
+    font-size: 0.78rem;
+    color: var(--d-faint);
+}
+
+.atajo kbd {
+    padding: 1px 5px;
+    border-radius: 4px;
+    font: inherit;
+    font-size: 0.74rem;
+    color: var(--d-muted);
+    background: var(--d-surface-2);
+    border: 1px solid var(--d-border);
+}
+
 .aviso {
     margin-right: auto;
     font-size: 0.86rem;
@@ -89,6 +104,33 @@
     cursor: wait;
 }
 
+/* Escritorio: el formulario ocupa toda la pestaña y los campos crecen */
+@media (min-width: 1024px) {
+    .contenedor {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 320px;
+    }
+
+    .form {
+        flex: 1;
+        min-height: 0;
+        grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .form > div:not(.acciones) {
+        min-height: 0;
+    }
+
+    .form textarea {
+        flex: 1;
+        min-height: 96px;
+        resize: none;
+        font-size: 1.02rem;
+    }
+}
+
 @media (max-width: 720px) {
     .contenedor {
         padding: 18px;
@@ -106,5 +148,9 @@
     .aviso {
         margin-right: 0;
         text-align: center;
+    }
+
+    .atajo {
+        display: none;
     }
 }

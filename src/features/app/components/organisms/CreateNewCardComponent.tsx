@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, FormEvent } from 'react'
+import { useEffect, useRef, useState, FormEvent, KeyboardEvent } from 'react'
 import { useLecciones } from '../../context/LeccionesContext'
 import QuestionAnswer from '../molecules/QuestionAnswer'
 import type { NuevaTarjeta } from '../../types/context.types'
@@ -51,9 +51,19 @@ export default function CreateNewCardComponent() {
 
         setPregunta('')
         setRespuesta('')
+        // Listo para escribir la siguiente
+        document.getElementById('card-question')?.focus()
         setAviso({ tipo: 'ok', texto: 'Tarjeta creada en la caja 1.' })
         clearTimeout(timer.current)
         timer.current = setTimeout(() => setAviso(null), 3500)
+    }
+
+    // Ctrl/Cmd + Enter crea la tarjeta sin salir del teclado
+    function atajoTeclado(e: KeyboardEvent<HTMLFormElement>) {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault()
+            e.currentTarget.requestSubmit()
+        }
     }
 
     return (
@@ -70,7 +80,7 @@ export default function CreateNewCardComponent() {
                 </div>
             </div>
 
-            <form id="new-card-form" className={styles.form} onSubmit={nuevaTarjeta} noValidate>
+            <form id="new-card-form" className={styles.form} onSubmit={nuevaTarjeta} onKeyDown={atajoTeclado} noValidate>
                 <QuestionAnswer
                     textAreaId={'card-question'}
                     textLabel={'Pregunta'}
@@ -93,6 +103,7 @@ export default function CreateNewCardComponent() {
                     <p className={`${styles.aviso} ${aviso?.tipo === 'error' ? styles.avisoError : ''}`} role="status" aria-live="polite">
                         {aviso?.texto}
                     </p>
+                    <span className={styles.atajo}><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
                     <button type="submit" className={styles.boton} disabled={enviando}>
                         {enviando ? 'Creando…' : 'Crear tarjeta'}
                     </button>

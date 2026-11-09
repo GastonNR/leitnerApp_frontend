@@ -78,3 +78,63 @@
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }
+
+/* Escritorio: barra lateral a toda altura; las 5 cajas se reparten el alto */
+@media (min-width: 1024px) {
+    .section {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        padding: 18px 14px 16px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .head {
+        padding: 0 8px 10px;
+    }
+
+    /* Cada caja es una franja que crece con la pantalla, hasta un máximo */
+    .lista {
+        flex: 1;
+        gap: 8px;
+    }
+
+    .lista > li {
+        flex: 1 1 0;
+        min-height: 0;
+        max-height: 112px;
+        display: flex;
+    }
+
+    .lista > li > button {
+        flex: 1;
+        background: var(--d-surface-2);
+        border-color: var(--d-border);
+    }
+
+    .lista > li > button:hover {
+        background: var(--d-accent-soft);
+        border-color: var(--d-border-strong);
+    }
+
+    .pie {
+        margin-top: auto;
+    }
+
+    .pie {
+        padding: 12px 8px 0;
+    }
+
+    .lista + .pie {
+        margin-top: 14px;
+    }
+}
+
+@media (min-width: 1024px) and (max-height: 720px) {
+    .ayuda {
+        display: none;
+    }
+}

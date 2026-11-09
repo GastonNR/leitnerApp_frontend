@@ -47,7 +47,7 @@ export default function StudyHero() {
         texto = `No hay repasos pendientes. Si quieres, puedes practicar las ${tarjetasDeHoy.length} tarjeta${tarjetasDeHoy.length !== 1 ? 's' : ''} de la caja 1.`
     } else if (totalTarjetas === 0) {
         titulo = 'Tu lección está vacía'
-        texto = 'Agrega tu primera tarjeta con el formulario de abajo.'
+        texto = 'Agrega tu primera tarjeta en la pestaña «Nueva tarjeta».'
     } else {
         titulo = 'Estás al día'
         texto = 'Hoy no te toca repasar nada. Vuelve mañana.'
