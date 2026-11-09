@@ -1,5 +1,6 @@
 .card {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 12px;
     padding: 14px 12px 14px 16px;
@@ -124,4 +125,77 @@
 
 .oculto {
     display: none;
+}
+
+.eliminar:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Confirmación en línea, dentro de la misma tarjeta */
+.confirmar {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--d-ko-soft);
+    border: 1px solid #efd3d0;
+}
+
+.confirmarTexto {
+    flex: 1 1 260px;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--d-text-2);
+}
+
+.confirmarTexto strong {
+    color: var(--d-text);
+}
+
+.confirmarBotones {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.cancelar,
+.peligro {
+    padding: 7px 14px;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.cancelar {
+    color: var(--d-text-2);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border-strong);
+}
+
+.cancelar:hover {
+    background: var(--d-surface-2);
+}
+
+.peligro {
+    color: #fff;
+    background: var(--d-ko);
+    border: 1px solid var(--d-ko);
+}
+
+.peligro:hover {
+    background: #9c443e;
+}
+
+.cancelar:focus-visible,
+.peligro:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 2px;
 }

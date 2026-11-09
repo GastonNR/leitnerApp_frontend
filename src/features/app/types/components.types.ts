@@ -1,4 +1,4 @@
-import { MouseEventHandler, Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { Caja, Tarjeta } from "./context.types"
 
 export interface BoxProps{
@@ -19,7 +19,7 @@ export interface CardElementProps{
     respuesta: string
     proxima_revision: Date
     imagen?: string | null
-    onEliminar: MouseEventHandler<HTMLButtonElement>
+    onEliminar: () => void
     /* Agregar o reemplazar la imagen (ya comprimida). Devuelve true o un mensaje de error. */
     onCambiarImagen: (imagen: Blob) => Promise<true | string>
     onQuitarImagen: () => Promise<true | string>

@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent } from "react"
+import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react"
 import type { CardElementProps } from "../../types/components.types"
 import { comprimirImagen, ErrorImagen } from "../../utils/comprimirImagen"
 import ImagenTarjeta from "../atoms/ImagenTarjeta"
@@ -24,6 +24,15 @@ export default function CardElement({ pregunta, respuesta, proxima_revision, ima
   const input = useRef<HTMLInputElement>(null)
   const [ocupado, setOcupado] = useState<null | 'subiendo' | 'quitando'>(null)
   const [error, setError] = useState<string | null>(null)
+  // Acción destructiva pendiente de confirmar
+  const [confirmando, setConfirmando] = useState<null | 'imagen' | 'tarjeta'>(null)
+
+  function cancelarConEscape(e: KeyboardEvent<HTMLDivElement>) {
+    if (e.key === 'Escape') {
+      e.stopPropagation()
+      setConfirmando(null)
+    }
+  }
 
   async function alElegir(e: ChangeEvent<HTMLInputElement>) {
     const archivo = e.target.files?.[0]
@@ -43,6 +52,7 @@ export default function CardElement({ pregunta, respuesta, proxima_revision, ima
   }
 
   async function quitar() {
+    setConfirmando(null)
     setError(null)
     setOcupado('quitando')
     const resultado = await onQuitarImagen()
@@ -74,7 +84,7 @@ export default function CardElement({ pregunta, respuesta, proxima_revision, ima
             {ocupado === 'subiendo' ? 'Subiendo…' : imagen ? 'Cambiar imagen' : 'Agregar imagen'}
           </button>
           {imagen && (
-            <button type="button" className={`${styles.enlace} ${styles.enlacePeligro}`} onClick={quitar} disabled={!!ocupado}>
+            <button type="button" className={`${styles.enlace} ${styles.enlacePeligro}`} onClick={() => setConfirmando('imagen')} disabled={!!ocupado || !!confirmando}>
               {ocupado === 'quitando' ? 'Quitando…' : 'Quitar imagen'}
             </button>
           )}
@@ -90,11 +100,42 @@ export default function CardElement({ pregunta, respuesta, proxima_revision, ima
         </div>
         {error && <p className={styles.error} role="alert">{error}</p>}
       </div>
-      <button type="button" className={styles.eliminar} onClick={onEliminar} aria-label={`Eliminar tarjeta: ${pregunta}`} title="Eliminar tarjeta">
+      <button type="button" className={styles.eliminar} onClick={() => setConfirmando('tarjeta')} disabled={!!ocupado || !!confirmando} aria-label={`Eliminar tarjeta: ${pregunta}`} title="Eliminar tarjeta">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
         </svg>
       </button>
+
+      {confirmando && (
+        <div
+          className={styles.confirmar}
+          role="alertdialog"
+          aria-label={confirmando === 'tarjeta' ? 'Confirmar eliminación de la tarjeta' : 'Confirmar quitar la imagen'}
+          onKeyDown={cancelarConEscape}
+        >
+          <p className={styles.confirmarTexto}>
+            {confirmando === 'tarjeta'
+              ? <><strong>¿Borrar esta tarjeta?</strong> Se pierde su progreso{imagen ? ' y su imagen' : ''}. No se puede deshacer.</>
+              : <><strong>¿Quitar la imagen?</strong> Se borra de la tarjeta y no se puede recuperar.</>}
+          </p>
+          <div className={styles.confirmarBotones}>
+            <button type="button" className={styles.cancelar} onClick={() => setConfirmando(null)} autoFocus>
+              Cancelar
+            </button>
+            <button
+              type="button"
+              className={styles.peligro}
+              onClick={() => {
+                if (confirmando === 'imagen') return quitar()
+                setConfirmando(null)
+                onEliminar()
+              }}
+            >
+              {confirmando === 'tarjeta' ? 'Borrar tarjeta' : 'Quitar imagen'}
+            </button>
+          </div>
+        </div>
+      )}
     </li>
   )
 }
