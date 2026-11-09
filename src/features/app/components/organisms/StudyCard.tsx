@@ -1,89 +1,55 @@
-import { useState, MouseEvent } from 'react'
-import { useLecciones } from '../../context/LeccionesContext'
+import { useState } from 'react'
 import { StudyCardProps } from '../../types/components.types'
-import Paragraph from '../../components/atoms/Paragraph'
-import Button from '../../components/atoms/Button'
-import "./css/studyCard.css"
+import styles from './css/studyCard.module.css'
 
-export default function StudyCard({ cantTarjetas, tarjeta, tarjetaIndex, setTarjetaIndex }: StudyCardProps) {
-
-    const { actualizarTarjeta, guardar } = useLecciones()
+// Tarjeta del modo estudio: se voltea con un click y, ya volteada, se responde.
+export default function StudyCard({ tarjeta, bloqueado, onResponder }: StudyCardProps) {
 
     const [flipped, setFlipped] = useState<boolean>(false)
 
-    const handleFlipped = (): void => {
-        setFlipped(prev => !prev)
-    }
-
-    const manejoDeCajas = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
-
-        const boton = event.currentTarget.id
-        if (boton !== 'btn-correct' && boton !== 'btn-incorrect') return
-
-        const esCorrecta = boton === 'btn-correct'
-
-        const leccionesActualizadas = await actualizarTarjeta(esCorrecta, tarjeta)
-
-        if (tarjetaIndex < cantTarjetas - 1) {
-            if (flipped) {
-                handleFlipped()
-            }
-
-            setTimeout(() => {
-                setTarjetaIndex(prev => prev + 1)
-            }, 600)
-
-        } else {
-            setTarjetaIndex(-1)
-            const estaGuardada = await guardar(leccionesActualizadas)
-            if(estaGuardada?.ok) alert("Lección actualizada")
-            else alert("No se pudo guardar la sesión de estudio. Inténtalo de nuevo.")
-        }
-    }
-
     return (
-        <div id="study-card-container" className="study-card-container">
+        <div id="study-card-container" className={styles.contenedor}>
 
-            <div
-                className={`card ${flipped ? "flipped" : ""}`}
-                onClick={handleFlipped}
+            <button
+                type="button"
+                className={`${styles.card} ${flipped ? styles.flipped : ''}`}
+                onClick={() => setFlipped(prev => !prev)}
+                aria-label={flipped ? `Respuesta: ${tarjeta.respuesta}. Toca para ver la pregunta` : `Pregunta: ${tarjeta.pregunta}. Toca para ver la respuesta`}
             >
-                <div className="card-inner">
+                <span className={styles.inner}>
+                    <span className={`${styles.cara} ${styles.frente}`}>
+                        <span className={styles.etiqueta}>Pregunta</span>
+                        <span id="current-question" className={styles.pregunta}>{tarjeta.pregunta}</span>
+                        <span className={styles.pista}>Piensa la respuesta y toca la tarjeta</span>
+                    </span>
+                    <span className={`${styles.cara} ${styles.dorso}`}>
+                        <span className={styles.etiqueta}>Respuesta</span>
+                        <span id="current-answer" className={styles.respuesta}>{tarjeta.respuesta}</span>
+                        <span className={styles.pista}>¿La sabías?</span>
+                    </span>
+                </span>
+            </button>
 
-                    <div className="card-front">
-                        <Paragraph id={'current-question'} texto={tarjeta.pregunta} />
-                    </div>
-
-                    <div className="card-back">
-                        <Paragraph id={'current-answer'} texto={tarjeta.respuesta} />
-                    </div>
-
-                </div>
-            </div>
-
-            <Paragraph className='parr_inf' texto='Haz click en la tarjeta para voltearla'/>
-
-            <div
-                id="answer-buttons"
-                className="grid grid-cols-2 gap-4"
-                style={{ display: flipped ? "flex" : "none" }}
-            >
-                <Button
+            <div id="answer-buttons" className={styles.botones}>
+                <button
                     id="btn-incorrect"
-                    className={'answer-buttons btn-incorrect'}
-                    texto={'No lo sabía'}
-                    onclick={manejoDeCajas}
-                />
-
-                <Button
+                    type="button"
+                    className={styles.incorrecta}
+                    onClick={() => onResponder(false)}
+                    disabled={!flipped || bloqueado}
+                >
+                    No lo sabía
+                </button>
+                <button
                     id="btn-correct"
-                    className={'answer-buttons btn-correct'}
-                    texto={'Lo sabía'}
-                    onclick={manejoDeCajas}
-                />
-
+                    type="button"
+                    className={styles.correcta}
+                    onClick={() => onResponder(true)}
+                    disabled={!flipped || bloqueado}
+                >
+                    Lo sabía
+                </button>
             </div>
-
         </div>
     )
 }

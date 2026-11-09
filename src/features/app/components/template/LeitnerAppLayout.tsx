@@ -1,24 +1,36 @@
 import { ReactNode } from "react"
+import { useLecciones } from "../../context/LeccionesContext"
 import styles from './leitnerAppLayout.module.css'
 
 interface LeitnerAppLayoutProps{
   header: ReactNode
-  sidebar: ReactNode
+  hero: ReactNode
+  boxes: ReactNode
   calendar: ReactNode
   createNewCardComponent: ReactNode
 }
 
-export default function LeitnerAppLayout({ header, sidebar, calendar, createNewCardComponent}: LeitnerAppLayoutProps) {
+// Panel de estudio. En escritorio las 5 cajas quedan fijas en una columna a la
+// izquierda (siempre a mano) y el resto del contenido se desplaza a la derecha.
+// En móvil se apila: hoy, cajas, nueva tarjeta y calendario.
+export default function LeitnerAppLayout({ header, hero, boxes, calendar, createNewCardComponent }: LeitnerAppLayoutProps) {
+  const { leccionActiva } = useLecciones()
+
   return (
-    <div className={styles.leitnerAppLayout}>
-      <div className={styles.header_grid}>{header}</div>
-      <div className={styles.sidebar_grid}>{sidebar}</div>
-      {/* Calendario y formulario en una sola área: así la altura del
-          sidebar no reparte espacio entre ellos ni abre huecos. */}
-      <div className={styles.contenido_grid}>
-        <div className={styles.calendar_grid}>{calendar}</div>
-        <div className={styles.createNewCard_grid}>{createNewCardComponent}</div>
-      </div>
+    <div className={`dashboard ${styles.page}`}>
+      {header}
+      <main className={`${styles.main} ${leccionActiva ? '' : styles.sinLeccion}`}>
+        <div className={styles.hero}>{hero}</div>
+        {leccionActiva && (
+          <>
+            <aside className={styles.boxes} aria-label="Tus cajas">
+              <div className={styles.boxesSticky}>{boxes}</div>
+            </aside>
+            <div className={styles.create}>{createNewCardComponent}</div>
+            <div className={styles.calendar}>{calendar}</div>
+          </>
+        )}
+      </main>
     </div>
   )
 }

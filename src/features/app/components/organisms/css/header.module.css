@@ -1,0 +1,176 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--d-surface);
+    border-bottom: 1px solid var(--d-border);
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1760px;
+    height: 64px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.brandText {
+    font-family: 'Poppins', var(--d-font);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--d-text);
+}
+
+.brandText span {
+    color: var(--d-accent);
+}
+
+/* Selector de lección */
+.leccion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    max-width: 300px;
+    margin-left: 16px;
+    padding: 6px 10px 6px 12px;
+    border-radius: var(--d-radius-sm);
+    border: 1px solid var(--d-border);
+    background: var(--d-surface);
+    color: var(--d-text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.leccion:hover {
+    border-color: var(--d-border-strong);
+    background: var(--d-surface-2);
+}
+
+.leccion:focus-visible,
+.logout:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 2px;
+}
+
+.leccion > svg:first-child {
+    flex-shrink: 0;
+    color: var(--d-muted);
+}
+
+.leccionTexto {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.2;
+}
+
+.leccionEtiqueta {
+    font-size: 0.7rem;
+    color: var(--d-muted);
+}
+
+.leccionNombre {
+    font-weight: 600;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chevron {
+    flex-shrink: 0;
+    color: var(--d-faint);
+}
+
+/* Usuario */
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--d-accent);
+    background: var(--d-accent-soft);
+}
+
+.userName {
+    display: none;
+    max-width: 160px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--d-text-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: var(--d-radius-sm);
+    background: transparent;
+    color: var(--d-muted);
+    font: inherit;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.logout:hover {
+    background: var(--d-surface-2);
+    color: var(--d-text);
+}
+
+.logoutTexto {
+    display: none;
+}
+
+@media (min-width: 720px) {
+    .userName,
+    .logoutTexto {
+        display: inline;
+    }
+}
+
+@media (max-width: 560px) {
+    .inner {
+        gap: 10px;
+        padding: 0 12px;
+    }
+
+    .brandText {
+        display: none;
+    }
+
+    .leccion {
+        margin-left: 0;
+        flex: 1;
+        max-width: none;
+    }
+}

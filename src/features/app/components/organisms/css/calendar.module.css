@@ -1,65 +1,125 @@
-.contenedor_calendario{
-    background-color: var(--color-white);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    padding: 0.5rem;
-    margin: 0.5rem;
+.contenedor_calendario {
+    padding: 22px 24px;
+    border-radius: var(--d-radius);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border);
+    box-shadow: var(--d-shadow);
+}
+
+.head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.texto {
+    max-width: 620px;
+    color: var(--d-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.leyendaHoy {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--d-muted);
+}
+
+.leyendaHoy::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--d-accent-soft);
+    border: 1px solid var(--d-accent);
 }
 
 .scroll_wrapper {
     overflow-x: auto;
     width: 100%;
+    border-radius: var(--d-radius-sm);
+    border: 1px solid var(--d-border);
 }
 
 .tabla {
     min-width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.th_nivel,
+.nivel_caja {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--d-surface);
+    text-align: left;
+    white-space: nowrap;
+    border-right: 1px solid var(--d-border);
 }
 
 .th_nivel {
-    font-size: var(--font-size-xs);
+    padding: 8px 12px;
+    font-size: 0.75rem;
     font-weight: 600;
-    text-align: left;
-    padding: 0.25rem 0.5rem 0.25rem 0.25rem;
-    white-space: nowrap;
-    position: sticky;
-    left: 0;
-    background-color: var(--color-white);
+    color: var(--d-muted);
+    border-bottom: 1px solid var(--d-border);
 }
 
 .th_dia {
     min-width: 44px;
-    padding: 0.25rem 0.125rem;
-    font-size: var(--font-size-xs);
+    padding: 8px 4px;
+    font-size: 0.72rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--d-muted);
     text-align: center;
+    border-bottom: 1px solid var(--d-border);
 }
 
 .nivel_caja {
-    font-size: var(--font-size-xs);
-    font-weight: 600;
-    white-space: nowrap;
-    text-align: left;
-    padding: 0.125rem 0.5rem 0.125rem 0.25rem;
-    position: sticky;
-    left: 0;
-    background-color: var(--color-white);
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--d-text-2);
 }
 
 .celda {
-    padding: 0.125rem;
+    height: 36px;
+    padding: 3px;
     text-align: center;
 }
 
 .col_hover {
-    background-color: var(--color-hover-col);
+    background-color: var(--d-surface-2);
 }
 
 .col_hoy {
-    border-left: 2px solid var(--color-accent-border);
-    border-right: 2px solid var(--color-accent-border);
-    background-color: var(--color-hoy);
-    font-weight: 500;
+    background-color: var(--d-accent-soft);
+}
+
+th.col_hoy {
+    color: var(--d-accent);
+    font-weight: 700;
+}
+
+@media (max-width: 720px) {
+    .contenedor_calendario {
+        padding: 18px;
+    }
+
+    .head {
+        flex-direction: column;
+        gap: 8px;
+    }
 }

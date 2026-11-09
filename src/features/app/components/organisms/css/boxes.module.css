@@ -1,0 +1,80 @@
+.section {
+    padding: 18px;
+    border-radius: var(--d-radius);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border);
+    box-shadow: var(--d-shadow);
+}
+
+.head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 4px 12px;
+}
+
+.titulo {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.total {
+    font-size: 0.82rem;
+    color: var(--d-muted);
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+}
+
+.pie {
+    margin-top: 14px;
+    padding: 14px 4px 0;
+    border-top: 1px solid var(--d-border);
+}
+
+.pieFila {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--d-muted);
+}
+
+.pieValor {
+    font-weight: 600;
+    color: var(--d-text-2);
+}
+
+.barra {
+    height: 6px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: var(--d-bg);
+    overflow: hidden;
+}
+
+.barra span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--d-box-5);
+}
+
+.ayuda {
+    margin-top: 12px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--d-faint);
+}
+
+/* En pantallas medianas las cajas van en fila */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .lista {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}

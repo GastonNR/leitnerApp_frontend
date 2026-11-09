@@ -1,0 +1,50 @@
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--d-text-2);
+}
+
+.textarea {
+    width: 100%;
+    min-height: 76px;
+    padding: 10px 12px;
+    resize: vertical;
+    font: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--d-text);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border-strong);
+    border-radius: var(--d-radius-sm);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.textarea::placeholder {
+    color: var(--d-faint);
+}
+
+.textarea:focus {
+    border-color: var(--d-accent);
+    box-shadow: 0 0 0 3px var(--d-accent-ring);
+}
+
+.conError,
+.conError:focus {
+    border-color: var(--d-ko);
+}
+
+.conError:focus {
+    box-shadow: 0 0 0 3px rgba(180, 83, 76, 0.18);
+}
+
+.error {
+    font-size: 0.82rem;
+    color: var(--d-ko);
+}

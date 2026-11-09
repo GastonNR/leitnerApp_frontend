@@ -69,12 +69,19 @@ export default function Calendar() {
   if (!leccionActiva) return null
 
   return (
-    <div className={styles.contenedor_calendario}>
+    <section className={styles.contenedor_calendario} aria-labelledby="titulo-calendario">
+      <div className={styles.head}>
+        <div>
+          <h2 id="titulo-calendario" className={styles.titulo}>Calendario de repaso</h2>
+          <p className={styles.texto}>Qué cajas conviene repasar cada día desde que creaste la lección. El número es la cantidad de tarjetas en esa caja.</p>
+        </div>
+        {diaHoyIdx !== null && <span className={styles.leyendaHoy}>Hoy</span>}
+      </div>
       <div className={styles.scroll_wrapper}>
         <table className={styles.tabla}>
           <thead>
             <tr>
-              <th className={styles.th_nivel}>Nivel</th>
+              <th className={styles.th_nivel}>Caja</th>
               {fechas.map((fecha, i) => (
                 <th
                   key={i}
@@ -125,6 +132,6 @@ export default function Calendar() {
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   )
 }

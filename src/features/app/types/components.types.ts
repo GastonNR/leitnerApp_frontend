@@ -4,10 +4,12 @@ import { Caja, Tarjeta } from "./context.types"
 export interface BoxProps{
     caja: string
     periodo: string
-    parrafo: string
     /* Datos de la caja para mostrar el contador dentro de la tarjeta. */
     datosCaja?: Caja
-    resaltado: string
+    /** Tarjetas de esta caja que tocan hoy (o están vencidas) */
+    pendientesHoy: number
+    /** Cantidad de la caja más llena, para la barra proporcional */
+    maximo: number
     setEstiloDisplay: Dispatch<SetStateAction<boolean>>
     setIndiceCaja: Dispatch<SetStateAction<string>>
 }
@@ -19,18 +21,13 @@ export interface CardElementProps{
     onEliminar: MouseEventHandler<HTMLButtonElement>
 }
 
-export interface CountCardsProps{
-    id: string
-    texto: string
-    resaltado: string
-    caja: Caja
-}
-
 export interface QuestionAnswerProps{
     textAreaId: string
     textLabel: string
     value: string
-    setOnChange: Dispatch<SetStateAction<string>>
+    placeholder?: string
+    error?: string | null
+    setOnChange: (valor: string) => void
 }
 
 export interface BoxModalProps{
@@ -39,8 +36,8 @@ export interface BoxModalProps{
 }
 
 export interface StudyCardProps{
-    cantTarjetas: number
     tarjeta: Tarjeta
-    tarjetaIndex: number
-    setTarjetaIndex: Dispatch<SetStateAction<number>>
+    /** true mientras se procesa la respuesta anterior */
+    bloqueado: boolean
+    onResponder: (esCorrecta: boolean) => void
 }

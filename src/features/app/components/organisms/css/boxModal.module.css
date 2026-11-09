@@ -1,0 +1,28 @@
+.encabezado {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.numero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--d-text-2);
+    background: var(--d-surface-2);
+    border: 1px solid var(--d-border);
+    box-shadow: inset 3px 0 0 var(--box-color);
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+}

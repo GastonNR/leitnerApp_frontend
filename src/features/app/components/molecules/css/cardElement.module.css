@@ -1,0 +1,64 @@
+.card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 12px 14px 16px;
+    border-radius: var(--d-radius-sm);
+    border: 1px solid var(--d-border);
+    background: var(--d-surface);
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.pregunta {
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.respuesta {
+    margin-top: 2px;
+    color: var(--d-text-2);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.revision {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    font-size: 0.78rem;
+    color: var(--d-muted);
+}
+
+.vencida {
+    color: var(--d-accent);
+    font-weight: 600;
+}
+
+.eliminar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--d-faint);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.eliminar:hover {
+    background: var(--d-ko-soft);
+    color: var(--d-ko);
+}
+
+.eliminar:focus-visible {
+    outline: 2px solid var(--d-accent);
+}

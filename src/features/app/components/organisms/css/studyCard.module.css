@@ -1,0 +1,157 @@
+.contenedor {
+    perspective: 1200px;
+}
+
+.card {
+    display: block;
+    width: 100%;
+    height: 240px;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: center;
+    cursor: pointer;
+    border-radius: var(--d-radius);
+}
+
+.card:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 3px;
+}
+
+/* El giro es la única animación: comunica "ahora ves la otra cara" */
+.inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.45s ease;
+}
+
+.flipped .inner {
+    transform: rotateY(180deg);
+}
+
+.cara {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    border-radius: var(--d-radius);
+    border: 1px solid var(--d-border);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow-y: auto;
+}
+
+.frente {
+    background: var(--d-surface);
+}
+
+.dorso {
+    background: var(--d-accent-soft);
+    border-color: #d5deef;
+    transform: rotateY(180deg);
+}
+
+.etiqueta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--d-muted);
+}
+
+.dorso .etiqueta {
+    color: var(--d-accent);
+}
+
+.pregunta {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.respuesta {
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.pista {
+    font-size: 0.8rem;
+    color: var(--d-faint);
+}
+
+.botones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.botones button {
+    padding: 12px;
+    border-radius: var(--d-radius-sm);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.botones button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.botones button:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 2px;
+}
+
+.incorrecta {
+    color: var(--d-ko);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border-strong);
+}
+
+.incorrecta:not(:disabled):hover {
+    background: var(--d-ko-soft);
+    border-color: var(--d-ko);
+}
+
+.correcta {
+    color: #fff;
+    background: var(--d-ok);
+    border: 1px solid var(--d-ok);
+}
+
+.correcta:not(:disabled):hover {
+    background: #367a5b;
+}
+
+@media (max-width: 420px) {
+    .card {
+        height: 220px;
+    }
+
+    .pregunta {
+        font-size: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .inner {
+        transition: none;
+    }
+}

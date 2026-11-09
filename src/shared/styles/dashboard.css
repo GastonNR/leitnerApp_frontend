@@ -1,0 +1,40 @@
+/* Paleta del panel de estudio. Sobria a propósito: fondo neutro, un solo color
+   de acento y los colores de las cajas apagados, usados solo como indicadores
+   pequeños (puntos, barras finas). Se aplica con la clase .dashboard en la raíz
+   del panel y en los modales (que se renderizan en <body>). */
+.dashboard {
+  --d-bg: #f4f5f7;
+  --d-surface: #ffffff;
+  --d-surface-2: #f8f9fb;
+  --d-border: #e3e6eb;
+  --d-border-strong: #cfd4dc;
+  --d-text: #1f2633;
+  --d-text-2: #475063;
+  --d-muted: #6b7385;
+  --d-faint: #9aa1b0;
+
+  --d-accent: #3a5fa8;
+  --d-accent-hover: #2f4f8f;
+  --d-accent-soft: #eef2f9;
+  --d-accent-ring: rgba(58, 95, 168, 0.22);
+
+  --d-ok: #3f8a68;
+  --d-ok-soft: #edf6f1;
+  --d-ko: #b4534c;
+  --d-ko-soft: #fbf0ef;
+
+  /* Cajas: tonos apagados, de "te cuesta" (1) a "dominada" (5) */
+  --d-box-1: #c7756d;
+  --d-box-2: #c9965c;
+  --d-box-3: #b9a75a;
+  --d-box-4: #6b93bd;
+  --d-box-5: #6aa386;
+
+  --d-radius: 14px;
+  --d-radius-sm: 10px;
+  --d-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --d-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  font-family: var(--d-font);
+  color: var(--d-text);
+}

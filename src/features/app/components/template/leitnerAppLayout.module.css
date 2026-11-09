@@ -1,44 +1,71 @@
-/* La página puede hacer scroll (min-height, no height).
-   El sidebar mantiene su propio scroll y queda fijo mientras la página baja. */
-.leitnerAppLayout{
+/* Colores de .dashboard (src/shared/styles/dashboard.css) */
+.page {
     min-height: 100vh;
+    background: var(--d-bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+.page :where(h1, h2, h3) {
+    letter-spacing: -0.01em;
+}
+
+.main {
     display: grid;
-    grid-template-columns: minmax(14rem, 23%) 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 
-        "header header"
-        "sidebar contenido"
-    ;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "hero"
+        "boxes"
+        "create"
+        "calendar";
+    gap: 20px;
+    width: 100%;
+    max-width: 1760px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
 }
 
-.header_grid{
-    grid-area: header;
+.hero { grid-area: hero; min-width: 0; }
+.boxes { grid-area: boxes; min-width: 0; }
+.create { grid-area: create; min-width: 0; }
+.calendar { grid-area: calendar; min-width: 0; }
+
+.sinLeccion {
+    max-width: 720px;
+    padding-top: 48px;
 }
 
-.sidebar_grid{
-    grid-area: sidebar;
-    align-self: start;
-    position: sticky;
-    top: 0;
-    max-height: 100vh;
-    overflow-y: auto;
+/* Escritorio: columna de cajas fija a la izquierda */
+@media (min-width: 1024px) {
+    .main {
+        grid-template-columns: 300px minmax(0, 1fr);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas:
+            "boxes hero"
+            "boxes create"
+            "boxes calendar";
+        align-items: start;
+        gap: 24px;
+        padding: 28px 32px 56px;
+    }
+
+    .sinLeccion {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "hero";
+    }
+
+    .boxes {
+        align-self: stretch;
+    }
+
+    .boxesSticky {
+        position: sticky;
+        top: 88px;
+    }
 }
 
-/* Calendario y formulario apilados, pegados arriba. */
-.contenido_grid{
-    grid-area: contenido;
-    align-self: start;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-/* El calendario ya tiene su propio scroll horizontal interno
-   (.scroll_wrapper); acá no se le agrega ninguno vertical. */
-.calendar_grid{
-    min-width: 0;
-}
-
-.createNewCard_grid{
-    min-width: 0;
+@media (max-width: 420px) {
+    .main {
+        gap: 16px;
+        padding: 16px 12px 40px;
+    }
 }

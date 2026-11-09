@@ -1,0 +1,111 @@
+.box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--d-radius-sm);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--d-text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.box:hover {
+    background: var(--d-surface-2);
+    border-color: var(--d-border);
+}
+
+.box:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 1px;
+}
+
+.numero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--d-text-2);
+    background: var(--d-surface-2);
+    border: 1px solid var(--d-border);
+    box-shadow: inset 3px 0 0 var(--box-color);
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.fila {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.nombre {
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+.cantidad {
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.periodo {
+    font-size: 0.78rem;
+    color: var(--d-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hoy {
+    flex-shrink: 0;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--d-accent);
+}
+
+.barra {
+    height: 4px;
+    margin-top: 4px;
+    border-radius: 999px;
+    background: var(--d-bg);
+    overflow: hidden;
+}
+
+.barra span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--box-color);
+    opacity: 0.85;
+}
+
+/* En fila (pantallas medianas) la caja se apila en vertical */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .box {
+        flex-direction: column;
+        align-items: stretch;
+        border-color: var(--d-border);
+    }
+
+    .numero {
+        display: none;
+    }
+}

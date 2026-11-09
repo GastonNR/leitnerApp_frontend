@@ -1,27 +1,43 @@
+import type { CSSProperties } from "react"
 import type { BoxProps } from "../../types/components.types"
-import Button from "../atoms/Button"
-import Circle from "../atoms/Circle"
-import Heading from "../atoms/Heading"
-import Paragraph from "../atoms/Paragraph"
-import "./css/box.css"
+import styles from "./css/box.module.css"
 
-export default function Box({caja, periodo, parrafo, datosCaja, resaltado, setEstiloDisplay, setIndiceCaja}: BoxProps) {
+// Una caja de la columna lateral: número, frecuencia, cantidad, cuántas tocan hoy
+// y una barra proporcional para comparar las cajas de un vistazo.
+export default function Box({ caja, periodo, datosCaja, pendientesHoy, maximo, setEstiloDisplay, setIndiceCaja }: BoxProps) {
 
   const cantidadTarjetas = datosCaja?.tarjetas?.length || 0
+  const relleno = Math.round((cantidadTarjetas / maximo) * 100)
 
-  function seleccionarCaja(){
+  function seleccionarCaja() {
     setEstiloDisplay(true)
     setIndiceCaja(caja)
   }
 
   return (
-    <div className="box-highlight box">
-        <div className="box_encabezado">
-          <Heading variante={'h3'} className={'titulo_caja'} texto={`Caja ${caja} ${periodo}`} />
-          <Circle id={`box-${caja}-count`} resaltado={resaltado} cantidadTarjetas={cantidadTarjetas} />
-        </div>
-        <Paragraph className={'parr_box'} texto={parrafo} />
-        <Button className={'view-box-btn'} texto={'Ver tarjetas'} onclick={seleccionarCaja} data_box={caja} />
-    </div>
+    <button
+      type="button"
+      className={styles.box}
+      style={{ '--box-color': `var(--d-box-${caja})` } as CSSProperties}
+      onClick={seleccionarCaja}
+      data-box={caja}
+      aria-label={`Caja ${caja}, ${periodo.toLowerCase()}: ${cantidadTarjetas} tarjeta${cantidadTarjetas !== 1 ? 's' : ''}${pendientesHoy > 0 ? `, ${pendientesHoy} para hoy` : ''}. Ver tarjetas`}
+    >
+      <span className={styles.numero}>{caja}</span>
+
+      <span className={styles.info}>
+        <span className={styles.fila}>
+          <span className={styles.nombre}>Caja {caja}</span>
+          <span id={`box-${caja}-count`} className={styles.cantidad}>{cantidadTarjetas}</span>
+        </span>
+        <span className={styles.fila}>
+          <span className={styles.periodo}>{periodo}</span>
+          {pendientesHoy > 0 && <span className={styles.hoy}>{pendientesHoy} hoy</span>}
+        </span>
+        <span className={styles.barra} aria-hidden="true">
+          <span style={{ width: `${relleno}%` }} />
+        </span>
+      </span>
+    </button>
   )
 }

@@ -1,28 +1,21 @@
+/* Contador del calendario: neutro, con un borde del color (apagado) de la caja */
 .cant_cards {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 500;
-    padding: 0.125rem 0.5rem;
-    border-radius: var(--radius-pill);
-}
-.cant_cards_1{
-    background-color: rgb(226, 158, 155);
-    color: rgba(154, 52, 18, 1);
-}
-.cant_cards_2{
-    background-color: rgb(210, 184, 235);
-    color: rgb(67, 34, 125);
-}
-.cant_cards_3{
-    background-color: rgb(184, 230, 144);
-    color: rgb(20, 81, 13);
-}
-.cant_cards_4{
-    background-color: rgb(239, 231, 177);
-    color: rgb(129, 126, 6);
-}
-.cant_cards_5{
-    background-color: rgb(180, 202, 230);
-    color: rgb(20, 18, 154);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--d-text-2, #475063);
+    background: var(--d-surface, #fff);
+    border: 1.5px solid currentColor;
 }
 
+.cant_cards_1 { border-color: var(--d-box-1, #c7756d); }
+.cant_cards_2 { border-color: var(--d-box-2, #c9965c); }
+.cant_cards_3 { border-color: var(--d-box-3, #b9a75a); }
+.cant_cards_4 { border-color: var(--d-box-4, #6b93bd); }
+.cant_cards_5 { border-color: var(--d-box-5, #6aa386); }

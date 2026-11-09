@@ -1,0 +1,139 @@
+.panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 28px;
+    border-radius: var(--d-radius);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border);
+    border-left: 4px solid var(--d-accent);
+    box-shadow: var(--d-shadow);
+}
+
+.contenido {
+    min-width: 0;
+}
+
+.fecha {
+    font-size: 0.82rem;
+    color: var(--d-muted);
+    margin-bottom: 4px;
+}
+
+.fecha::first-letter {
+    text-transform: uppercase;
+}
+
+.titulo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 6px;
+}
+
+.texto {
+    max-width: 560px;
+    color: var(--d-text-2);
+    line-height: 1.55;
+}
+
+.desglose {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+    list-style: none;
+}
+
+.desglose li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--d-text-2);
+    background: var(--d-surface-2);
+    border: 1px solid var(--d-border);
+}
+
+.desglose li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--box-color);
+}
+
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 12px 20px;
+    border-radius: var(--d-radius-sm);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    background: var(--d-accent);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.boton:hover:not(:disabled) {
+    background: var(--d-accent-hover);
+}
+
+.boton:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 2px;
+}
+
+.boton:disabled {
+    color: var(--d-faint);
+    background: var(--d-bg);
+    cursor: not-allowed;
+}
+
+/* Sin lecciones */
+.vacio {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 32px;
+    border-left-width: 1px;
+}
+
+.vacio .titulo {
+    margin-top: 16px;
+}
+
+.vacio .boton {
+    margin-top: 20px;
+}
+
+.iconoVacio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    color: var(--d-accent);
+    background: var(--d-accent-soft);
+}
+
+@media (max-width: 720px) {
+    .panel {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+    }
+
+    .titulo {
+        font-size: 1.3rem;
+    }
+}

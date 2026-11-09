@@ -1,5 +1,6 @@
 @import "./shared/styles/tokens.css";
 @import "./shared/styles/marca.css";
+@import "./shared/styles/dashboard.css";
 
 *{
     margin: 0;

@@ -1,0 +1,214 @@
+/* Modo estudio: panel claro y sin distracciones; la tarjeta es lo único que importa */
+.panel {
+    max-width: 580px;
+}
+
+.panel .cerrar {
+    background: transparent;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px 0;
+}
+
+.headerTexto {
+    min-width: 0;
+}
+
+.eyebrow {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--d-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.progreso {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px 0;
+}
+
+.barra {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--d-bg);
+    overflow: hidden;
+}
+
+.barra span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--d-accent);
+    transition: width 0.3s ease;
+}
+
+.contador {
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--d-muted);
+    min-width: 3.5em;
+    text-align: right;
+}
+
+.body {
+    padding: 20px 22px 22px;
+    overflow-y: auto;
+}
+
+/* Pantalla final */
+.final {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px 0 0;
+}
+
+.finalIcono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    margin-bottom: 12px;
+    color: var(--d-ok);
+    background: var(--d-ok-soft);
+}
+
+.finalIconoError {
+    color: var(--d-ko);
+    background: var(--d-ko-soft);
+}
+
+.finalTitulo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.finalTexto {
+    max-width: 400px;
+    line-height: 1.55;
+    color: var(--d-text-2);
+    font-size: 0.92rem;
+}
+
+.resumen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 340px;
+    margin-bottom: 16px;
+}
+
+.resumen > div {
+    padding: 12px;
+    border-radius: var(--d-radius-sm);
+    background: var(--d-surface-2);
+    border: 1px solid var(--d-border);
+}
+
+.resumen dt {
+    font-size: 0.8rem;
+    color: var(--d-muted);
+}
+
+.resumen dd {
+    font-weight: 600;
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.ok dd {
+    color: var(--d-ok);
+}
+
+.ko dd {
+    color: var(--d-ko);
+}
+
+.finalAcciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.botonPrimario,
+.botonSecundario {
+    padding: 10px 20px;
+    border-radius: var(--d-radius-sm);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.botonPrimario {
+    color: #fff;
+    background: var(--d-accent);
+}
+
+.botonPrimario:hover {
+    background: var(--d-accent-hover);
+}
+
+.botonSecundario {
+    color: var(--d-text-2);
+    background: var(--d-surface);
+    border: 1px solid var(--d-border-strong);
+}
+
+.botonSecundario:hover {
+    background: var(--d-surface-2);
+}
+
+.botonPrimario:focus-visible,
+.botonSecundario:focus-visible {
+    outline: 2px solid var(--d-accent);
+    outline-offset: 2px;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid var(--d-border);
+    border-top-color: var(--d-accent);
+    border-radius: 50%;
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 560px) {
+    .header,
+    .progreso {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .body {
+        padding: 18px;
+    }
+}
