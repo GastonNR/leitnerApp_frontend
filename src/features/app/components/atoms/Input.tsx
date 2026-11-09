@@ -9,9 +9,10 @@ interface InputProps{
     onChange?: (e: ChangeEvent<HTMLInputElement>)=> void
     onKeyDown?: (e: KeyboardEvent<HTMLInputElement>)=> void
     autoFocus?: boolean
+    maxLength?: number
 }
 
-export default function Input({id, type, className, placeholder, value, onChange, onKeyDown, autoFocus}: InputProps) {
+export default function Input({id, type, className, placeholder, value, onChange, onKeyDown, autoFocus, maxLength}: InputProps) {
   return (
     <input
         id={id}
@@ -22,6 +23,7 @@ export default function Input({id, type, className, placeholder, value, onChange
         onChange={onChange}
         onKeyDown={onKeyDown}
         autoFocus={autoFocus}
+        maxLength={maxLength}
     />
   )
 }

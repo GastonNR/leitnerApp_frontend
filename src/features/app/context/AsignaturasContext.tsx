@@ -289,7 +289,10 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
   // Guarda la sesión del tema: el backend reparte las tarjetas en sus nuevas cajas.
   const guardar = async (tema: Tema): Promise<boolean> => {
     try {
-      const guardado = await guardarSesionService(tema._id, tema.cajas)
+      const respuestas = tema.cajas
+        .flatMap(caja => caja.tarjetas)
+        .flatMap(t => typeof t.es_correcta === 'boolean' ? [{ _id: t._id, es_correcta: t.es_correcta }] : [])
+      const guardado = await guardarSesionService(tema._id, respuestas)
       setAsignaturas(prev => mapearTema(prev, tema._id, () => guardado))
       historialCambio()
       return true

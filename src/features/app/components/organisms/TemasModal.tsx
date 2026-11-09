@@ -8,6 +8,9 @@ import Input from "../atoms/Input"
 import modal from "./css/modal.module.css"
 import styles from "./css/temasModal.module.css"
 
+// Igual que el límite del backend (NOMBRE_MAX en config/limites.ts).
+const NOMBRE_MAX = 80
+
 const iconoBorrar = (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
@@ -98,6 +101,7 @@ function FormNombre({ id, etiqueta, placeholder, ayuda, textoBoton, textoEnviand
                     }
                 }}
                 autoFocus
+                maxLength={NOMBRE_MAX}
             />
             {error
                 ? <p className={styles.error} role="alert">{error}</p>

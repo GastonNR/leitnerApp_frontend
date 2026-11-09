@@ -1,5 +1,5 @@
 import { api } from "../../../shared/api/axios"
-import { Asignatura, Caja, EdicionTarjeta, NuevaTarjeta, Repaso, Tarjeta, Tema } from "../types/context.types"
+import { Asignatura, EdicionTarjeta, NuevaTarjeta, Repaso, RespuestaSesion, Tarjeta, Tema } from "../types/context.types"
 
 // ASIGNATURAS
 
@@ -46,10 +46,11 @@ export const eliminarTemaService = async (temaId: string): Promise<void> => {
     await api.delete(`/temas/${temaId}`)
 }
 
-// Guarda una sesión de estudio: el backend aplica el algoritmo Leitner y
+// Guarda una sesión de estudio: solo se envía qué tarjetas se acertaron y cuáles
+// no; el backend aplica el algoritmo Leitner sobre las tarjetas guardadas y
 // devuelve el tema con las tarjetas ya repartidas en sus nuevas cajas.
-export const guardarSesionService = async (temaId: string, cajas: Caja[]): Promise<Tema> => {
-    const {data} = await api.put<Tema>(`/temas/${temaId}/cajas`, { cajas })
+export const guardarSesionService = async (temaId: string, respuestas: RespuestaSesion[]): Promise<Tema> => {
+    const {data} = await api.put<Tema>(`/temas/${temaId}/cajas`, { respuestas })
     return data
 }
 

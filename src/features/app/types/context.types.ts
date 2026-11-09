@@ -64,6 +64,12 @@ export interface Caja{
     _id: string
 }
 
+// Una respuesta de la sesión de estudio, tal como se envía al backend.
+export interface RespuestaSesion{
+    _id: string
+    es_correcta: boolean
+}
+
 export interface Tarjeta{
     pregunta: string
     respuesta: string

@@ -11,7 +11,7 @@ import type { RegistroRequest } from '../types/auth.types'
 
 const NOMBRE_REGEX = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9._-]{4,20}$/
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-const PASSWORD_MIN = 6
+const PASSWORD_MIN = 8
 
 interface ErroresRegistro {
     nombre: string | null
