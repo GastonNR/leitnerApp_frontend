@@ -2,8 +2,11 @@ import { createContext, useState, useContext, useEffect, useRef } from "react";
 import {
   getAsignaturasService,
   crearAsignaturaService,
+  renombrarAsignaturaService,
   eliminarAsignaturaService,
   crearTemaService,
+  renombrarTemaService,
+  moverTemaService,
   eliminarTemaService,
   guardarSesionService,
   crearNuevaTarjetaService,
@@ -91,6 +94,8 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
   const [temaActivoId, setTemaActivoId] = useState<string | null>(leerTemaGuardado)
   const [tarjetasDeHoy, setTarjetasDeHoy] = useState<Tarjeta[]>([])
   const [modalTemasAbierto, setModalTemasAbierto] = useState<boolean>(false)
+  const [versionRepasos, setVersionRepasos] = useState<number>(0)
+  const historialCambio = () => setVersionRepasos(v => v + 1)
 
   const activo = buscarTema(asignaturas, temaActivoId)
   const temaActivo = activo?.tema
@@ -163,6 +168,17 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
     }
   }
 
+  // Solo cambia el nombre: sus temas quedan como están en el navegador.
+  const renombrarAsignatura = async (asignaturaId: string, nombre: string): Promise<void> => {
+    try {
+      const renombrada = await renombrarAsignaturaService(asignaturaId, nombre.trim())
+      setAsignaturas(prev => prev.map(a => a._id === asignaturaId ? { ...a, nombre: renombrada.nombre } : a))
+    } catch (error) {
+      console.error("Error al renombrar la asignatura", error)
+      throw new Error(mensajeDeError(error, "No se pudo renombrar la asignatura."))
+    }
+  }
+
   const eliminarAsignatura = async (asignaturaId: string): Promise<void> => {
     try {
       await eliminarAsignaturaService(asignaturaId)
@@ -173,6 +189,7 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
 
     const restantes = ultimas.current.filter(a => a._id !== asignaturaId)
     setAsignaturas(restantes)
+    historialCambio()
     if (asignaturaActiva?._id === asignaturaId) activar(temaDeReemplazo(restantes))
   }
 
@@ -191,6 +208,36 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
     }
   }
 
+  // Solo cambia el nombre: no pisa las respuestas de una sesión en curso.
+  const renombrarTema = async (temaId: string, nombre: string): Promise<void> => {
+    try {
+      const renombrado = await renombrarTemaService(temaId, nombre.trim())
+      setAsignaturas(prev => mapearTema(prev, temaId, t => ({ ...t, nombre: renombrado.nombre })))
+    } catch (error) {
+      console.error("Error al renombrar el tema", error)
+      throw new Error(mensajeDeError(error, "No se pudo renombrar el tema."))
+    }
+  }
+
+  // Pasa el tema al final de otra asignatura. Si es el activo, sigue activo.
+  const moverTema = async (temaId: string, asignaturaId: string): Promise<void> => {
+    try {
+      await moverTemaService(temaId, asignaturaId)
+    } catch (error) {
+      console.error("Error al mover el tema", error)
+      throw new Error(mensajeDeError(error, "No se pudo mover el tema."))
+    }
+
+    setAsignaturas(prev => {
+      const tema = buscarTema(prev, temaId)?.tema
+      if (!tema) return prev
+      return prev.map(a => {
+        const sinTema = a.temas.filter(t => t._id !== temaId)
+        return a._id === asignaturaId ? { ...a, temas: [...sinTema, tema] } : { ...a, temas: sinTema }
+      })
+    })
+  }
+
   const eliminarTema = async (temaId: string): Promise<void> => {
     try {
       await eliminarTemaService(temaId)
@@ -202,6 +249,7 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
     const asignaturaDelTema = buscarTema(ultimas.current, temaId)?.asignatura._id
     const restantes = ultimas.current.map(a => ({ ...a, temas: a.temas.filter(t => t._id !== temaId) }))
     setAsignaturas(restantes)
+    historialCambio()
     if (temaActivoId === temaId) activar(temaDeReemplazo(restantes, asignaturaDelTema))
   }
 
@@ -243,6 +291,7 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
     try {
       const guardado = await guardarSesionService(tema._id, tema.cajas)
       setAsignaturas(prev => mapearTema(prev, tema._id, () => guardado))
+      historialCambio()
       return true
     } catch (error) {
       console.error("Error al guardar la sesión", error)
@@ -287,11 +336,15 @@ export default function AsignaturasProvider({ children }: AsignaturasProviderPro
       temaActivo,
       asignaturaActiva,
       tarjetasDeHoy,
+      versionRepasos,
       modalTemasAbierto,
       setModalTemasAbierto,
       crearAsignatura,
+      renombrarAsignatura,
       eliminarAsignatura,
       crearTema,
+      renombrarTema,
+      moverTema,
       eliminarTema,
       cambiarTema,
       crearNuevaTarjeta,

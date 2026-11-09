@@ -8,12 +8,18 @@ export interface AsignaturasContextType{
     asignaturaActiva: Asignatura | undefined
     // Tarjetas del tema activo que tocan hoy (o la caja 1 si no toca ninguna)
     tarjetasDeHoy: Tarjeta[]
+    // Cambia cada vez que el historial de repasos cambia en el servidor
+    // (sesión guardada, tema o asignatura borrados): las métricas lo vuelven a pedir
+    versionRepasos: number
     modalTemasAbierto: boolean
     setModalTemasAbierto: React.Dispatch<SetStateAction<boolean>>
     // Las de crear lanzan Error con el mensaje del backend si fallan
     crearAsignatura: (nombre: string)=> Promise<Asignatura>
+    renombrarAsignatura: (asignaturaId: string, nombre: string)=> Promise<void>
     eliminarAsignatura: (asignaturaId: string)=> Promise<void>
     crearTema: (asignaturaId: string, nombre: string)=> Promise<Tema> // queda como tema activo
+    renombrarTema: (temaId: string, nombre: string)=> Promise<void>
+    moverTema: (temaId: string, asignaturaId: string)=> Promise<void>
     eliminarTema: (temaId: string)=> Promise<void>
     cambiarTema: (temaId: string)=> void
     crearNuevaTarjeta: (temaId: string, tarjeta: NuevaTarjeta)=> Promise<true | string> // true o el mensaje de error
@@ -42,6 +48,14 @@ export interface Tema{
     fechaCreacion: Date
     cajas: Caja[]
     _id: string
+}
+
+// Una sesión de estudio guardada (historial para las métricas)
+export interface Repaso{
+    tema: string
+    fecha: string
+    aciertos: number
+    fallos: number
 }
 
 export interface Caja{

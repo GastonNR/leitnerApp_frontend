@@ -1,5 +1,5 @@
 import { api } from "../../../shared/api/axios"
-import { Asignatura, Caja, EdicionTarjeta, NuevaTarjeta, Tarjeta, Tema } from "../types/context.types"
+import { Asignatura, Caja, EdicionTarjeta, NuevaTarjeta, Repaso, Tarjeta, Tema } from "../types/context.types"
 
 // ASIGNATURAS
 
@@ -11,6 +11,11 @@ export const getAsignaturasService = async (): Promise<Asignatura[]> => {
 
 export const crearAsignaturaService = async (nombre: string): Promise<Asignatura> => {
     const {data} = await api.post<Asignatura>('/asignaturas', { nombre })
+    return data
+}
+
+export const renombrarAsignaturaService = async (asignaturaId: string, nombre: string): Promise<Asignatura> => {
+    const {data} = await api.patch<Asignatura>(`/asignaturas/${asignaturaId}`, { nombre })
     return data
 }
 
@@ -26,6 +31,17 @@ export const crearTemaService = async (asignaturaId: string, nombre: string): Pr
     return data
 }
 
+export const renombrarTemaService = async (temaId: string, nombre: string): Promise<Tema> => {
+    const {data} = await api.patch<Tema>(`/temas/${temaId}`, { nombre })
+    return data
+}
+
+// Mueve el tema (con sus tarjetas y progreso) a otra asignatura.
+export const moverTemaService = async (temaId: string, asignaturaId: string): Promise<Tema> => {
+    const {data} = await api.patch<Tema>(`/temas/${temaId}/asignatura`, { asignaturaId })
+    return data
+}
+
 export const eliminarTemaService = async (temaId: string): Promise<void> => {
     await api.delete(`/temas/${temaId}`)
 }
@@ -34,6 +50,14 @@ export const eliminarTemaService = async (temaId: string): Promise<void> => {
 // devuelve el tema con las tarjetas ya repartidas en sus nuevas cajas.
 export const guardarSesionService = async (temaId: string, cajas: Caja[]): Promise<Tema> => {
     const {data} = await api.put<Tema>(`/temas/${temaId}/cajas`, { cajas })
+    return data
+}
+
+// HISTORIAL (métricas)
+
+// Sesiones de estudio guardadas en los últimos `dias` días, de la más vieja a la más nueva.
+export const getRepasosService = async (dias: number): Promise<Repaso[]> => {
+    const {data} = await api.get<Repaso[]>('/repasos', { params: { dias } })
     return data
 }
 

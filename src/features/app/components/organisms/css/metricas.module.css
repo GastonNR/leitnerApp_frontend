@@ -1,0 +1,171 @@
+/* Pestaña "Métricas": tarjetas simples y amables, nada de tablero de control. */
+.metricas {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 760px;
+}
+
+.tarjeta {
+    padding: 22px 24px;
+    border-radius: var(--d-radius);
+    border: 1px solid var(--d-border);
+    background: var(--d-surface);
+    box-shadow: var(--d-shadow);
+}
+
+.titulo {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.texto {
+    margin-top: 4px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--d-text-2);
+}
+
+/* La semana: un punto por día */
+.semana {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    max-width: 380px;
+    margin-top: 18px;
+    list-style: none;
+}
+
+.semana li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.punto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--d-bg);
+    border: 2px solid var(--d-border);
+    color: #fff;
+}
+
+.estudio {
+    background: var(--d-ok);
+    border-color: var(--d-ok);
+}
+
+.hoy .punto:not(.estudio) {
+    border-style: dashed;
+    border-color: var(--d-accent);
+}
+
+.inicial {
+    font-size: 0.76rem;
+    color: var(--d-muted);
+}
+
+.hoy .inicial {
+    font-weight: 600;
+    color: var(--d-text);
+}
+
+/* Destacados */
+.destacados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.destacado {
+    padding: 18px 20px;
+    border-radius: var(--d-radius);
+    background: var(--d-accent-soft);
+}
+
+.destacado h3 {
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--d-text-2);
+}
+
+.destacadoTema {
+    margin-top: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.destacadoAsignatura {
+    font-size: 0.84rem;
+    color: var(--d-muted);
+}
+
+/* Progreso por tema */
+.asignatura {
+    margin-top: 20px;
+}
+
+.asignaturaNombre {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--d-muted);
+}
+
+.temas {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 10px;
+    list-style: none;
+}
+
+.temaFila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 12px;
+}
+
+.temaNombre {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.temaCuenta {
+    font-size: 0.84rem;
+    color: var(--d-muted);
+}
+
+.barra {
+    display: block;
+    height: 8px;
+    margin-top: 6px;
+    border-radius: 999px;
+    background: var(--d-accent-soft);
+    overflow: hidden;
+}
+
+.barra span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--d-accent);
+}
+
+.soloLectores {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}

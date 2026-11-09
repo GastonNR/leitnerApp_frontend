@@ -180,7 +180,8 @@
     color: var(--d-accent);
 }
 
-.eliminar {
+.eliminar,
+.renombrar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -199,6 +200,12 @@
     color: var(--d-ko);
 }
 
+.renombrar:hover {
+    background: var(--d-accent-soft);
+    color: var(--d-accent);
+}
+
+.renombrar:focus-visible,
 .eliminar:focus-visible {
     outline: 2px solid var(--d-accent);
 }
@@ -228,6 +235,10 @@
     border-radius: var(--d-radius-sm);
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+select.input {
+    cursor: pointer;
 }
 
 .input::placeholder {
@@ -308,4 +319,9 @@
 
 .asignaturaCabecera .inicial {
     background: var(--d-surface);
+}
+
+/* Renombrar la asignatura: el formulario ocupa el lugar de la cabecera */
+.asignatura > .formEnLista:first-child {
+    margin: 0 0 10px;
 }

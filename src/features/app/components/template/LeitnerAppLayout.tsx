@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 import { useAsignaturas } from "../../context/AsignaturasContext"
 import { venceHoy } from "../../utils/fechas"
 import Pestanas from "../molecules/Pestanas"
+import Metricas from "../organisms/Metricas"
 import styles from './leitnerAppLayout.module.css'
 
 interface LeitnerAppLayoutProps{
@@ -25,9 +26,15 @@ const iconoRepaso = (
   </svg>
 )
 
+const iconoMetricas = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+  </svg>
+)
+
 // Panel de estudio a pantalla completa (escritorio): cabecera arriba, las 5 cajas
-// en una barra lateral a la izquierda y, a la derecha, dos pestañas:
-// "Nueva tarjeta" y "Repaso y calendario". Nada hace scroll a nivel de página.
+// en una barra lateral a la izquierda y, a la derecha, tres pestañas:
+// "Nueva tarjeta", "Repaso y calendario" y "Métricas". Nada hace scroll a nivel de página.
 // En pantallas chicas se apila y la página vuelve a desplazarse con normalidad.
 export default function LeitnerAppLayout({ header, hero, boxes, calendar, createNewCardComponent }: LeitnerAppLayoutProps) {
   const { temaActivo } = useAsignaturas()
@@ -74,6 +81,12 @@ export default function LeitnerAppLayout({ header, hero, boxes, calendar, create
                     <div className={styles.calendar}>{calendar}</div>
                   </div>
                 ),
+              },
+              {
+                id: 'metricas',
+                titulo: 'Métricas',
+                icono: iconoMetricas,
+                contenido: <Metricas />,
               },
             ]}
           />

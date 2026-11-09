@@ -82,3 +82,23 @@
 .panel[hidden] {
     display: none;
 }
+
+/* Pantallas angostas: sin íconos y con menos aire, para que entren las tres
+   pestañas; si aun así no entran, la barra se desliza de costado. */
+@media (max-width: 480px) {
+    .lista {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .tab {
+        flex-shrink: 0;
+        gap: 6px;
+        padding: 10px 6px;
+        font-size: 0.86rem;
+    }
+
+    .icono {
+        display: none;
+    }
+}
